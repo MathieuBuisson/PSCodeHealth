@@ -1,0 +1,45 @@
+version: 1.0.{build}
+
+os: WMF 5
+
+# Skip on updates to the readme
+skip_commits:
+  message: /readme*/
+
+install:
+  - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
+  - ps: Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
+  - ps: Install-PackageProvider -Name NuGet -Force
+  - ps: Install-Module -Name Pester -Force
+  - ps: Install-Module PsScriptAnalyzer -Force
+  
+build: false
+
+test_script:
+  - ps: |
+      $UnitTestsOutput = Invoke-Pester -Script ".\Tests" -OutputFile TestsResults.xml -OutputFormat NUnitXml -PassThru
+      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
+      $FailedCount = $UnitTestsOutput.FailedCount
+      If ($FailedCount -gt 0) {
+        Add-AppveyorMessage -Message "$($FailedCount) unit test(s) failed."
+
+        # Failing the build
+        Throw "Build failed because $($FailedCount) unit test(s) failed"
+      }
+
+  - ps: |
+      Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
+      $ScriptAnalyzerResults = Invoke-ScriptAnalyzer -Path $pwd -Severity Error -ErrorAction SilentlyContinue
+      If ($ScriptAnalyzerResults) {
+        $ScriptAnalyzerResultString = $ScriptAnalyzerResults | Out-String
+        Write-Warning $ScriptAnalyzerResultString
+        Add-AppveyorMessage -Message "PSScriptAnalyzer output contained one or more result(s) with 'Error' severity.`
+        Check the 'Tests' tab of this build for more details." -Category Error
+        Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Failed -ErrorMessage $ScriptAnalyzerResultString
+        
+        # Failing the build
+        Throw "Build failed"
+      }
+      Else {
+        Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Passed
+      }
