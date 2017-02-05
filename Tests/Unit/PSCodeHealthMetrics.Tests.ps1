@@ -13,7 +13,7 @@ Describe 'General Module behaviour' {
     }
 }
 
-Describe 'Get-ModulePowerShellScripts' {
+Describe 'Get-ModulePowerShellScript' {
 
     InModuleScope $ModuleName {
         
@@ -25,7 +25,7 @@ Describe 'Get-ModulePowerShellScripts' {
         New-Item -Path TestDrive:\Module\SubFolder\Module.Tests.ps1 -ItemType File
         Mock Import-Module { [PSCustomObject]@{ ModuleBase = 'TestDrive:\Module' } }
 
-        $Results = Get-ModulePowerShellScripts -Name 'Module'
+        $Results = Get-ModulePowerShellScript -Name 'Module'
 
         It 'Should return strings' {
             Foreach ( $Result in $Results ) {
@@ -38,10 +38,49 @@ Describe 'Get-ModulePowerShellScripts' {
             }
         }
         It 'Should not return any script with "*Tests*" in their name or path' {
-            $Results | Where { $_ -like "*Tests*" } | Should BeNullOrEmpty
+            $Results | Where-Object { $_ -like "*Tests*" } | Should BeNullOrEmpty
         }
         It 'Should not return any file with the .psd1 extension' {
-            $Results | Where { $_ -like "*psd1" } | Should BeNullOrEmpty
+            $Results | Where-Object { $_ -like "*psd1" } | Should BeNullOrEmpty
+        }
+    }
+}
+
+Describe 'Get-ModuleFunctionDefinition' {
+
+    InModuleScope $ModuleName {
+
+        $TestsDirectory = Resolve-Path -Path $PSScriptRoot
+        Mock Get-ModulePowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+        
+        $TestDataPublicFunctions = @('Get-Nothing', 'Set-Nothing', 'Public')
+        $TestDataPrivateFunctions = 'Private'
+        $TestDataNestedFunctions = 'Nested'
+
+        $Results = Get-ModuleFunctionDefinition -Name 'Module'
+
+        It 'Should return objects of the type [FunctionDefinitionAst]' {
+            Foreach ( $Result in $Results ) {
+                $Result | Should BeOfType [System.Management.Automation.Language.FunctionDefinitionAst]
+            }
+        }
+        It 'Should return all public functions from all script files' {
+            Foreach ( $PublicFunction in $TestDataPublicFunctions ) {
+                $Results.Name | Where-Object { $_ -eq $PublicFunction } |
+                Should Not BeNullOrEmpty
+            }
+        }
+        It 'Should return private functions' {
+            $Results.Name | Where-Object { $_ -eq $TestDataPrivateFunctions } |
+            Should Not BeNullOrEmpty
+        }
+        It 'Should not return any nested function' {
+            $Results.Name | Where-Object { $_ -eq $TestDataNestedFunctions } |
+            Should BeNullOrEmpty
+        }
+        It 'Should return 2 functions from the test data file : 1Public1Nested1Private.psm1' {
+            ($Results.Extent.File | Where-Object { $_ -eq "$($PSScriptRoot)\TestData\1Public1Nested1Private.psm1" }).Count |
+            Should Be 2
         }
     }
 }

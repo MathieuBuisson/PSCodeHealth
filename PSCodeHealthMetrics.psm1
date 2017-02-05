@@ -3,8 +3,7 @@
     $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
 
 #Dot source the files
-    Foreach($Import in @($Public + $Private))
-    {
+    Foreach ( $Import in @($Public + $Private) ) {
         Try
         {
             . $Import.FullName

@@ -1,4 +1,4 @@
-Function Get-ModulePowerShellScripts {
+Function Get-ModulePowerShellScript {
 <#
 .SYNOPSIS
     Gets all PowerShell scripts and modules nested in the specified module.
@@ -12,7 +12,7 @@ Function Get-ModulePowerShellScripts {
     To specify the module to check by the path of its manifest (.psd1) or root module file (.psm1).
 
 .EXAMPLE
-    Get-ModulePowerShellScripts -Path C:\GitRepos\MyModule\MyModule.psd1
+    Get-ModulePowerShellScript -Path C:\GitRepos\MyModule\MyModule.psd1
 
     Gets all PowerShell scripts and modules nested in the module specified by the path of its manifest.
 #>
