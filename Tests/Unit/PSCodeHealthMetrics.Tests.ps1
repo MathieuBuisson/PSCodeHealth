@@ -89,17 +89,29 @@ Describe 'Test-FunctionHelpCoverage' {
 
     InModuleScope $ModuleName {
 
-        $Result = Test-FunctionHelpCoverage -FunctionDefinition
+        $TestsDirectory = Resolve-Path -Path $PSScriptRoot
+        Mock Get-ModulePowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+
+        $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+        $FunctionsWithHelp = @('Set-Nothing', 'Get-Nothing', 'Public')
+        $FunctionWithNoHelp = 'Private'
 
         It 'Should return a [System.Boolean]' {
-            $Result | Should BeOfType [System.Boolean]
+            Foreach ( $FunctionDefinition in $FunctionDefinitions ) {
+                Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition |
+                Should BeOfType [System.Boolean]
+            }
         }
         It 'Should return True if the specified function contains some help info' {
-            
-            
+            Foreach ( $FunctionDefinition in ($FunctionDefinitions | Where-Object { $_.Name -in $FunctionsWithHelp }) ) {
+                Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition |
+                Should Be $True
+            }
         }
         It 'Should return False if the specified function does not contain any help info' {
-            
+            $FunctionDefinitionWithNoHelp = $FunctionDefinitions | Where-Object { $_.Name -eq $FunctionWithNoHelp }
+            Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinitionWithNoHelp |
+            Should Be $False
         }
     }
 }
