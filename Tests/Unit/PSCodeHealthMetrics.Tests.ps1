@@ -84,3 +84,22 @@ Describe 'Get-ModuleFunctionDefinition' {
         }
     }
 }
+
+Describe 'Test-FunctionHelpCoverage' {
+
+    InModuleScope $ModuleName {
+
+        $Result = Test-FunctionHelpCoverage -FunctionDefinition
+
+        It 'Should return a [System.Boolean]' {
+            $Result | Should BeOfType [System.Boolean]
+        }
+        It 'Should return True if the specified function contains some help info' {
+            
+            
+        }
+        It 'Should return False if the specified function does not contain any help info' {
+            
+        }
+    }
+}
