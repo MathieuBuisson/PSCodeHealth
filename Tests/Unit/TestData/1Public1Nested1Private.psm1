@@ -14,5 +14,6 @@ Function Public () {
 }
 
 Function Private ($InputObject) {
+    # A simple line of comment
     Get-Item $InputObject
 }

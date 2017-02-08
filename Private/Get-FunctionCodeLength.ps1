@@ -26,6 +26,8 @@ Function Get-FunctionCodeLength {
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
     )
     
-    
-
+    $FunctionText = $FunctionDefinition.Extent.Text
+    $AstTokens = [System.Management.Automation.PSParser]::Tokenize($FunctionText, [ref]$Null)
+    $NoCommentTokens = $AstTokens | Where-Object { $_.Type -ne 'Comment' }
+    $NumberOfLines = ($NoCommentTokens | Where-Object { $_.Type -eq 'NewLine' }).Count - 1
 }
