@@ -78,5 +78,6 @@ Function Set-Nothing {
     Begin {
     }
     Process {
+        $Null = Get-Nothing
     }
 }

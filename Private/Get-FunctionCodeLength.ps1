@@ -1,9 +1,10 @@
 Function Get-FunctionCodeLength {
 <#
 .SYNOPSIS
-    Tells whether or not the specified function definition contains help information.
+    Gets the number of lines in the specified function definition (excluding comments).
 .DESCRIPTION
-    Tells whether or not the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst] contains help information (a CommentHelpInfo object).
+    Gets the number of lines in the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst].
+    The single line comments, multiple lines comments and comment-based help are not considered as code, so they are excluded.
 
 .PARAMETER FunctionDefinition
     To specify the function definition to analyze.
@@ -11,16 +12,16 @@ Function Get-FunctionCodeLength {
 .EXAMPLE
     Get-FunctionCodeLength -FunctionDefinition $MyFunctionAst
 
-    Returns $True if the specified function definition contains help information, returns $False if not.
+    Returns the number of code lines in the specified function definition.
 
 .OUTPUTS
-    System.Boolean
+    System.Int32
 
 .NOTES
     General notes
 #>
     [CmdletBinding()]
-    [OutputType([System.Boolean])]
+    [OutputType([System.Int32])]
     Param (
         [Parameter(Position=0, Mandatory=$True)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
@@ -29,5 +30,9 @@ Function Get-FunctionCodeLength {
     $FunctionText = $FunctionDefinition.Extent.Text
     $AstTokens = [System.Management.Automation.PSParser]::Tokenize($FunctionText, [ref]$Null)
     $NoCommentTokens = $AstTokens | Where-Object { $_.Type -ne 'Comment' }
-    $NumberOfLines = ($NoCommentTokens | Where-Object { $_.Type -eq 'NewLine' }).Count - 1
+
+    # Substracting 1 from the number of lines if the last token is a NewLine
+    [System.Int32]$NumberofLinesToSubstract = If ( $NoCommentTokens[-1].Type -eq 'NewLine' ) { 1 } Else { 0 }
+    [System.Int32]$NumberOfLines = ($NoCommentTokens | Where-Object { $_.Type -eq 'NewLine' }).Count - $NumberofLinesToSubstract
+    return $NumberOfLines
 }

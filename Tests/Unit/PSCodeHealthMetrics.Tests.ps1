@@ -115,3 +115,26 @@ Describe 'Test-FunctionHelpCoverage' {
         }
     }
 }
+
+Describe 'Get-FunctionCodeLength' {
+    InModuleScope $ModuleName {
+
+        $TestsDirectory = Resolve-Path -Path $PSScriptRoot
+        Mock Get-ModulePowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+
+        $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+        $TestCases = @(
+            @{ FunctionName = 'Public'; ExpectedNumberOfLines = 6 }
+            @{ FunctionName = 'Private'; ExpectedNumberOfLines = 3 }
+            @{ FunctionName = 'Get-Nothing'; ExpectedNumberOfLines = 15 }
+            @{ FunctionName = 'Set-Nothing'; ExpectedNumberOfLines = 16 }
+        )
+
+        It 'Counts <ExpectedNumberOfLines> lines in the function definition : <FunctionName>' -TestCases $TestCases {
+            Param ([string]$FunctionName, [int]$ExpectedNumberOfLines)
+
+            Get-FunctionCodeLength -FunctionDefinition ($FunctionDefinitions | Where-Object { $_.Name -eq $FunctionName }) |
+            Should Be $ExpectedNumberOfLines
+        }
+    }
+}
