@@ -1,46 +1,32 @@
 Function Get-PowerShellFile {
 <#
 .SYNOPSIS
-    Gets all PowerShell scripts and modules nested in the specified module.
+    Gets all PowerShell files in the specified directory.
 .DESCRIPTION
-    Gets all PowerShell scripts and modules nested in the module specified by name or filepath.
-
-.PARAMETER Name
-    To specify the module to check by its name.
+    Gets all PowerShell files (.ps1, .psm1 and .psd1) in the specified directory.
+    The following PowerShell-related files are excluded : Tests, format data files and type data files.
 
 .PARAMETER Path
-    To specify the module to check by the path of its manifest (.psd1) or root module file (.psm1).
+    To specify the path of the directory to search.
+
+.PARAMETER Recurse
+    To search the Path directory and all subdirectories recursively.
 
 .EXAMPLE
-    Get-PowerShellFile -Path C:\GitRepos\MyModule\MyModule.psd1
+    Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse
 
-    Gets all PowerShell scripts and modules nested in the module specified by the path of its manifest.
+    Gets all PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
 #>
-    [CmdletBinding(DefaultParameterSetName="Name")]
+    [CmdletBinding()]
     [OutputType([String[]])]
     Param (
-        [Parameter(Position=0,ParameterSetName='Name')]
-        [string]$Name,
-        
-        [Parameter(Position=0,ParameterSetName='Path')]
-        [validatescript({ Test-Path $_ })]
-        [string]$Path
+        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+        [validatescript({ Test-Path $_ -PathType Container })]
+        [string]$Path,
+
+        [switch]$Recurse
     )
-    Try {
-        If ( $PSCmdlet.ParameterSetName -eq 'Name' ) {
-            $ModuleInfo = Import-Module -Name $Name -Force -PassThru
-        } 
-        ElseIf ($PSCmdlet.ParameterSetName -eq 'Path') {
-            $ModuleInfo = Import-Module $Path -Force -PassThru
-        }
-    }
-    Catch {
-        Throw $_
-    }
 
-    $ModuleFolder = $ModuleInfo.ModuleBase
-    Write-Verbose "The module folder path is : $($ModuleFolder)"
-
-    $ScriptFiles = Get-ChildItem -Path $ModuleFolder -Recurse -Filter '*.ps*1' -File | Where-Object { $_.FullName -notmatch "Tests|\w\.psd1|xml$" }
-    return $ScriptFiles.FullName
+    $PowerShellFiles = Get-ChildItem @PSBoundParameters -Filter '*.ps*1' -File | Where-Object { $_.FullName -notmatch "Tests|xml$" }
+    return $PowerShellFiles.FullName
 }

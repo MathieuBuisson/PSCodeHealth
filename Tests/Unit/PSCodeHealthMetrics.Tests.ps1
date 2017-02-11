@@ -21,15 +21,21 @@ Describe 'Get-PowerShellFile' {
         New-Item -Path TestDrive:\Module\Module.psd1 -ItemType File
         New-Item -Path TestDrive:\Module\SubFolder -ItemType Directory
         New-Item -Path TestDrive:\Module\SubFolder\Module.psm1 -ItemType File
+        New-Item -Path TestDrive:\Module\SubFolder\Module.psd1 -ItemType File
         New-Item -Path TestDrive:\Module\SubFolder\Module.ps1 -ItemType File
         New-Item -Path TestDrive:\Module\SubFolder\Module.Tests.ps1 -ItemType File
-        Mock Import-Module { [PSCustomObject]@{ ModuleBase = 'TestDrive:\Module' } }
 
-        $Results = Get-PowerShellFile -Name 'Module'
+        $Results = Get-PowerShellFile -Path TestDrive:\Module -Recurse
+        $PipelineInputResults = 'TestDrive:\Module' | Get-PowerShellFile
 
         It 'Should return strings' {
             Foreach ( $Result in $Results ) {
                 $Result | Should BeOfType [string]
+            }
+        }
+        It 'Should work with the Path input from the pipeline' {
+            Foreach ( $Result in $PipelineInputResults ) {
+                $PipelineInputResults | Should BeOfType [string]
             }
         }
         It 'Should return only files with a .ps*1 extension' {
@@ -40,33 +46,42 @@ Describe 'Get-PowerShellFile' {
         It 'Should not return any script with "*Tests*" in their name or path' {
             $Results | Where-Object { $_ -like "*Tests*" } | Should BeNullOrEmpty
         }
-        It 'Should not return any file with the .psd1 extension' {
-            $Results | Where-Object { $_ -like "*psd1" } | Should BeNullOrEmpty
+        It 'Should not return any file from subdirectories without the Recurse parameter' {
+            $PipelineInputResults.Count | Should Be 1
+        }
+        It 'Should return any file from directory and all subdirectories with the Recurse parameter' {
+            $Results.Count | Should Be 4
         }
     }
 }
 
-Describe 'Get-ModuleFunctionDefinition' {
+Describe 'Get-FunctionDefinition' {
 
     InModuleScope $ModuleName {
 
-        $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-        Mock Get-PowerShellFile { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+        $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
         
         $TestDataPublicFunctions = @('Get-Nothing', 'Set-Nothing', 'Public')
         $TestDataPrivateFunctions = 'Private'
         $TestDataNestedFunctions = 'Nested'
 
-        $Results = Get-ModuleFunctionDefinition -Name 'Module'
+        $Results = Get-FunctionDefinition -Path $Files
+        $PipelineInputResults = $Files | Get-FunctionDefinition
 
         It 'Should return objects of the type [FunctionDefinitionAst]' {
             Foreach ( $Result in $Results ) {
                 $Result | Should BeOfType [System.Management.Automation.Language.FunctionDefinitionAst]
             }
         }
-        It 'Should return all public functions from all script files' {
+        It 'Should return all public functions from all files' {
             Foreach ( $PublicFunction in $TestDataPublicFunctions ) {
                 $Results.Name | Where-Object { $_ -eq $PublicFunction } |
+                Should Not BeNullOrEmpty
+            }
+        }
+        It 'Should return all public functions from all files specified via pipeline input' {
+            Foreach ( $PublicFunction in $TestDataPublicFunctions ) {
+                $PipelineInputResults.Name | Where-Object { $_ -eq $PublicFunction } |
                 Should Not BeNullOrEmpty
             }
         }
@@ -89,10 +104,8 @@ Describe 'Test-FunctionHelpCoverage' {
 
     InModuleScope $ModuleName {
 
-        $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-        Mock Get-PowerShellFile { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
-
-        $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+        $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
+        $FunctionDefinitions = Get-FunctionDefinition -Path $Files
         $FunctionsWithHelp = @('Set-Nothing', 'Get-Nothing', 'Public')
         $FunctionWithNoHelp = 'Private'
 
@@ -119,10 +132,8 @@ Describe 'Test-FunctionHelpCoverage' {
 Describe 'Get-FunctionCodeLength' {
     InModuleScope $ModuleName {
 
-        $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-        Mock Get-PowerShellFile { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
-
-        $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+        $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
+        $FunctionDefinitions = Get-FunctionDefinition -Path $Files
         $TestCases = @(
             @{ FunctionName = 'Public'; ExpectedNumberOfLines = 6 }
             @{ FunctionName = 'Private'; ExpectedNumberOfLines = 3 }
@@ -144,10 +155,9 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
 
         Context 'When the function contains no best practices violation' {
 
-            $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-            Mock Get-PowerShellFile { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
+            $FunctionDefinitions = Get-FunctionDefinition -Path $Files
             Mock Invoke-ScriptAnalyzer { $Null }
-            $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
             It 'Should return 0' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
@@ -156,10 +166,9 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         }
         Context 'When the function contains 1 best practices violation' {
 
-            $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-            Mock Get-PowerShellFile { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
+            $FunctionDefinitions = Get-FunctionDefinition -Path $Files
             Mock Invoke-ScriptAnalyzer { '1 violation' }
-            $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
             It 'Should return 1' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
@@ -168,10 +177,9 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         }
         Context 'When the function contains 3 best practices violations' {
 
-            $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-            Mock Get-PowerShellFile { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
+            $FunctionDefinitions = Get-FunctionDefinition -Path $Files
             Mock Invoke-ScriptAnalyzer { 'First violation', 'Second', 'Third' }
-            $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
             It 'Should return 3' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
