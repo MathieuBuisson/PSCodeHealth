@@ -13,7 +13,7 @@ Describe 'General Module behaviour' {
     }
 }
 
-Describe 'Get-ModulePowerShellScript' {
+Describe 'Get-PowerShellScript' {
 
     InModuleScope $ModuleName {
         
@@ -25,7 +25,7 @@ Describe 'Get-ModulePowerShellScript' {
         New-Item -Path TestDrive:\Module\SubFolder\Module.Tests.ps1 -ItemType File
         Mock Import-Module { [PSCustomObject]@{ ModuleBase = 'TestDrive:\Module' } }
 
-        $Results = Get-ModulePowerShellScript -Name 'Module'
+        $Results = Get-PowerShellScript -Name 'Module'
 
         It 'Should return strings' {
             Foreach ( $Result in $Results ) {
@@ -51,7 +51,7 @@ Describe 'Get-ModuleFunctionDefinition' {
     InModuleScope $ModuleName {
 
         $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-        Mock Get-ModulePowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+        Mock Get-PowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
         
         $TestDataPublicFunctions = @('Get-Nothing', 'Set-Nothing', 'Public')
         $TestDataPrivateFunctions = 'Private'
@@ -90,7 +90,7 @@ Describe 'Test-FunctionHelpCoverage' {
     InModuleScope $ModuleName {
 
         $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-        Mock Get-ModulePowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+        Mock Get-PowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
 
         $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
         $FunctionsWithHelp = @('Set-Nothing', 'Get-Nothing', 'Public')
@@ -120,7 +120,7 @@ Describe 'Get-FunctionCodeLength' {
     InModuleScope $ModuleName {
 
         $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-        Mock Get-ModulePowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
+        Mock Get-PowerShellScript { (Get-ChildItem -Path (Join-Path $TestsDirectory 'TestData')).FullName }
 
         $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
         $TestCases = @(
@@ -145,7 +145,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         Context 'When the function contains no best practices violation' {
 
             $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-            Mock Get-ModulePowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            Mock Get-PowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
             Mock Invoke-ScriptAnalyzer { $Null }
             $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
@@ -157,7 +157,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         Context 'When the function contains 1 best practices violation' {
 
             $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-            Mock Get-ModulePowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            Mock Get-PowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
             Mock Invoke-ScriptAnalyzer { '1 violation' }
             $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
@@ -169,7 +169,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         Context 'When the function contains 3 best practices violations' {
 
             $TestsDirectory = Resolve-Path -Path $PSScriptRoot
-            Mock Get-ModulePowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            Mock Get-PowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
             Mock Invoke-ScriptAnalyzer { 'First violation', 'Second', 'Third' }
             $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
