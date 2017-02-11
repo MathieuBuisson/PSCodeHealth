@@ -156,12 +156,26 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         }
         Context 'When the function contains 1 best practices violation' {
 
-            Mock Invoke-ScriptAnalyzer { 'I am 1 violation' }
+            $TestsDirectory = Resolve-Path -Path $PSScriptRoot
+            Mock Get-ModulePowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            Mock Invoke-ScriptAnalyzer { '1 violation' }
             $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
 
             It 'Should return 1' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
                 Should Be 1
+            }
+        }
+        Context 'When the function contains 3 best practices violations' {
+
+            $TestsDirectory = Resolve-Path -Path $PSScriptRoot
+            Mock Get-ModulePowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            Mock Invoke-ScriptAnalyzer { 'First violation', 'Second', 'Third' }
+            $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+
+            It 'Should return 3' {
+                Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
+                Should Be 3
             }
         }
     }
