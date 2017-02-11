@@ -27,9 +27,15 @@ Function Get-FunctionDefinition {
     )
     Process {
         Foreach ( $PowerShellFile in $Path ) {
+            Write-VerboseOutput -Message "Parsing file : $PowerShellFile"
 
             $FileAst = [System.Management.Automation.Language.Parser]::ParseFile($PowerShellFile, [ref]$Null, [ref]$Null)
             $FileFunctions = $FileAst.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $False)
+            If ( $FileFunctions ) {
+                Foreach ( $FunctionName in $FileFunctions.Name ) {
+                    Write-VerboseOutput -Message "Found function : $FunctionName"
+                }
+            }
             $FileFunctions
         }
     }

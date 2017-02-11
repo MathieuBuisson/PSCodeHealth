@@ -13,8 +13,31 @@ Describe 'General Module behaviour' {
     }
 }
 
-Describe 'Get-PowerShellFile' {
+Describe 'Write-VerboseOutput' {
+    InModuleScope $ModuleName {
 
+        Context 'Formatted DateTime' {
+
+            Mock Write-Verbose -ParameterFilter { $Message -match "^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}" } { }
+
+            It 'Should call Write-Verbose with correctly formatted date in the Message parameter' {
+                $Null = Write-VerboseOutput -Message 'Test'
+                Assert-MockCalled -CommandName Write-Verbose -Exactly -Times 1 -Scope It
+            }
+        }
+        Context 'Message' {
+
+            Mock Write-Verbose -ParameterFilter { $Message -match "Test$" } { }
+
+            It 'Should call Write-Verbose with message in the Message parameter' {
+                $Null = Write-VerboseOutput -Message 'Test'
+                Assert-MockCalled -CommandName Write-Verbose -Exactly -Times 1 -Scope It
+            }
+        }
+    }
+}
+
+Describe 'Get-PowerShellFile' {
     InModuleScope $ModuleName {
         
         New-Item -Path TestDrive:\Module -ItemType Directory
@@ -56,7 +79,6 @@ Describe 'Get-PowerShellFile' {
 }
 
 Describe 'Get-FunctionDefinition' {
-
     InModuleScope $ModuleName {
 
         $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
@@ -101,7 +123,6 @@ Describe 'Get-FunctionDefinition' {
 }
 
 Describe 'Test-FunctionHelpCoverage' {
-
     InModuleScope $ModuleName {
 
         $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
@@ -157,7 +178,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
 
             $Files = (Get-ChildItem -Path (Join-Path -Path $PSScriptRoot -ChildPath 'TestData') -Filter '*.psm1').FullName
             $FunctionDefinitions = Get-FunctionDefinition -Path $Files
-            Mock Invoke-ScriptAnalyzer { $Null }
+            Mock Invoke-ScriptAnalyzer { }
 
             It 'Should return 0' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
@@ -185,6 +206,35 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
                 Should Be 3
             }
+        }
+    }
+}
+
+Describe 'Get-FunctionTestCoverage' {
+    InModuleScope $ModuleName {
+
+        $FunctionDefinitions = Get-FunctionDefinition -Path "$($PSScriptRoot)\TestData\1Public1Nested1Private.psm1"
+        $FunctionDefinitions2 = Get-FunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+        
+        It 'Should return a [System.Double]' {
+            Foreach ( $FunctionDefinition in $FunctionDefinitions ) {
+                Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinition |
+                Should BeOfType [System.Double]
+            }
+        }
+        It "Should return 0 if Pester doesn't find any command in the function" {
+            $EmptyFunction = $FunctionDefinitions2 | Where-Object { $_.Name -eq 'Get-Nothing' }
+            Get-FunctionTestCoverage -FunctionDefinition $EmptyFunction |
+            Should Be 0
+        }
+        It 'Should run tests only from the specified file if TestsPath is a file' {
+
+        }
+        It 'Should run tests only from the directory and any subdirectories if TestsPath is a directory' {
+
+        }
+        It 'Should run tests from the directory of the file containing the specified function, and any subdirectories' {
+
         }
     }
 }
