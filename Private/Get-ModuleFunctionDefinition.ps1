@@ -33,10 +33,10 @@ Function Get-ModuleFunctionDefinition {
     )
     
     If ( $PSCmdlet.ParameterSetName -eq 'Name' ) {
-        $ModulePowerShellScripts = Get-PowerShellScript -Name $Name
+        $ModulePowerShellScripts = Get-PowerShellFile -Name $Name
     } 
     ElseIf ($PSCmdlet.ParameterSetName -eq 'Path') {
-        $ModulePowerShellScripts = Get-PowerShellScript -Path $Path
+        $ModulePowerShellScripts = Get-PowerShellFile -Path $Path
     }
 
     Foreach ( $ScriptFile in $ModulePowerShellScripts ) {
