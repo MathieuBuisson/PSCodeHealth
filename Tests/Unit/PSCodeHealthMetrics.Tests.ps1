@@ -138,3 +138,31 @@ Describe 'Get-FunctionCodeLength' {
         }
     }
 }
+
+Describe 'Get-FunctionScriptAnalyzerViolation' {
+    InModuleScope $ModuleName {
+
+        Context 'When the function contains no best practices violation' {
+
+            $TestsDirectory = Resolve-Path -Path $PSScriptRoot
+            Mock Get-ModulePowerShellScript { Join-Path $TestsDirectory 'TestData\2PublicFunctions.psm1' }
+            Mock Invoke-ScriptAnalyzer { $Null }
+            $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+
+            It 'Should return 0' {
+                Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
+                Should Be 0
+            }
+        }
+        Context 'When the function contains 1 best practices violation' {
+
+            Mock Invoke-ScriptAnalyzer { 'I am 1 violation' }
+            $FunctionDefinitions = Get-ModuleFunctionDefinition -Path "$($PSScriptRoot)\TestData\2PublicFunctions.psm1"
+
+            It 'Should return 1' {
+                Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
+                Should Be 1
+            }
+        }
+    }
+}
