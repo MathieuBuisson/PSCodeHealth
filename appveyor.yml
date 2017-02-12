@@ -1,4 +1,4 @@
-version: 1.0.{build}
+version: 0.1.{build}
 
 os: WMF 5
 
@@ -10,21 +10,22 @@ install:
   - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
   - ps: Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
   - ps: Install-PackageProvider -Name NuGet -Force
-  - ps: Install-Module -Name Pester -Force
+  - ps: Install-Module -Name Pester -RequiredVersion 3.4.6 -Force
   - ps: Install-Module PsScriptAnalyzer -Force
   
 build: false
 
 test_script:
   - ps: |
-      $UnitTestsOutput = Invoke-Pester -Script ".\Tests" -OutputFile TestsResults.xml -OutputFormat NUnitXml -PassThru
-      (New-Object 'System.Net.WebClient').UploadFile("https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\TestsResults.xml))
-      $FailedCount = $UnitTestsOutput.FailedCount
+      $TestsUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
+      $TestsOutput = Invoke-Pester -Script ".\Tests" -CodeCoverage @{Path = 'C:\GitHub\PSCodeHealthMetrics\P*\*'} -OutputFile TestResults.xml -PassThru
+      (New-Object 'System.Net.WebClient').UploadFile($TestsUploadUrl, (Resolve-Path .\TestResults.xml))
+      $FailedCount = $TestsOutput.FailedCount
       If ($FailedCount -gt 0) {
-        Add-AppveyorMessage -Message "$($FailedCount) unit test(s) failed."
+        Add-AppveyorMessage -Message "$($FailedCount) Pester test(s) failed."
 
         # Failing the build
-        Throw "Build failed because $($FailedCount) unit test(s) failed"
+        Throw "Build failed because $($FailedCount) Pester test(s) failed"
       }
 
   - ps: |
@@ -38,7 +39,7 @@ test_script:
         Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Failed -ErrorMessage $ScriptAnalyzerResultString
         
         # Failing the build
-        Throw "Build failed"
+        Throw "Build failed because there were one or more PSScriptAnalyzer violation(s)."
       }
       Else {
         Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Passed
