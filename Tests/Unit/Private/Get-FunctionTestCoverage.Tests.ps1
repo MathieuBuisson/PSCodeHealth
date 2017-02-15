@@ -1,7 +1,7 @@
 $ModuleName = 'PSCodeHealthMetrics'
 Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
 
-$MockObjects = ConvertFrom-Json -InputObject (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+$Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
 
 Describe 'Get-FunctionTestCoverage' {
     InModuleScope $ModuleName {
@@ -10,7 +10,7 @@ Describe 'Get-FunctionTestCoverage' {
 
         Context 'Pester finds 1 command in the function' {
 
-            Mock Invoke-Pester { ($MockObjects.'Invoke-Pester' | Where-Object TestCase -eq '1 analyzed').ReturnValue }
+            Mock Invoke-Pester { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
             
             It 'Should return a [System.Double]' {
                 Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] |
@@ -19,7 +19,7 @@ Describe 'Get-FunctionTestCoverage' {
         }
         Context "Pester doesn't find any command in the function" {
 
-            Mock Invoke-Pester { ($MockObjects.'Invoke-Pester' | Where-Object TestCase -eq '0 analyzed').ReturnValue }
+            Mock Invoke-Pester { $Mocks.'Invoke-Pester'.'0CommandAnalyzed' }
 
             It "Should return 0" {
                 Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] |
@@ -31,9 +31,9 @@ Describe 'Get-FunctionTestCoverage' {
             New-Item -Path TestDrive:\Module -ItemType Directory
             New-Item -Path TestDrive:\Module\Module.Tests.ps1 -ItemType File
 
-            Mock Invoke-Pester -ParameterFilter { $Script -eq 'TestDrive:\Module\Module.Tests.ps1' } { ($MockObjects.'Invoke-Pester' | Where-Object TestCase -eq '1 analyzed').ReturnValue }
-            Mock Invoke-Pester -ParameterFilter { $Script -eq 'TestDrive:\Module' } { ($MockObjects.'Invoke-Pester' | Where-Object TestCase -eq '1 analyzed').ReturnValue }
-            Mock Invoke-Pester -ParameterFilter { $Script -like '*\TestData' } { ($MockObjects.'Invoke-Pester' | Where-Object TestCase -eq '1 analyzed').ReturnValue }
+            Mock Invoke-Pester -ParameterFilter { $Script -eq 'TestDrive:\Module\Module.Tests.ps1' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
+            Mock Invoke-Pester -ParameterFilter { $Script -eq 'TestDrive:\Module' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
+            Mock Invoke-Pester -ParameterFilter { $Script -like '*\TestData' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
 
             It 'Should call Invoke-Pester with the file path if TestsPath is a file' {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] -TestsPath 'TestDrive:\Module\Module.Tests.ps1'

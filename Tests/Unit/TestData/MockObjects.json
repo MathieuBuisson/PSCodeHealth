@@ -1,12 +1,10 @@
 {
     "Invoke-ScriptAnalyzer": [
         {
-            "TestCase": "1 violation",
-            "ReturnValue": "1 violation"
+            "1ScriptAnalyzerViolation": "1 violation"
         },
         {
-            "TestCase": "3 violations",
-            "ReturnValue": [
+            "3ScriptAnalyzerViolations": [
                 "First violation",
                 "Second",
                 "Third"
@@ -15,8 +13,7 @@
     ],
     "Invoke-Pester": [
         {
-            "TestCase": "1 analyzed",
-            "ReturnValue": {
+            "1CommandAnalyzed": {
                 "CodeCoverage": {
                     "NumberOfCommandsAnalyzed": 1,
                     "NumberOfCommandsExecuted": 0
@@ -24,8 +21,7 @@
             }
         },
         {
-            "TestCase": "0 analyzed",
-            "ReturnValue": {
+            "0CommandAnalyzed": {
                 "CodeCoverage": {
                     "NumberOfCommandsAnalyzed": 0,
                     "NumberOfCommandsExecuted": 1
