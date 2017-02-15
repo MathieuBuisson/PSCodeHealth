@@ -26,6 +26,10 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         Context 'When the function contains 1 best practices violation' {
 
             Mock Invoke-ScriptAnalyzer { $Mocks.'Invoke-ScriptAnalyzer'.'1ScriptAnalyzerViolation' | Where-Object { $_ } }
+            Write-Host "Mock : $(Invoke-ScriptAnalyzer | Out-String)"
+            Write-Host "Mock : $($Mocks.'Invoke-ScriptAnalyzer'.'1ScriptAnalyzerViolation' | Out-String)"
+            Write-Host "Mock Count : $((Invoke-ScriptAnalyzer).Count)"
+            Write-Host "Mock Count : $(($Mocks.'Invoke-ScriptAnalyzer'.'1ScriptAnalyzerViolation' | Where-Object { $_ }).Count)"
 
             It 'Should return 1' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
