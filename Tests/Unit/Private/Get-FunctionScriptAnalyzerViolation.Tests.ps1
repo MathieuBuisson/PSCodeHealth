@@ -1,6 +1,7 @@
 $ModuleName = 'PSCodeHealthMetrics'
 Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
 
+Get-Module -Name 'Pester'
 Write-Host "PSScriptRoot : $($PSScriptRoot)"
 
 $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
