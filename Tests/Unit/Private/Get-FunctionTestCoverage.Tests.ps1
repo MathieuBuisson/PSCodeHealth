@@ -1,10 +1,10 @@
 $ModuleName = 'PSCodeHealthMetrics'
 Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
 
-$Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
-
 Describe 'Get-FunctionTestCoverage' {
     InModuleScope $ModuleName {
+
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
 
         $FunctionDefinitions = Get-FunctionDefinition -Path "$($PSScriptRoot)\..\TestData\1Public1Nested1Private.psm1"
 

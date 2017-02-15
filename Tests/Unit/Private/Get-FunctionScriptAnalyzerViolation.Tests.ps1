@@ -4,12 +4,14 @@ Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
 Write-Host "Pester Module : $(Get-Module -Name 'Pester' | Out-String)"
 Write-Host "PSScriptRoot : $($PSScriptRoot)"
 
-$Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
-Write-Host "Mocks $($Mocks | Out-String)"
-Foreach ( $Mock in $Mocks.'Invoke-ScriptAnalyzer' ) { Write-Host "Mock : $($Mock | Out-String)" }
 
 Describe 'Get-FunctionScriptAnalyzerViolation' {
     InModuleScope $ModuleName {
+
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+        Write-Host "Mocks $($Mocks | Out-String)"
+        Foreach ( $Mock in $Mocks.'Invoke-ScriptAnalyzer' ) { Write-Host "Mock : $($Mock | Out-String)" }
+
 
         $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
         $FunctionDefinitions = Get-FunctionDefinition -Path $Files
