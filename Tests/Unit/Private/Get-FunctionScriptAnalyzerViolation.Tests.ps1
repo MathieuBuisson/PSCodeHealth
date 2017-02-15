@@ -1,7 +1,11 @@
 $ModuleName = 'PSCodeHealthMetrics'
 Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
 
+Write-Host "PSScriptRoot : $($PSScriptRoot)"
+
 $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+Write-Host "Mocks $($Mocks | Out-String)"
+Foreach ( $Mock in $Mocks.'Invoke-ScriptAnalyzer' ) { Write-Host "Mock : $($Mock | Out-String)" }
 
 Describe 'Get-FunctionScriptAnalyzerViolation' {
     InModuleScope $ModuleName {
