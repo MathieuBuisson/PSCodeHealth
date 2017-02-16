@@ -1,32 +1,62 @@
 Function Get-PSCodeHealth {
 <#
 .SYNOPSIS
-    Short description
+    Gets health and maintainability metrics for PowerShell code contained in scripts, modules or directories.
 .DESCRIPTION
-    Long description
+    Gets health and maintainability metrics for PowerShell code contained in scripts, modules or directories.
+
+.PARAMETER Path
+    To specify the path of the directory to search.
+
+.PARAMETER Recurse
+    To search the Path directory and all subdirectories recursively.
+
 .EXAMPLE
-    Example of how to use this cmdlet
+    Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse
+
+    Gets health and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
+
 .OUTPUTS
     Output from this cmdlet (if any)
+
 .NOTES
     General notes
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
     Param (
-        [Parameter(Mandatory=$True, Position=0, ValueFromPipeline=$True)]
-        $Param1,
-        
-        [int]$Param2
+        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+        [validatescript({ Test-Path $_ })]
+        [string]$Path,
+
+        [switch]$Recurse
     )
     
-    Begin {
+    If ( (Get-Item -Path $Path).PSIsContainer ) {
+        $PowerShellFiles = Get-PowerShellFile @PSBoundParameters
+        Write-VerboseOutput -Message 'Found the following PowerShell files in the directory :'
+        Write-VerboseOutput -Message "$($PowerShellFiles | Out-String)"
     }
-    
-    Process {
-            
+    Else {
+        $PowerShellFiles = $Path
     }
-    
-    End {
+
+    $FunctionDefinitions = Get-FunctionDefinition -Path $PowerShellFiles
+
+    Foreach ( $Function in $FunctionDefinitions ) {
+
+        Write-VerboseOutput -Message "Gathering metrics for function : $($Function.Name)"
+
+        $CodeLength = Get-FunctionCodeLength -FunctionDefinition $Function
+        $ScriptAnalyzerViolations = Get-FunctionScriptAnalyzerViolation -FunctionDefinition $Function
+
+        $Properties = [ordered]@{
+            'Name' = $Function.Name
+            'CodeLength' = $CodeLength
+            'ScriptAnalyzerViolations' = $ScriptAnalyzerViolations
+        }
+
+        $CustomObject = New-Object -TypeName PSObject -Property $Properties
+        $CustomObject
     }
 }
