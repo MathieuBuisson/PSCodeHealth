@@ -12,16 +12,12 @@ Function Get-PSCodeHealth {
     General notes
 #>
     [CmdletBinding()]
-    [OutputType([String])]
+    [OutputType([PSCustomObject])]
     Param (
-        # Param1 help description
-        [Parameter(Mandatory=True,Position=0,ValueFromPipeline=True)]
-        [ValidateSet("sun", "moon", "earth")]
-        Param1,
+        [Parameter(Mandatory=$True, Position=0, ValueFromPipeline=$True)]
+        $Param1,
         
-        # Param2 help description
-        [ValidateScript({True})]
-        [int]Param2
+        [int]$Param2
     )
     
     Begin {
