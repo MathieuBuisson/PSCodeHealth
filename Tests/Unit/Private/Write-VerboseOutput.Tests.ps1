@@ -1,4 +1,4 @@
-$ModuleName = 'PSCodeHealthMetrics'
+$ModuleName = 'PSCodeHealth'
 Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
 
 Describe 'Write-VerboseOutput' {
