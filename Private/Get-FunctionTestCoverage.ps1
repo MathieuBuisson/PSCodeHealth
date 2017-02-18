@@ -41,11 +41,11 @@ Function Get-FunctionTestCoverage {
     $FunctionName = $FunctionDefinition.Name
     Write-VerboseOutput -Message "The function [$FunctionName] comes from the file :  $SourcePath"
 
-    If ( -not($TestsPath) ) {
+    If ( -not $TestsPath ) {
         $TestsPath = Split-Path -Path $SourcePath -Parent
     }
 
-    $TestResult = Invoke-Pester -Path $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Quiet -Verbose:$False
+    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Quiet -Verbose:$False
     $CodeCoverage = $TestResult.CodeCoverage
     $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
     Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
