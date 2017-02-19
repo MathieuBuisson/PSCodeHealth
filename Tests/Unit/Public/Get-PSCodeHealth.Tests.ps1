@@ -7,9 +7,9 @@ Describe 'Get-PSCodeHealth' {
         $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
         $ScriptPath = $PSScriptRoot
 
-        Context 'Get-PowerShellFile return 0 file' {
+        Context 'Get-PowerShellFile returns 0 file' {
 
-            Mock Get-PowerShellFile { $Null }
+            Mock Get-PowerShellFile { }
             $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
             It 'Should not throw but return $Null' {
@@ -32,10 +32,23 @@ Describe 'Get-PSCodeHealth' {
                 { Get-PSCodeHealth -Path 'Any' } |
                 Should Throw
             }
+            It 'Should return $Null if Get-FunctionDefinition finds 0 function' {
+                Mock Get-FunctionDefinition { }
+                Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
+                Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData" |
+                Should Be $Null
+            }
             It 'Should remove TestsPath from $PSBoundParameters before calling Get-PowerShellFile' {
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
                 { Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData" -TestsPath "$PSScriptRoot\..\TestData" } |
                 Should Not Throw
+            }
+            It 'Should return the expected results if the specified Path is a file' {
+                $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData\2PublicFunctions.psm1"
+                Foreach ( $Result in $Results ) {
+                    $Result.Name -in @('Get-Nothing','Set-Nothing') | Should Be $True
+                    $Result.FilePath | Should BeLike '*Unit\TestData\2PublicFunctions.psm1'
+                }
             }
         }
 
