@@ -21,7 +21,7 @@ Function Get-FunctionTestCoverage {
     Gets the percentage of lines of code in the function $MyFunctionAst that are tested by all tests found in the module's parent directory.
 
 .OUTPUTS
-    System.Boolean
+    System.Double
 
 .NOTES
     General notes

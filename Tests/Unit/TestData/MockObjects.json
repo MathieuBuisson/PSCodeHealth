@@ -1,11 +1,37 @@
 {
     "Invoke-ScriptAnalyzer": [
         {
-            "1ScriptAnalyzerViolation": "1 violation"
+            "1Result_PSProvideCommentHelp": {
+                "RuleName": "PSProvideCommentHelp",
+                    "Extent": {
+                        "Text": "BadFunction"
+                    }
+            }
         },
         {
-            "3ScriptAnalyzerViolations": [
-                "First violation",
+            "2Results_2Rules": [
+                {
+                    "RuleName": "PSProvideCommentHelp",
+                        "Extent": {
+                            "Text": "VeryBadFunction"
+                        }
+                },
+                {
+                    "RuleName": "PSAvoidGlobalVars",
+                        "Extent": {
+                            "Text": "VeryBadFunction"
+                        }
+                }
+            ]
+        }
+    ],
+    "Get-FunctionScriptAnalyzerResult": [
+        {
+            "1Result": "1 result"
+        },
+        {
+            "3Results": [
+                "First result",
                 "Second",
                 "Third"
             ]

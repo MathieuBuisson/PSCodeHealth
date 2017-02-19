@@ -71,6 +71,7 @@ Function Get-PSCodeHealth {
 
         $CodeLength = Get-FunctionCodeLength -FunctionDefinition $Function
         $ScriptAnalyzerViolations = Get-FunctionScriptAnalyzerViolation -FunctionDefinition $Function
+        $ScriptAnalyzerResults = Get-FunctionScriptAnalyzerResult -FunctionDefinition $Function
         $ContainsHelp = Test-FunctionHelpCoverage -FunctionDefinition $Function
 
         $TestCoverageParams = If ( $TestsPath ) {
@@ -79,16 +80,15 @@ Function Get-PSCodeHealth {
         }
         $TestCoverage = Get-FunctionTestCoverage @TestCoverageParams
 
-        $Properties = [ordered]@{
-            'Name' = $Function.Name
-            'CodeLength' = $CodeLength
-            'ScriptAnalyzerViolations' = $ScriptAnalyzerViolations
-            'ContainsHelp' = $ContainsHelp
-            'TestCoverage' = $TestCoverage
+        $FunctionHealthRecordParams = @{
+            FunctionDefinition = $Function
+            CodeLength = $CodeLength
+            ScriptAnalyzerViolations = $ScriptAnalyzerViolations
+            ScriptAnalyzerResultDetails = $ScriptAnalyzerResults
+            ContainsHelp = $ContainsHelp
+            TestCoverage = $TestCoverage
         }
-
-        $CustomObject = New-Object -TypeName PSObject -Property $Properties
-        $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
-        $CustomObject
+        $FunctionHealthRecord = New-FunctionHealthRecord @FunctionHealthRecordParams
+        $FunctionHealthRecord
     }
 }

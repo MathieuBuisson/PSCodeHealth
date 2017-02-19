@@ -27,7 +27,7 @@ Function Get-FunctionScriptAnalyzerViolation {
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
     )
     
-    $Results = Invoke-ScriptAnalyzer -ScriptDefinition $FunctionDefinition.Extent.Text -Verbose:$False
+    $Results = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
     $ViolationCount = If ( $Results ) { $Results.Count } Else { 0 }
     return $ViolationCount
 }

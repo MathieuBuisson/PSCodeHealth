@@ -12,7 +12,7 @@ Describe 'Get-PSCodeHealth' {
             Mock Get-PowerShellFile { $Null }
             $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
-            It 'Should not throw and return $Null' {
+            It 'Should not throw but return $Null' {
                 $Results | Should Be $Null
             }
         }

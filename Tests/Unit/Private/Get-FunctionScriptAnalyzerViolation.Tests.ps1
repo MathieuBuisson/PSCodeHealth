@@ -10,7 +10,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         
         Context 'When the function contains no best practices violation' {
 
-            Mock Invoke-ScriptAnalyzer { }
+            Mock Get-FunctionScriptAnalyzerResult { }
 
             It 'Should return 0' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
@@ -19,7 +19,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         }
         Context 'When the function contains 1 best practices violation' {
 
-            Mock Invoke-ScriptAnalyzer { $Mocks.'Invoke-ScriptAnalyzer'.'1ScriptAnalyzerViolation' | Where-Object { $_ } }
+            Mock Get-FunctionScriptAnalyzerResult { $Mocks.'Get-FunctionScriptAnalyzerResult'.'1Result' | Where-Object { $_ } }
 
             It 'Should return 1' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
@@ -28,7 +28,7 @@ Describe 'Get-FunctionScriptAnalyzerViolation' {
         }
         Context 'When the function contains 3 best practices violations' {
 
-            Mock Invoke-ScriptAnalyzer { $Mocks.'Invoke-ScriptAnalyzer'.'3ScriptAnalyzerViolations' | Where-Object { $_ } }
+            Mock Get-FunctionScriptAnalyzerResult { $Mocks.'Get-FunctionScriptAnalyzerResult'.'3Results' | Where-Object { $_ } }
 
             It 'Should return 3' {
                 Get-FunctionScriptAnalyzerViolation -FunctionDefinition $FunctionDefinitions[0] |
