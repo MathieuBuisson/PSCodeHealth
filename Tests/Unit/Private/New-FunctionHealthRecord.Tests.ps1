@@ -1,5 +1,5 @@
 $ModuleName = 'PSCodeHealth'
-Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
+Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
 Describe 'New-FunctionHealthRecord' {
     InModuleScope $ModuleName {

@@ -1,5 +1,5 @@
 $ModuleName = 'PSCodeHealth'
-Import-Module "$($PSScriptRoot)\..\..\..\$($ModuleName).psd1" -Force
+Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
 Describe 'General Module behaviour' {
        
@@ -21,7 +21,7 @@ Describe 'General Module behaviour' {
         Should Be $True
     }
     It 'Exports all public functions' {
-        $ExpectedFunctions = (Get-ChildItem -Path "$PSScriptRoot\..\..\..\Public" -File).BaseName
+        $ExpectedFunctions = (Get-ChildItem -Path "$PSScriptRoot\..\..\..\PSCodeHealth\Public" -File).BaseName
         $ExportedFunctions = $ModuleInfo.ExportedFunctions.Values.Name
         
         Foreach ( $FunctionName in $ExpectedFunctions ) {
