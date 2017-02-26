@@ -1,9 +1,9 @@
 Function Get-PSCodeHealth {
 <#
 .SYNOPSIS
-    Gets health and maintainability metrics for PowerShell code contained in scripts, modules or directories.
+    Gets quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.
 .DESCRIPTION
-    Gets health and maintainability metrics for PowerShell code contained in scripts, modules or directories.
+    Gets quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.
 
 .PARAMETER Path
     To specify the path of the directory to search.
@@ -18,7 +18,7 @@ Function Get-PSCodeHealth {
 .EXAMPLE
     Get-PowerShellFile -Path 'C:\GitRepos\MyModule' -Recurse -TestsPath 'C:\GitRepos\MyModule\Tests\Unit'
 
-    Gets health and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
+    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
     This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\Unit, and any subdirectories.
 
 .OUTPUTS

@@ -27,7 +27,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) 2016 Mathieu Buisson. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'This module gathers metrics designed to express PowerShell code health and maintainability.'
+Description = 'This module gathers metrics designed to express PowerShell code quality and maintainability.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.0'
