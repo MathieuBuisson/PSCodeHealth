@@ -37,6 +37,72 @@
             ]
         }
     ],
+    "Get-FunctionDefinition": [
+        {
+            "IfStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$IfElseif",
+                        "    )",
+                        "",
+                        "    # Testing If/ElseIf conditional statement",
+                        "    If ( $IfElseif -eq 10 ) {",
+                        "        Write-Host 'IfElseif is 10'",
+                        "    }",
+                        "    ElseIf ( $IfElseif -eq 11 ) {",
+                        "        Write-Host 'IfElseif is 11'",
+                        "    }",
+                        "    ElseIf ( $IfElseif -eq 12 ) {",
+                        "        Write-Host 'IfElseif is 12'",
+                        "    }",
+                        "    Else {",
+                        "        Write-Host 'IfElseif is different'",
+                        "    }",
+                        "",
+                        "    # Testing nested If statement",
+                        "    If ( $IfElseif -gt 20 ) {",
+                        "        If ( $IfElseif -gt 40 ) {",
+                        "            Write-Host 'IfElseif is between 20 and 40'",
+                        "        }",
+                        "        Else {",
+                        "            Write-Host 'IfElseif is greater than 40'",
+                        "        }",
+                        "    }",
+                        "    Else {",
+                        "        If ( $IfElseif -ge 10 ) {",
+                        "            Write-Host 'IfElseif is a 2 digit number'",
+                        "        }",
+                        "        Else {",
+                        "            Write-Host 'IfElseif is a 1 digit number'",
+                        "        }",
+                        "    }",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "NoIfStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$IfElseif",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no If nor is there any ElseIf'",
+                        "}"
+                    ]
+                }
+            }
+        }
+    ],
     "Invoke-Pester": [
         {
             "1CommandAnalyzed": {
