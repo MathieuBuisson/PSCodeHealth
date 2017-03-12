@@ -1,17 +1,17 @@
-Function Get-FunctionIfCodePath {
+Function Measure-FunctionSwitchCodePath {
 <#
 .SYNOPSIS
-    Gets the number of additional code paths due to If statements.
+    Gets the number of additional code paths due to Switch statements.
 .DESCRIPTION
-    Gets the number of additional code paths due to If statements (including If/Else and If/ElseIf/Else statements), in the specified function definition.
+    Gets the number of additional code paths due to Switch statements, in the specified function definition.
 
 .PARAMETER FunctionDefinition
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Get-FunctionIfCodePath -FunctionDefinition $MyFunctionAst
+    Measure-FunctionSwitchCodePath -FunctionDefinition $MyFunctionAst
 
-    Gets the number of additional code paths due to If statements in the specified function definition.
+    Gets the number of additional code paths due to Switch statements in the specified function definition.
 
 .OUTPUTS
     System.Int32
@@ -30,11 +30,11 @@ Function Get-FunctionIfCodePath {
 
     # Converting the function definition to a generic ScriptBlockAst because the FindAll method of FunctionDefinitionAst object work strangely
     $FunctionAst = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$null, [ref]$null)
-    $IfStatements = $FunctionAst.FindAll({ $args[0] -is [System.Management.Automation.Language.IfStatementAst] }, $True)
+    $SwitchStatements = $FunctionAst.FindAll({ $args[0] -is [System.Management.Automation.Language.SwitchStatementAst] }, $True)
 
-    If ( -not($IfStatements) ) {
+    If ( -not($SwitchStatements) ) {
         return [int]0
     }
-    # If and ElseIf clauses are creating an additional path, not Else clauses
-    return $IfStatements.Clauses.Count
+    # Each clause is creating an additional path, except for the "catch-all" Default clause
+    return $SwitchStatements.Clauses.Count
 }

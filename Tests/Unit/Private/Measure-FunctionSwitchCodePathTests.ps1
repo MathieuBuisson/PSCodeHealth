@@ -1,17 +1,17 @@
 $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
-Describe 'Get-FunctionIfCodePath' {
+Describe 'Measure-FunctionSwitchCodePath' {
     InModuleScope $ModuleName {
 
         $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
 
-        Context 'There is no If statement in the specified function' {
+        Context 'There is no Switch statement in the specified function' {
 
-            $FunctionText = ($Mocks.'Get-FunctionDefinition'.NoIfStatements.Extent.Text | Out-String)
+            $FunctionText = ($Mocks.'Get-FunctionDefinition'.NoSwitchStatements.Extent.Text | Out-String)
             $ScriptBlock = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$null, [ref]$null)
             $FunctionDefinition = $ScriptBlock.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $False)
-            $Result = Get-FunctionIfCodePath -FunctionDefinition $FunctionDefinition[0]
+            $Result = Measure-FunctionSwitchCodePath -FunctionDefinition $FunctionDefinition[0]
 
             It 'Should return an object of the type [System.Int32]' {
                 $Result | Should BeOfType [System.Int32]
@@ -21,18 +21,18 @@ Describe 'Get-FunctionIfCodePath' {
             }
         }
 
-        Context 'There are If statements with ElseIf clauses and nested If statements in the specified function' {
+        Context 'There are Switch statements with 3 clauses and a default clause in the specified function' {
 
-            $FunctionText = ($Mocks.'Get-FunctionDefinition'.IfStatements.Extent.Text | Out-String)
+            $FunctionText = ($Mocks.'Get-FunctionDefinition'.SwitchStatements.Extent.Text | Out-String)
             $ScriptBlock = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$null, [ref]$null)
             $FunctionDefinition = $ScriptBlock.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $False)
-            $Result = Get-FunctionIfCodePath -FunctionDefinition $FunctionDefinition[0]
+            $Result = Measure-FunctionSwitchCodePath -FunctionDefinition $FunctionDefinition[0]
 
             It 'Should return an object of the type [System.Int32]' {
                 $Result | Should BeOfType [System.Int32]
             }
-            It 'Should count every If statements (including nested ones) and ElseIf clauses' {
-                $Result | Should Be 6
+            It 'Should count every clause in the Switch statement, except for the Default clause' {
+                $Result | Should Be 3
             }
         }
     }

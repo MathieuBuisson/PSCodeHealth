@@ -101,6 +101,57 @@
                     ]
                 }
             }
+        },
+        {
+            "NoSwitchStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$Switch",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no Switch Statement'",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "SwitchStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$Switch",
+                        "    )",
+                        "",
+                        "    Switch ($Switch)",
+                        "    {",
+                        "        10 {",
+                        "            Write-Host 'IfElseif is 10'",
+                        "            Break",
+                        "        }",
+                        "        11 {",
+                        "            Write-Host 'IfElseif is 11'",
+                        "            Break",
+                        "        }",
+                        "        12 {",
+                        "            Write-Host 'IfElseif is 12'",
+                        "            Break",
+                        "        }",
+                        "        Default {",
+                        "            Write-Host 'Switch is different'",
+                        "        }",
+                        "    }",
+                        "}"
+                    ]
+                }
+            }
         }
     ],
     "Invoke-Pester": [
