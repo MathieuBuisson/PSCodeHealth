@@ -152,6 +152,49 @@
                     ]
                 }
             }
+        },
+        {
+            "NoLogicalOp": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$LogicalOp",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no logical operator'",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "LogicalOps": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$LogicalOp,",
+                        "        [int]$LogicalOp2",
+                        "    )",
+                        "    # Testing Logical operators",
+                        "    If ( $LogicalOp -gt 10 -and $LogicalOp2 -gt 10 ) {",
+                        "        Write-Host 'Both are greater to 10'",
+                        "    }",
+                        "    If ( $LogicalOp -gt 10 -or $LogicalOp2 -gt 10 ) {",
+                        "        Write-Host 'At least one is greater than 10'",
+                        "    }",
+                        "    If ( $LogicalOp -gt 10 -xor $LogicalOp2 -gt 10 ) {",
+                        "        Write-Host 'Only one is greater than 10'",
+                        "    }",
+                        "}"
+                    ]
+                }
+            }
         }
     ],
     "Invoke-Pester": [
