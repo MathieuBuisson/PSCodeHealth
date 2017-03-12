@@ -195,6 +195,61 @@
                     ]
                 }
             }
+        },
+        {
+            "NoTrapOrCatch": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$Trap",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no Trap statement or Catch clause'",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "TrapAndCatch": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$Trap,",
+                        "        [int] $Catch",
+                        "    )",
+                        "    #Testing Trap statements and Catch clauses in Try statements",
+                        "    Try {",
+                        "        $Catch | Out-String -ErrorAction Stop",
+                        "    }",
+                        "    Catch [System.OutOfMemoryException] {",
+                        "        Try {",
+                        "            Restart-Computer -Force",
+                        "        }",
+                        "        Catch {",
+                        "            Write-Error 'Please, kill me !'",
+                        "        }",
+                        "    }",
+                        "    Catch [System.NullReferenceException] {",
+                        "        Write-Warning '$Catch was Null'",
+                        "    }",
+                        "    Catch {",
+                        "        Write-Error $_.Exception.Message",
+                        "    }",
+                        "    Trap {",
+                        "        Write-Warning 'Trapped exception'",
+                        "    }",
+                        "    $Trap | Out-String -ErrorAction Stop",
+                        "}"
+                    ]
+                }
+            }
         }
     ],
     "Invoke-Pester": [
