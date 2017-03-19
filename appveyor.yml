@@ -14,7 +14,8 @@ install:
   - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
   - ps: Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
   - ps: Install-PackageProvider -Name NuGet -Force
-  - ps: Install-Module Coveralls
+  - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+  - ps: Install-Module Coveralls -Scope CurrentUser -Force
   - ps: Import-Module Coveralls
   - ps: Install-Module -Name Pester -RequiredVersion 3.4.6 -Force
   - ps: Install-Module PsScriptAnalyzer -Force
