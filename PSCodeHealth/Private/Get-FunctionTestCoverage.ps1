@@ -24,7 +24,7 @@ Function Get-FunctionTestCoverage {
     System.Double
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([System.Double])]

@@ -18,7 +18,7 @@ Function Get-FunctionScriptAnalyzerResult {
     Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord])]

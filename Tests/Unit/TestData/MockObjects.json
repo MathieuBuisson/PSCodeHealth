@@ -337,6 +337,111 @@
                     ]
                 }
             }
+        },
+        {
+            "NoBranching": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$While",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no branching statement'",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "MultipleBranchings": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$While",
+                        "    )",
+                        "",
+                        "# Testing While statements",
+                        "While ($While -lt 99) {",
+                        "    Write-Host 'While is less than 99'",
+                        "    $While++",
+                        "",
+                        "    While ($While2 -lt 10) {",
+                        "        Write-Host 'While2 is less than 10'",
+                        "        $While2++",
+                        "    }",
+                        "}",
+                        "While ( 'I am always true' ) {",
+                        "    Write-Host 'This is true'",
+                        "}",
+                        "# Testing If/ElseIf conditional statement",
+                        "If ( $IfElseif -eq 10 ) {",
+                        "    Write-Host 'IfElseif is 10'",
+                        "}",
+                        "ElseIf ( $IfElseif -eq 11 ) {",
+                        "    Write-Host 'IfElseif is 11'",
+                        "}",
+                        "ElseIf ( $IfElseif -eq 12 ) {",
+                        "    Write-Host 'IfElseif is 12'",
+                        "}",
+                        "Else {",
+                        "    Write-Host 'IfElseif is different'",
+                        "}",
+                        "",
+                        "# Testing nested If statement",
+                        "If ( $IfElseif -gt 20 ) {",
+                        "    If ( $IfElseif -gt 40 ) {",
+                        "        Write-Host 'IfElseif is between 20 and 40'",
+                        "    }",
+                        "    Else {",
+                        "        Write-Host 'IfElseif is greater than 40'",
+                        "    }",
+                        "}",
+                        "Else {",
+                        "    If ( $IfElseif -ge 10 ) {",
+                        "        Write-Host 'IfElseif is a 2 digit number'",
+                        "    }",
+                        "    Else {",
+                        "        Write-Host 'IfElseif is a 1 digit number'",
+                        "    }",
+                        "}",
+                        "# Testing Logical operators",
+                        "If ( $LogicalOp -gt 10 -and $LogicalOp2 -gt 10 ) {",
+                        "    Write-Host 'Both are greater to 10'",
+                        "}",
+                        "If ( $LogicalOp -gt 10 -or $LogicalOp2 -gt 10 ) {",
+                        "    Write-Host 'At least one is greater than 10'",
+                        "}",
+                        "If ( $LogicalOp -gt 10 -xor $LogicalOp2 -gt 10 ) {",
+                        "    Write-Host 'Only one is greater than 10'",
+                        "}",
+                        "# Testing Trap statements and Catch clauses in Try statements",
+                        "Try {",
+                        "    $Catch | Out-String -ErrorAction Stop",
+                        "}",
+                        "Catch [System.OutOfMemoryException] {",
+                        "    Try {",
+                        "        Restart-Computer -Force",
+                        "    }",
+                        "    Catch {",
+                        "        Write-Error 'Please, kill me !'",
+                        "    }",
+                        "}",
+                        "Catch [System.NullReferenceException] {",
+                        "    Write-Warning '$Catch was Null'",
+                        "}",
+                        "Catch {",
+                        "    Write-Error $_.Exception.Message",
+                        "   }",
+                        "}"
+                    ]
+                }
+            }
         }
     ],
     "Invoke-Pester": [

@@ -17,7 +17,7 @@ Function Measure-FunctionLogicalOpCodePath {
     System.Int32
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([System.Int32])]
@@ -28,7 +28,7 @@ Function Measure-FunctionLogicalOpCodePath {
     
     $FunctionText = $FunctionDefinition.Extent.Text
     $Tokens = $Null
-    $FunctionAst = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$Tokens, [ref]$Null)
+    $Null = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$Tokens, [ref]$Null)
     $LogicalOperators = $Tokens | Where-Object { $_.Kind.ToString() -In 'And','Or','Xor' }
 
     If ( -not($LogicalOperators) ) {

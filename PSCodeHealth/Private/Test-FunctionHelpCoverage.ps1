@@ -17,7 +17,7 @@ Function Test-FunctionHelpCoverage {
     System.Boolean
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([System.Boolean])]

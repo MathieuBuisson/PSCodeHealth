@@ -25,7 +25,7 @@ Function Get-PSCodeHealth {
     PSCodeHealth.Function.HealthRecord
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]

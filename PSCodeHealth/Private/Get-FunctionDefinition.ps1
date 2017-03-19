@@ -16,7 +16,7 @@ Function Get-FunctionDefinition {
 .OUTPUTS
     System.Management.Automation.Language.FunctionDefinitionAst
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([System.Management.Automation.Language.FunctionDefinitionAst[]])]

@@ -32,7 +32,7 @@ Function New-FunctionHealthRecord {
     PSCodeHealth.Function.HealthRecord
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]

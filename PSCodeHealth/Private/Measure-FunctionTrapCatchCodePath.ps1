@@ -17,7 +17,7 @@ Function Measure-FunctionTrapCatchCodePath {
     System.Int32
 
 .NOTES
-    General notes
+    
 #>
     [CmdletBinding()]
     [OutputType([System.Int32])]
