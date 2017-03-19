@@ -252,7 +252,7 @@
             }
         },
         {
-            "NoForStatements": {
+            "NoForStatement": {
                 "Extent": {
                     "Text": [
                         "Function Test-Conditional",
@@ -289,6 +289,49 @@
                         "    }",
                         "    For ($k = 1;;$k++) {",
                         "        Write-Host 'No Condition for this loop'",
+                        "    }",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "NoWhileStatement": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$While",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no While statement'",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "WhileStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-While {",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$While,",
+                        "       ",
+                        "        [int]$While2",
+                        "    )",
+                        "    #Testing While statements",
+                        "    While ($While -lt 99) {",
+                        "        Write-Host 'While is less than 99'",
+                        "        $While++",
+                        "       ",
+                        "        While ($While2 -lt 10) {",
+                        "            Write-Host 'While2 is less than 10'",
+                        "            $While2++",
+                        "        }",
                         "    }",
                         "}"
                     ]
