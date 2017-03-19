@@ -222,7 +222,7 @@
                         "    [CmdletBinding()]",
                         "    Param(",
                         "        [int]$Trap,",
-                        "        [int] $Catch",
+                        "        [int]$Catch",
                         "    )",
                         "    #Testing Trap statements and Catch clauses in Try statements",
                         "    Try {",
@@ -246,6 +246,50 @@
                         "        Write-Warning 'Trapped exception'",
                         "    }",
                         "    $Trap | Out-String -ErrorAction Stop",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "NoForStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-Conditional",
+                        "{",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$For",
+                        "    )",
+                        "",
+                        "    Write-Host 'There is no For statement'",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
+            "ForStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-For {",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$For,",
+                        "        ",
+                        "        [int]$For2",
+                        "    )",
+                        "    #Testing For statements",
+                        "    For ($i = 1; $i -lt 99; $i++) {",
+                        "        Write-Host \"$($For + $i)\"",
+                        "       ",
+                        "        For ($j = 0; $j -lt 10; $j++) {",
+                        "            Write-Host \"$($For2 - $j)\"",
+                        "        }",
+                        "    }",
+                        "    For ($k = 1;;$k++) {",
+                        "        Write-Host 'No Condition for this loop'",
+                        "    }",
                         "}"
                     ]
                 }
