@@ -6,10 +6,16 @@ os: WMF 5
 skip_commits:
   message: /readme*/
 
+environment:
+  CA_Key:
+    secure: 0eJvIYA/nSAW0zBTrjkNZ+7s76G3zGM5Oas2iWJicIwjZnRraAbtzrCCb8ndVMhq
+
 install:
   - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
   - ps: Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
   - ps: Install-PackageProvider -Name NuGet -Force
+  - ps: Install-Module Coveralls
+  - ps: Import-Module Coveralls
   - ps: Install-Module -Name Pester -RequiredVersion 3.4.6 -Force
   - ps: Install-Module PsScriptAnalyzer -Force
   
@@ -27,6 +33,8 @@ test_script:
         # Failing the build
         Throw "Build failed because $($FailedCount) Pester test(s) failed"
       }
+      $Coverage = Format-Coverage -PesterResults $TestsOutput -CoverallsApiToken $ENV:CA_Key -BranchName $ENV:APPVEYOR_REPO_BRANCH
+      Publish-Coverage -Coverage $Coverage
 
   - ps: |
       Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
