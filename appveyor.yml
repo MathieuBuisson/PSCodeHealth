@@ -2,10 +2,6 @@ version: 0.1.{build}
 
 os: WMF 5
 
-# Skip on updates to the readme
-skip_commits:
-  message: /readme*/
-
 environment:
   CA_Key:
     secure: 0eJvIYA/nSAW0zBTrjkNZ+7s76G3zGM5Oas2iWJicIwjZnRraAbtzrCCb8ndVMhq
