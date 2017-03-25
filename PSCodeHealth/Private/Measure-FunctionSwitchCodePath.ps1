@@ -36,6 +36,6 @@ Function Measure-FunctionSwitchCodePath {
         return [int]0
     }
     # Each clause is creating an additional path, except for the "catch-all" Default clause
-    Write-Warning 'This result is inaccurate if some clauses in the Switch statement do not have a Break statement'
+    Write-VerboseOutput 'This result is inaccurate if some clauses in the Switch statement do not have a Break statement'
     return $SwitchStatements.Clauses.Count
 }

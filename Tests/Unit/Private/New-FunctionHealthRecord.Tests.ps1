@@ -7,20 +7,10 @@ Describe 'New-FunctionHealthRecord' {
         $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
         $FunctionDefinitions = Get-FunctionDefinition -Path $Files
         $Function = $FunctionDefinitions | Where-Object Name -eq 'Set-Nothing'
-        $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $Function
 
         Context '1 PSScriptAnalyzer result is specified for ScriptAnalyzerResultDetails' {
 
-            $Params = @{
-                FunctionDefinition = $Function
-                CodeLength = 10
-                ScriptAnalyzerViolations = $ScriptAnalyzerResultDetails.Count
-                ScriptAnalyzerResultDetails = $ScriptAnalyzerResultDetails
-                ContainsHelp = $True
-                TestCoverage = 91.54
-            }
-
-            $Result = New-FunctionHealthRecord @Params
+            $Result = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage 91.54
 
             It 'Should return an object of the type [PSCodeHealth.Function.HealthRecord]' {
                 $Result | Should BeOfType [PSCustomObject]
@@ -33,14 +23,14 @@ Describe 'New-FunctionHealthRecord' {
                 $Result.FilePath | Should BeLike '*Unit\TestData\2PublicFunctions.psm1'
             }
             It 'Should return an object with the expected property "CodeLength"' {
-                $Result.CodeLength | Should Be 10
+                $Result.CodeLength | Should Be 16
             }
             It 'Should return an object with the expected property "ScriptAnalyzerViolations"' {
-                $Result.ScriptAnalyzerViolations | Should Be $ScriptAnalyzerResultDetails.Count
+                $Result.ScriptAnalyzerViolations | Should Be 1
             }
             It 'Should return an object with the expected property "ScriptAnalyzerResultDetails"' {
-                $Result.ScriptAnalyzerResultDetails |
-                Should Be $ScriptAnalyzerResultDetails
+                $Result.ScriptAnalyzerResultDetails.RuleName |
+                Should Be 'PSUseShouldProcessForStateChangingFunctions'
             }
             It 'Should return an object with the expected property "ContainsHelp"' {
                 $Result.ContainsHelp | Should Be $True
@@ -48,21 +38,8 @@ Describe 'New-FunctionHealthRecord' {
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 91.54
             }
-        }
-
-        Context '$Null is specified for the ScriptAnalyzerResultDetails parameter' {
-
-            $Params = @{
-                FunctionDefinition = $Function
-                CodeLength = 10
-                ScriptAnalyzerViolations = 1
-                ScriptAnalyzerResultDetails = $Null
-                ContainsHelp = $True
-                TestCoverage = 91.54
-            }
-
-            It 'Should allows Null for the parameter ScriptAnalyzerResultDetails' {
-                { New-FunctionHealthRecord @Params } | Should Not Throw
+            It 'Should return an object with the expected property "Complexity"' {
+                $Result.Complexity | Should Be 1
             }
         }
     }

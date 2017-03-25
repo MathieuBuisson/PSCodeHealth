@@ -69,26 +69,13 @@ Function Get-PSCodeHealth {
 
         Write-VerboseOutput -Message "Gathering metrics for function : $($Function.Name)"
 
-        $CodeLength = Get-FunctionCodeLength -FunctionDefinition $Function
-        $ScriptAnalyzerViolations = Get-FunctionScriptAnalyzerViolation -FunctionDefinition $Function
-        $ScriptAnalyzerResults = Get-FunctionScriptAnalyzerResult -FunctionDefinition $Function
-        $ContainsHelp = Test-FunctionHelpCoverage -FunctionDefinition $Function
-
         $TestCoverageParams = If ( $TestsPath ) {
             @{ FunctionDefinition = $Function; TestsPath = $TestsPath }} Else {
             @{ FunctionDefinition = $Function }
         }
         $TestCoverage = Get-FunctionTestCoverage @TestCoverageParams
 
-        $FunctionHealthRecordParams = @{
-            FunctionDefinition = $Function
-            CodeLength = $CodeLength
-            ScriptAnalyzerViolations = $ScriptAnalyzerViolations
-            ScriptAnalyzerResultDetails = $ScriptAnalyzerResults
-            ContainsHelp = $ContainsHelp
-            TestCoverage = $TestCoverage
-        }
-        $FunctionHealthRecord = New-FunctionHealthRecord @FunctionHealthRecordParams
+        $FunctionHealthRecord = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage $TestCoverage
         $FunctionHealthRecord
     }
 }

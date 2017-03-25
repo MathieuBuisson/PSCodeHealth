@@ -8,23 +8,11 @@ Function New-FunctionHealthRecord {
 .PARAMETER FunctionDefinition
     To specify the function definition.
 
-.PARAMETER CodeLength
-    To specify the number of code lines in the function definition.
-
-.PARAMETER ScriptAnalyzerViolations
-    To specify the number of best practices violation found in the function.
-
-.PARAMETER ScriptAnalyzerResultDetails
-    To populate the PSScriptAnalyzer results found in the function
-
-.PARAMETER ContainsHelp
-    To specify whether or not, the function contains help information.
-
-.PARAMETER TestCoverage
+.PARAMETER FunctionTestCoverage
     To specify the percentage of lines of code in the specified function that are tested by unit tests.
 
 .EXAMPLE
-    New-FunctionHealthRecord -FunctionDefinition $MyFunctionAst
+    New-FunctionHealthRecord -FunctionDefinition $MyFunctionAst -FunctionTestCoverage $TestCoverage
 
     Returns new custom object of the type PSCodeHealth.Function.HealthRecord.
 
@@ -41,30 +29,20 @@ Function New-FunctionHealthRecord {
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition,
 
         [Parameter(Position=1, Mandatory)]
-        [System.Int32]$CodeLength,
-
-        [Parameter(Position=2, Mandatory)]
-        [System.Int32]$ScriptAnalyzerViolations,
-
-        [Parameter(Position=3, Mandatory)]
-        [AllowNull()]
-        [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord[]]$ScriptAnalyzerResultDetails,
-
-        [Parameter(Position=4, Mandatory)]
-        [System.Boolean]$ContainsHelp,
-
-        [Parameter(Position=5, Mandatory)]
-        [System.Double]$TestCoverage
+        [System.Double]$FunctionTestCoverage
     )
-    
+
+        $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
+
         $ObjectProperties = [ordered]@{
-            'Name' = $FunctionDefinition.Name
-            'FilePath' = $FunctionDefinition.Extent.File
-            'CodeLength' = $CodeLength
-            'ScriptAnalyzerViolations' = $ScriptAnalyzerViolations
+            'Name'                        = $FunctionDefinition.Name
+            'FilePath'                    = $FunctionDefinition.Extent.File
+            'CodeLength'                  = Get-FunctionCodeLength -FunctionDefinition $FunctionDefinition
+            'ScriptAnalyzerViolations'    = $ScriptAnalyzerResultDetails.Count
             'ScriptAnalyzerResultDetails' = $ScriptAnalyzerResultDetails
-            'ContainsHelp' = $ContainsHelp
-            'TestCoverage' = $TestCoverage
+            'ContainsHelp'                = Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition
+            'TestCoverage'                = $FunctionTestCoverage
+            'Complexity'                  = Measure-functionComplexity -FunctionDefinition $Function
         }
 
         $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties
