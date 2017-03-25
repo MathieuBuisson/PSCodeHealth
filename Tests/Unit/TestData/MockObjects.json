@@ -25,18 +25,6 @@
             ]
         }
     ],
-    "Get-FunctionScriptAnalyzerResult": [
-        {
-            "1Result": "1 result"
-        },
-        {
-            "3Results": [
-                "First result",
-                "Second",
-                "Third"
-            ]
-        }
-    ],
     "Get-FunctionDefinition": [
         {
             "IfStatements": {
