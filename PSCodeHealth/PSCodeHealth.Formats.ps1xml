@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Configuration>
+    <ViewDefinitions>
+        <View>
+            <Name>PSCodeHealth.Function.HealthRecord</Name> 
+            <ViewSelectedBy>
+                <TypeName>PSCodeHealth.Function.HealthRecord</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Name</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Length</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Complexity</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Contains Help</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Test Coverage</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>ScriptAnalyzer Violations</Label>
+                        <Alignment>Center</Alignment>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                    <TableColumnItems>
+                        <TableColumnItem>
+                            <PropertyName>Name</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>CodeLength</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Complexity</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>ContainsHelp</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <ScriptBlock>'{0} %' -f $_.TestCoverage.ToString()</ScriptBlock>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>ScriptAnalyzerViolations</PropertyName>
+                        </TableColumnItem>
+                    </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
+    </ViewDefinitions>
+</Configuration>

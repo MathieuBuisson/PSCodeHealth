@@ -28,4 +28,8 @@ Describe 'General Module behaviour' {
 			$ExportedFunctions -contains $FunctionName | Should Be $True
 		}
     }
+    It 'Links the type "PSCodeHealth.Function.HealthRecord" to the "PSCodeHealth.Function.HealthRecord" formatting view' {
+        (Get-FormatData -TypeName PSCodeHealth.Function.HealthRecord).FormatViewDefinition.Name |
+        Should Be 'PSCodeHealth.Function.HealthRecord'
+    }
 }
