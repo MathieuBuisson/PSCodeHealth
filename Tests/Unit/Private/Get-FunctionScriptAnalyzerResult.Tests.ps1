@@ -17,7 +17,7 @@ Describe 'Get-FunctionScriptAnalyzerResult' {
                 $Result |
                 Should BeOfType [Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord]
             }
-            It 'Should should return the expected violation' {
+            It 'Should return the expected ScriptAnalyzer finding' {
                 $Result.Extent.Text | Should Be 'Set-Nothing'
                 $Result.RuleName | Should Be 'PSUseShouldProcessForStateChangingFunctions'
             }
@@ -37,7 +37,7 @@ Describe 'Get-FunctionScriptAnalyzerResult' {
             Mock Invoke-ScriptAnalyzer { $Mocks.'Invoke-ScriptAnalyzer'.'1Result_PSProvideCommentHelp' | Where-Object { $_ } }
             $Result = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinitions[0]
 
-            It 'Should return the expected PSScriptAnalyzer result' {
+            It 'Should return the expected PSScriptAnalyzer finding' {
                 $Result.RuleName | Should Be 'PSProvideCommentHelp'
                 $Result.Extent.Text | Should Be 'BadFunction'
             }
@@ -47,7 +47,7 @@ Describe 'Get-FunctionScriptAnalyzerResult' {
             Mock Invoke-ScriptAnalyzer { $Mocks.'Invoke-ScriptAnalyzer'.'2Results_2Rules' | Where-Object { $_ } }
             $Results = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinitions[0]
 
-            It 'Should return 2 PSScriptAnalyzer results' {
+            It 'Should return 2 PSScriptAnalyzer findings' {
                 $Results.Count | Should Be 2
             }
             It 'Should return the expected PSScriptAnalyzer rule names' {

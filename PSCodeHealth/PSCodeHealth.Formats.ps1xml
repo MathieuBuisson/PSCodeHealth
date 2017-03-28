@@ -24,7 +24,7 @@
                         <Label>Test Coverage</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>ScriptAnalyzer Violations</Label>
+                        <Label>ScriptAnalyzer Findings</Label>
                         <Alignment>Center</Alignment>
                     </TableColumnHeader>
                 </TableHeaders>
@@ -47,7 +47,7 @@
                             <ScriptBlock>'{0} %' -f $_.TestCoverage.ToString()</ScriptBlock>
                         </TableColumnItem>
                         <TableColumnItem>
-                            <PropertyName>ScriptAnalyzerViolations</PropertyName>
+                            <PropertyName>ScriptAnalyzerFindings</PropertyName>
                         </TableColumnItem>
                     </TableColumnItems>
                     </TableRowEntry>

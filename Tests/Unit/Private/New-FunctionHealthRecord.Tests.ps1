@@ -25,8 +25,8 @@ Describe 'New-FunctionHealthRecord' {
             It 'Should return an object with the expected property "CodeLength"' {
                 $Result.CodeLength | Should Be 16
             }
-            It 'Should return an object with the expected property "ScriptAnalyzerViolations"' {
-                $Result.ScriptAnalyzerViolations | Should Be 1
+            It 'Should return an object with the expected property "ScriptAnalyzerFindings"' {
+                $Result.ScriptAnalyzerFindings | Should Be 1
             }
             It 'Should return an object with the expected property "ScriptAnalyzerResultDetails"' {
                 $Result.ScriptAnalyzerResultDetails.RuleName |

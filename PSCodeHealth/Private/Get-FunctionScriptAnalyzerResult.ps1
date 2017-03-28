@@ -1,9 +1,9 @@
 Function Get-FunctionScriptAnalyzerResult {
 <#
 .SYNOPSIS
-    Gets the best practices violations in the specified function definition, using PSScriptAnalyzer.
+    Gets the best practices violations details in the specified function definition, using PSScriptAnalyzer.
 .DESCRIPTION
-    Gets the best practices violations in the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst].
+    Gets the best practices violations details in the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst].
     It uses the PSScriptAnalyzer PowerShell module.
 
 .PARAMETER FunctionDefinition
@@ -12,7 +12,7 @@ Function Get-FunctionScriptAnalyzerResult {
 .EXAMPLE
     Get-FunctionScriptAnalyzerResult -FunctionDefinition $MyFunctionAst
 
-    Returns the best practices violations (PSScriptAnalyzer results) in the specified function definition.
+    Returns the best practices violations details (PSScriptAnalyzer results) in the specified function definition.
 
 .OUTPUTS
     Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord
