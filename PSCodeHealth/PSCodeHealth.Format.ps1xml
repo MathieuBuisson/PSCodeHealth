@@ -9,7 +9,8 @@
             <TableControl>
                 <TableHeaders>
                     <TableColumnHeader>
-                        <Label>Name</Label>
+                        <Label>Function Name</Label>
+                        <Width>27</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Length</Label>
@@ -32,7 +33,7 @@
                     <TableRowEntry>
                     <TableColumnItems>
                         <TableColumnItem>
-                            <PropertyName>Name</PropertyName>
+                            <PropertyName>FunctionName</PropertyName>
                         </TableColumnItem>
                         <TableColumnItem>
                             <PropertyName>CodeLength</PropertyName>

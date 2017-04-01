@@ -16,8 +16,8 @@ Describe 'New-FunctionHealthRecord' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName | Should Be 'PSCodeHealth.Function.HealthRecord'
             }
-            It 'Should return an object with the expected property "Name"' {
-                $Result.Name | Should Be 'Set-Nothing'
+            It 'Should return an object with the expected property "FunctionName"' {
+                $Result.FunctionName | Should Be 'Set-Nothing'
             }
             It 'Should return an object with the expected property "FilePath"' {
                 $Result.FilePath | Should BeLike '*Unit\TestData\2PublicFunctions.psm1'

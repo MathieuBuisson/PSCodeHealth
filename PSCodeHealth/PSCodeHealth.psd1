@@ -60,7 +60,7 @@ RequiredModules = @('Pester','PSScriptAnalyzer')
 # TypesToProcess = @()
 
 # Format files (.ps1xml) to be loaded when importing this module
-FormatsToProcess = @('PSCodeHealth.Formats.ps1xml')
+FormatsToProcess = @('PSCodeHealth.Format.ps1xml')
 
 # Modules to import as nested modules of the module specified in RootModule/ModuleToProcess
 # NestedModules = @()

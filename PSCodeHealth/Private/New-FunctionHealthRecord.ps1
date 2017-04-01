@@ -35,7 +35,7 @@ Function New-FunctionHealthRecord {
         $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
 
         $ObjectProperties = [ordered]@{
-            'Name'                        = $FunctionDefinition.Name
+            'FunctionName'                        = $FunctionDefinition.Name
             'FilePath'                    = $FunctionDefinition.Extent.File
             'CodeLength'                  = Get-FunctionCodeLength -FunctionDefinition $FunctionDefinition
             'ScriptAnalyzerFindings'    = $ScriptAnalyzerResultDetails.Count
