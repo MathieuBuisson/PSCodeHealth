@@ -35,14 +35,15 @@ Function New-FunctionHealthRecord {
         $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
 
         $ObjectProperties = [ordered]@{
-            'FunctionName'                        = $FunctionDefinition.Name
+            'FunctionName'                = $FunctionDefinition.Name
             'FilePath'                    = $FunctionDefinition.Extent.File
             'CodeLength'                  = Get-FunctionCodeLength -FunctionDefinition $FunctionDefinition
-            'ScriptAnalyzerFindings'    = $ScriptAnalyzerResultDetails.Count
+            'ScriptAnalyzerFindings'      = $ScriptAnalyzerResultDetails.Count
             'ScriptAnalyzerResultDetails' = $ScriptAnalyzerResultDetails
             'ContainsHelp'                = Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition
             'TestCoverage'                = $FunctionTestCoverage
-            'Complexity'                  = Measure-functionComplexity -FunctionDefinition $Function
+            'Complexity'                  = Measure-FunctionComplexity -FunctionDefinition $FunctionDefinition
+            'MaximumNestingDepth'             = Measure-FunctionMaxNestingDepth -FunctionDefinition $FunctionDefinition
         }
 
         $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties

@@ -41,6 +41,9 @@ Describe 'New-FunctionHealthRecord' {
             It 'Should return an object with the expected property "Complexity"' {
                 $Result.Complexity | Should Be 1
             }
+            It 'Should return an object with the expected property "MaximumNestingDepth"' {
+                $Result.MaximumNestingDepth | Should Be 1
+            }
         }
     }
 }
