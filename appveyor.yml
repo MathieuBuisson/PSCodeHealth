@@ -13,7 +13,7 @@ install:
   - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
   - ps: Install-Module Coveralls -Scope CurrentUser -Force
   - ps: Import-Module Coveralls
-  - ps: Install-Module -Name Pester -RequiredVersion 3.4.6 -Force
+  - ps: Install-Module -Name Pester -Force
   - ps: Install-Module PsScriptAnalyzer -Force
   
 build: false
