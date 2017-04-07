@@ -25,7 +25,7 @@ Describe 'Get-PSCodeHealth' {
             It 'Should return objects of the type [PSCodeHealth.Function.HealthRecord]' {
                 Foreach ( $Result in $Results ) {
                     $Result | Should BeOfType [PSCustomObject]
-                    ($Result | Get-Member).TypeName | Should Be 'PSCodeHealth.Function.HealthRecord'
+                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Function.HealthRecord'
                 }
             }
             It 'Should throw if the specified Path does not exist'  {

@@ -14,7 +14,7 @@ Describe 'New-FunctionHealthRecord' {
 
             It 'Should return an object of the type [PSCodeHealth.Function.HealthRecord]' {
                 $Result | Should BeOfType [PSCustomObject]
-                ($Result | Get-Member).TypeName | Should Be 'PSCodeHealth.Function.HealthRecord'
+                ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Function.HealthRecord'
             }
             It 'Should return an object with the expected property "FunctionName"' {
                 $Result.FunctionName | Should Be 'Set-Nothing'
