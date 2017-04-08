@@ -13,7 +13,7 @@
                         <Width>27</Width>
                     </TableColumnHeader>
                     <TableColumnHeader>
-                        <Label>Length</Label>
+                        <Label>Lines of Code</Label>
                     </TableColumnHeader>
                     <TableColumnHeader>
                         <Label>Complexity</Label>
@@ -36,7 +36,7 @@
                             <PropertyName>FunctionName</PropertyName>
                         </TableColumnItem>
                         <TableColumnItem>
-                            <PropertyName>CodeLength</PropertyName>
+                            <PropertyName>LinesOfCode</PropertyName>
                         </TableColumnItem>
                         <TableColumnItem>
                             <PropertyName>Complexity</PropertyName>

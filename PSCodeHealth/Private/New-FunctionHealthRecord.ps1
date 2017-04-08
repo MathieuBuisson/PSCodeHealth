@@ -37,7 +37,7 @@ Function New-FunctionHealthRecord {
         $ObjectProperties = [ordered]@{
             'FunctionName'                = $FunctionDefinition.Name
             'FilePath'                    = $FunctionDefinition.Extent.File
-            'CodeLength'                  = Get-FunctionCodeLength -FunctionDefinition $FunctionDefinition
+            'LinesOfCode'                  = Get-FunctionLinesOfCode -FunctionDefinition $FunctionDefinition
             'ScriptAnalyzerFindings'      = $ScriptAnalyzerResultDetails.Count
             'ScriptAnalyzerResultDetails' = $ScriptAnalyzerResultDetails
             'ContainsHelp'                = Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition

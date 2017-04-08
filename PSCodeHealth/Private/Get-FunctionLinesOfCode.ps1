@@ -1,18 +1,18 @@
-Function Get-FunctionCodeLength {
+Function Get-FunctionLinesOfCode {
 <#
 .SYNOPSIS
     Gets the number of lines in the specified function definition (excluding comments).
 .DESCRIPTION
-    Gets the number of lines in the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst].
-    The single line comments, multiple lines comments and comment-based help are not considered as code, so they are excluded.
+    Gets the number of lines of code in the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst].
+    The single line comments, multiple lines comments and comment-based help are not executable code, so they are excluded.
 
 .PARAMETER FunctionDefinition
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Get-FunctionCodeLength -FunctionDefinition $MyFunctionAst
+    Get-FunctionLinesOfCode -FunctionDefinition $MyFunctionAst
 
-    Returns the number of code lines in the specified function definition.
+    Returns the number of lines of code in the specified function definition.
 
 .OUTPUTS
     System.Int32

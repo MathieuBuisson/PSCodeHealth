@@ -1,7 +1,7 @@
 $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
-Describe 'Get-FunctionCodeLength' {
+Describe 'Get-FunctionLinesOfCode' {
     InModuleScope $ModuleName {
 
         $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
@@ -16,7 +16,7 @@ Describe 'Get-FunctionCodeLength' {
         It 'Counts <ExpectedNumberOfLines> lines in the function definition : <FunctionName>' -TestCases $TestCases {
             Param ([string]$FunctionName, [int]$ExpectedNumberOfLines)
 
-            Get-FunctionCodeLength -FunctionDefinition ($FunctionDefinitions | Where-Object { $_.Name -eq $FunctionName }) |
+            Get-FunctionLinesOfCode -FunctionDefinition ($FunctionDefinitions | Where-Object { $_.Name -eq $FunctionName }) |
             Should Be $ExpectedNumberOfLines
         }
     }

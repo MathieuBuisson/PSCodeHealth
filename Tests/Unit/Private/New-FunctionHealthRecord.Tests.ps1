@@ -22,8 +22,8 @@ Describe 'New-FunctionHealthRecord' {
             It 'Should return an object with the expected property "FilePath"' {
                 $Result.FilePath | Should BeLike '*Unit\TestData\2PublicFunctions.psm1'
             }
-            It 'Should return an object with the expected property "CodeLength"' {
-                $Result.CodeLength | Should Be 16
+            It 'Should return an object with the expected property "LinesOfCode"' {
+                $Result.LinesOfCode | Should Be 16
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindings"' {
                 $Result.ScriptAnalyzerFindings | Should Be 1
