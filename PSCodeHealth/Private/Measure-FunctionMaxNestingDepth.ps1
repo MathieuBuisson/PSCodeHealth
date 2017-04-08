@@ -33,7 +33,7 @@ Function Measure-FunctionMaxNestingDepth {
 
     [System.Collections.ArrayList]$NestingDepthValues = @()
     [System.Int32]$NestingDepth = 0
-    [System.Collections.ArrayList]$CurlyBrackets = $Tokens | Where-Object { $_.Kind -in 'LCurly','RCurly' }
+    [System.Collections.ArrayList]$CurlyBrackets = $Tokens | Where-Object { $_.Kind -in 'AtCurly','LCurly','RCurly' }
 
     # Removing the first opening curly and the last closing curly because they belong to the function itself
     $CurlyBrackets.RemoveAt(0)
@@ -44,7 +44,7 @@ Function Measure-FunctionMaxNestingDepth {
 
     Foreach ( $CurlyBracket in $CurlyBrackets ) {
 
-        If ( $CurlyBracket.Kind -eq 'LCurly' ) {
+        If ( $CurlyBracket.Kind -in 'AtCurly','LCurly' ) {
             $NestingDepth++
         }
         ElseIf ( $CurlyBracket.Kind -eq 'RCurly' ) {
