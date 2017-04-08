@@ -45,7 +45,7 @@ Function Get-FunctionTestCoverage {
         $TestsPath = Split-Path -Path $SourcePath -Parent
     }
 
-    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Quiet -Verbose:$False
+    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Show None -Verbose:$False
     $CodeCoverage = $TestResult.CodeCoverage
     $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
     Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
