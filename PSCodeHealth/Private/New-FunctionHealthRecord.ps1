@@ -32,21 +32,21 @@ Function New-FunctionHealthRecord {
         [System.Double]$FunctionTestCoverage
     )
 
-        $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
+    $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
 
-        $ObjectProperties = [ordered]@{
-            'FunctionName'                = $FunctionDefinition.Name
-            'FilePath'                    = $FunctionDefinition.Extent.File
-            'LinesOfCode'                  = Get-FunctionLinesOfCode -FunctionDefinition $FunctionDefinition
-            'ScriptAnalyzerFindings'      = $ScriptAnalyzerResultDetails.Count
-            'ScriptAnalyzerResultDetails' = $ScriptAnalyzerResultDetails
-            'ContainsHelp'                = Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition
-            'TestCoverage'                = $FunctionTestCoverage
-            'Complexity'                  = Measure-FunctionComplexity -FunctionDefinition $FunctionDefinition
-            'MaximumNestingDepth'             = Measure-FunctionMaxNestingDepth -FunctionDefinition $FunctionDefinition
-        }
+    $ObjectProperties = [ordered]@{
+        'FunctionName'                = $FunctionDefinition.Name
+        'FilePath'                    = $FunctionDefinition.Extent.File
+        'LinesOfCode'                 = Get-FunctionLinesOfCode -FunctionDefinition $FunctionDefinition
+        'ScriptAnalyzerFindings'      = $ScriptAnalyzerResultDetails.Count
+        'ScriptAnalyzerResultDetails' = $ScriptAnalyzerResultDetails
+        'ContainsHelp'                = Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition
+        'TestCoverage'                = $FunctionTestCoverage
+        'Complexity'                  = Measure-FunctionComplexity -FunctionDefinition $FunctionDefinition
+        'MaximumNestingDepth'         = Measure-FunctionMaxNestingDepth -FunctionDefinition $FunctionDefinition
+    }
 
-        $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties
-        $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
-        return $CustomObject
+    $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties
+    $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
+    return $CustomObject
 }

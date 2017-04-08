@@ -6,7 +6,7 @@ Function Get-PSCodeHealth {
     Gets quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.
 
 .PARAMETER Path
-    To specify the path of the directory to search.
+    To specify the path of the directory to search for PowerShell files to analyze.
 
 .PARAMETER TestsPath
     To specify the file or directory where tests are located.
@@ -22,7 +22,7 @@ Function Get-PSCodeHealth {
     This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\Unit, and any subdirectories.
 
 .OUTPUTS
-    PSCodeHealth.Function.HealthRecord
+    PSCodeHealth.Overall.HealthReport
 
 .NOTES
     
@@ -64,6 +64,7 @@ Function Get-PSCodeHealth {
     If ( -not $FunctionDefinitions ) {
         return $Null
     }
+    [System.Collections.ArrayList]$FunctionHealthRecords = @()
 
     Foreach ( $Function in $FunctionDefinitions ) {
 
@@ -76,6 +77,11 @@ Function Get-PSCodeHealth {
         $TestCoverage = Get-FunctionTestCoverage @TestCoverageParams
 
         $FunctionHealthRecord = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage $TestCoverage
-        $FunctionHealthRecord
+        $FunctionHealthRecords += $FunctionHealthRecord
     }
+    If ( -not $TestsPath ) {
+        $TestsPath = If ( (Get-Item -Path $Path).PSIsContainer ) { $Path } Else { Split-Path -Path $Path -Parent }
+    }
+
+    New-PSCodeHealthReport -Path $PowerShellFiles -FunctionHealthRecord $FunctionHealthRecords -TestsPath $TestsPath
 }

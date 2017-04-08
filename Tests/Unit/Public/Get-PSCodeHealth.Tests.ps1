@@ -22,7 +22,7 @@ Describe 'Get-PSCodeHealth' {
             Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
             $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
-            It 'Should return objects of the type [PSCodeHealth.Function.HealthRecord]' {
+            It 'Should return objects of the type [PSCodeHealth.Overall.HealthReport]' {
                 Foreach ( $Result in $Results ) {
                     $Result | Should BeOfType [PSCustomObject]
                     ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Function.HealthRecord'
@@ -35,8 +35,10 @@ Describe 'Get-PSCodeHealth' {
             It 'Should return $Null if Get-FunctionDefinition finds 0 function' {
                 Mock Get-FunctionDefinition { }
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
-                Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData" |
-                Should Be $Null
+                Mock New-PSCodeHealthReport { } -ParameterFilter {$FunctionHealthRecord -eq $Null}
+
+                $Null = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+                Assert-MockCalled New-PSCodeHealthReport -Exactly 1 -Scope It
             }
             It 'Should remove TestsPath from $PSBoundParameters before calling Get-PowerShellFile' {
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
@@ -59,6 +61,18 @@ Describe 'Get-PSCodeHealth' {
 
             It 'Should return 1 object for every function in every file' {
                 $Results.Count | Should Be 4
+            }
+        }
+
+        Context 'TestsPath parameter is not specified' {
+
+            Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
+            $ExpectedTestsPath = "$PSScriptRoot\..\TestData"
+            Mock New-PSCodeHealthReport { } -ParameterFilter {$TestsPath -eq $ExpectedTestsPath}
+
+            It 'Should set $TestsPath to the parent directory of the Path parameter' {
+                $Null = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData\2PublicFunctions.psm1"
+                Assert-MockCalled New-PSCodeHealthReport -Exactly 1 -Scope It
             }
         }
     }
