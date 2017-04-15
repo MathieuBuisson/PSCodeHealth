@@ -34,6 +34,7 @@ Function Measure-FunctionForCodePath {
 
     # Taking into account the rare cases where For statements don't contain a condition
     $ConditionalForStatements = $ForStatements | Where-Object Condition
+    
     If ( -not($ConditionalForStatements) ) {
         return [int]0
     }
