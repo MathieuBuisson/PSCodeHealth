@@ -518,5 +518,34 @@
                 }
             }
         }
+    ],
+    "New-FunctionHealthRecord": [
+        {
+            "Single": {
+                "FunctionName": "Test-Function",
+                "LinesOfCode": 101,
+                "ScriptAnalyzerFindings": 11,
+                "Complexity": 19,
+                "MaximumNestingDepth": 5
+            }
+        },
+        {
+            "2HealthRecords": [
+                {
+                    "FunctionName": "Test-Function1",
+                    "LinesOfCode": 101,
+                    "ScriptAnalyzerFindings": 11,
+                    "Complexity": 19,
+                    "MaximumNestingDepth": 5
+                },
+                {
+                    "FunctionName": "Test-Function2",
+                    "LinesOfCode": 86,
+                    "ScriptAnalyzerFindings": 6,
+                    "Complexity": 12,
+                    "MaximumNestingDepth": 2
+                }
+            ]
+        }
     ]
 }

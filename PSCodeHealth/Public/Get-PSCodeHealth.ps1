@@ -61,24 +61,27 @@ Function Get-PSCodeHealth {
     }
 
     $FunctionDefinitions = Get-FunctionDefinition -Path $PowerShellFiles
-    If ( -not $FunctionDefinitions ) {
-        return $Null
-    }
     [System.Collections.ArrayList]$FunctionHealthRecords = @()
 
-    Foreach ( $Function in $FunctionDefinitions ) {
-
-        Write-VerboseOutput -Message "Gathering metrics for function : $($Function.Name)"
-
-        $TestCoverageParams = If ( $TestsPath ) {
-            @{ FunctionDefinition = $Function; TestsPath = $TestsPath }} Else {
-            @{ FunctionDefinition = $Function }
-        }
-        $TestCoverage = Get-FunctionTestCoverage @TestCoverageParams
-
-        $FunctionHealthRecord = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage $TestCoverage
-        $FunctionHealthRecords += $FunctionHealthRecord
+    If ( -not $FunctionDefinitions ) {
+        $FunctionHealthRecords = $Null
     }
+    Else {
+        Foreach ( $Function in $FunctionDefinitions ) {
+
+            Write-VerboseOutput -Message "Gathering metrics for function : $($Function.Name)"
+
+            $TestCoverageParams = If ( $TestsPath ) {
+                @{ FunctionDefinition = $Function; TestsPath = $TestsPath }} Else {
+                @{ FunctionDefinition = $Function }
+            }
+            $TestCoverage = Get-FunctionTestCoverage @TestCoverageParams
+
+            $FunctionHealthRecord = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage $TestCoverage
+            $FunctionHealthRecords += $FunctionHealthRecord
+        }
+    }
+
     If ( -not $TestsPath ) {
         $TestsPath = If ( (Get-Item -Path $Path).PSIsContainer ) { $Path } Else { Split-Path -Path $Path -Parent }
     }

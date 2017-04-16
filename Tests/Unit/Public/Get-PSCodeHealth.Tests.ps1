@@ -10,57 +10,91 @@ Describe 'Get-PSCodeHealth' {
         Context 'Get-PowerShellFile returns 0 file' {
 
             Mock Get-PowerShellFile { }
-            $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+            $Result = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
             It 'Should not throw but return $Null' {
-                $Results | Should Be $Null
+                $Result | Should Be $Null
             }
         }
 
         Context 'Get-PowerShellFile returns 1 file' {
 
             Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
-            $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+            $Result = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
-            It 'Should return objects of the type [PSCodeHealth.Overall.HealthReport]' {
-                Foreach ( $Result in $Results ) {
-                    $Result | Should BeOfType [PSCustomObject]
-                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Function.HealthRecord'
-                }
+            It 'Should return 1 object' {
+                ($Result | Measure-Object).Count | Should Be 1
+            }
+            It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
+                $Result | Should BeOfType [PSCustomObject]
+                ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
             }
             It 'Should throw if the specified Path does not exist'  {
                 { Get-PSCodeHealth -Path 'Any' } |
                 Should Throw
             }
-            It 'Should return $Null if Get-FunctionDefinition finds 0 function' {
+            It 'Should not be $Null if Get-FunctionDefinition finds 0 function' {
                 Mock Get-FunctionDefinition { }
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
-                Mock New-PSCodeHealthReport { } -ParameterFilter {$FunctionHealthRecord -eq $Null}
 
-                $Null = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
-                Assert-MockCalled New-PSCodeHealthReport -Exactly 1 -Scope It
+                $ItResult = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+                $ItResult | Should Not BeNullOrEmpty
+                $ItResult.FunctionHealthRecords | Should BeNullOrEmpty
             }
             It 'Should remove TestsPath from $PSBoundParameters before calling Get-PowerShellFile' {
+                Mock Get-FunctionDefinition { }
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
                 { Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData" -TestsPath "$PSScriptRoot\..\TestData" } |
                 Should Not Throw
             }
-            It 'Should return the expected results if the specified Path is a file' {
-                $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData\2PublicFunctions.psm1"
-                Foreach ( $Result in $Results ) {
-                    $Result.Name -in @('Get-Nothing','Set-Nothing') | Should Be $True
-                    $Result.FilePath | Should BeLike '*Unit\TestData\2PublicFunctions.psm1'
+            It 'Should return an object with the expected property "Files"' {
+                $Result.Files | Should Be 1
+            }
+            It 'Should return an object with the expected property "Functions"' {
+                $Result.Functions | Should Be 2
+            }
+            It 'Should return an object with the expected property "LinesOfCodeTotal"' {
+                $Result.LinesOfCodeTotal | Should Be 31
+            }
+            It 'Should return an object with the expected property "LinesOfCodePerFunction"' {
+                $Result.LinesOfCodePerFunction | Should Be 15.5
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
+                $Result.ScriptAnalyzerFindingsTotal | Should Be 1
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsPerFunction"' {
+                $Result.ScriptAnalyzerFindingsPerFunction | Should Be 0.5
+            }
+            It 'Should return an object with the expected property "TestCoverage"' {
+                $Result.TestCoverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "CommandsMissedTotal"' {
+                $Result.CommandsMissedTotal | Should Be 1
+            }
+            It 'Should return an object with the expected property "ComplexityPerFunction"' {
+                $Result.ComplexityPerFunction | Should Be 1
+            }
+            It 'Should return an object with the expected property "NestingDepthPerFunction"' {
+                $Result.NestingDepthPerFunction | Should Be 1
+            }
+            It 'Should return 2 objects in the property "FunctionHealthRecords"' {
+                $Result.FunctionHealthRecords.Count | Should Be 2
+            }
+            It 'Should return only [PSCodeHealth.Function.HealthRecord] objects in the property "FunctionHealthRecords"' {
+                $ResultTypeNames = ($Result.FunctionHealthRecords | Get-Member).TypeName
+                Foreach ( $TypeName in $ResultTypeNames ) {
+                    $TypeName | Should Be 'PSCodeHealth.Function.HealthRecord'
                 }
             }
         }
-
+<#        
         Context 'Get-PowerShellFile returns 2 files' {
 
             Mock Get-PowerShellFile { (Get-ChildItem "$ScriptPath\..\TestData" -Filter '*.ps*1').FullName }
-            $Results = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+            $Result = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
             It 'Should return 1 object for every function in every file' {
-                $Results.Count | Should Be 4
+                $Result.Count | Should Be 1
             }
         }
 
@@ -75,5 +109,6 @@ Describe 'Get-PSCodeHealth' {
                 Assert-MockCalled New-PSCodeHealthReport -Exactly 1 -Scope It
             }
         }
+    #>
     }
 }

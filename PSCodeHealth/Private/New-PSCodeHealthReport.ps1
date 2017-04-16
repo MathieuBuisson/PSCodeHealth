@@ -55,23 +55,24 @@ Function New-PSCodeHealthReport {
     }
 
     # Gettings overall test coverage for all code in $Path
-    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage $Path -Show None -PassThru -Verbose:$False
-    If ( -not($TestResult) ) {
-        return [System.Double]0
-    }
+    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage $Path -Show None -PassThru -Verbose:$False -WarningAction SilentlyContinue
+    If ( $TestResult.CodeCoverage ) {
+        $CodeCoverage = $TestResult.CodeCoverage
+        $CommandsMissed = $CodeCoverage.NumberOfCommandsMissed
+        Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsMissed)"
 
-    $CodeCoverage = $TestResult.CodeCoverage
-    $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
-    Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
+        $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
+        Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
 
-    # To prevent any "Attempted to divide by zero" exceptions
-    If ( $CommandsFound -eq 0 ) {
-        return [System.Double]0
-    }
-    Else {
-        $CommandsExercised = $CodeCoverage.NumberOfCommandsExecuted
-        Write-VerboseOutput -Message "Number of commands exercised in the tests : $($CommandsExercised)"
-        [System.Double]$CodeCoveragePerCent = [math]::Round(($CommandsExercised / $CommandsFound) * 100, 2)
+        # To prevent any "Attempted to divide by zero" exceptions
+        If ( $CommandsFound -ne 0 ) {
+            $CommandsExercised = $CodeCoverage.NumberOfCommandsExecuted
+            Write-VerboseOutput -Message "Number of commands exercised in the tests : $($CommandsExercised)"
+            [System.Double]$CodeCoveragePerCent = [math]::Round(($CommandsExercised / $CommandsFound) * 100, 2)
+        }
+        Else {
+            [System.Double]$CodeCoveragePerCent = 0
+        }
     }
 
     $ObjectProperties = [ordered]@{
@@ -82,7 +83,7 @@ Function New-PSCodeHealthReport {
         'ScriptAnalyzerFindingsTotal'       = ($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Sum).Sum + $Psd1ScriptAnalyzerResults.Count
         'ScriptAnalyzerFindingsPerFunction' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
         'TestCoverage'                      = $CodeCoveragePerCent
-        'CommandsMissedTotal'               = $CodeCoverage.NumberOfCommandsMissed
+        'CommandsMissedTotal'               = $CommandsMissed
         'ComplexityPerFunction'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)
         'NestingDepthPerFunction'           = [math]::Round(($FunctionHealthRecord.MaximumNestingDepth | Measure-Object -Average).Average, 2)
         'FunctionHealthRecords'             = $FunctionHealthRecord
