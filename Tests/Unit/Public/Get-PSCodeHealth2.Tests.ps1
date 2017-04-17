@@ -115,7 +115,7 @@ Describe 'Get-PSCodeHealth (again)' {
                 $Null = Get-PSCodeHealth -Recurse
                 Assert-MockCalled -CommandName Get-PowerShellFile -Scope It -ParameterFilter { $Path  -eq $TestDrive }
             }
-            It 'Should throw we are in a PowerShell drive other than the FileSystem provider' {
+            It 'Should throw if we are in a PowerShell drive other than the FileSystem provider' {
                 { Set-Location HKLM:\ ; Get-PSCodeHealth } |
                 Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
             }
