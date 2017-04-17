@@ -7,6 +7,7 @@ Function Get-PSCodeHealth {
 
 .PARAMETER Path
     To specify the path of the directory to search for PowerShell files to analyze.
+    If the Path is not specified and the current location is in a FileSystem PowerShell drive, this will default to the current directory.
 
 .PARAMETER TestsPath
     To specify the file or directory where tests are located.
@@ -30,7 +31,7 @@ Function Get-PSCodeHealth {
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
     Param (
-        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+        [Parameter(Position=0, Mandatory=$False, ValueFromPipeline=$True)]
         [validatescript({ Test-Path $_ })]
         [string]$Path,
 
@@ -40,13 +41,19 @@ Function Get-PSCodeHealth {
 
         [switch]$Recurse
     )
+    If ( -not($PSBoundParameters.ContainsKey('Path')) ) {
+
+        If ( $PWD.Provider.Name -eq 'FileSystem' ) {
+            $Path = $PWD.ProviderPath
+        }
+        Else {
+            Throw "The current location is from the $($PWD.Provider.Name) provider, please provide a value for the Path parameter or change to a FileSystem location."
+        }
+    }
     
     If ( (Get-Item -Path $Path).PSIsContainer ) {
 
-        If ( $PSBoundParameters.ContainsKey('TestsPath') ) {
-            $Null = $PSBoundParameters.Remove('TestsPath')
-        }
-        $PowerShellFiles = Get-PowerShellFile @PSBoundParameters
+        $PowerShellFiles = Get-PowerShellFile -Path $Path -Recurse:$($Recurse.IsPresent)
     }
     Else {
         $PowerShellFiles = $Path

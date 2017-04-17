@@ -4,6 +4,12 @@ $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
 Describe 'Get-PSCodeHealth (again)' {
+
+    $InitialLocation = $PWD.ProviderPath
+    AfterEach {
+        Set-Location $InitialLocation
+    }
+
     InModuleScope $ModuleName {
 
         Copy-Item -Path (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName -Destination TestDrive:\
@@ -98,6 +104,20 @@ Describe 'Get-PSCodeHealth (again)' {
                 Foreach ( $TypeName in $ResultTypeNames ) {
                     $TypeName | Should Be 'PSCodeHealth.Function.HealthRecord'
                 }
+            }
+        }
+        Context 'No value is specified for the Path parameter' {
+
+            Mock Get-PowerShellFile { } -ParameterFilter { $Path  -eq $TestDrive }
+
+            It 'Should default to the current directory if we are in a FileSystem PowerShell drive' {
+                Set-Location $TestDrive
+                $Null = Get-PSCodeHealth -Recurse
+                Assert-MockCalled -CommandName Get-PowerShellFile -Scope It -ParameterFilter { $Path  -eq $TestDrive }
+            }
+            It 'Should throw we are in a PowerShell drive other than the FileSystem provider' {
+                { Set-Location HKLM:\ ; Get-PSCodeHealth } |
+                Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
             }
         }
     }
