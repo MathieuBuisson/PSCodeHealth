@@ -25,6 +25,15 @@ Describe 'Get-FunctionTestCoverage' {
                 Should Be 0
             }
         }
+        Context 'Invoke-Pester returns nothing at all' {
+
+            Mock Invoke-Pester { }
+
+            It 'Should not throw but return $Null' {
+                Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] |
+                Should BeNullOrEmpty
+            }
+        }
         Context 'TestsPath parameter' {
 
             New-Item -Path TestDrive:\Module -ItemType Directory

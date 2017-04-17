@@ -4,9 +4,9 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Get-PSCodeHealth' {
     InModuleScope $ModuleName {
 
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
         $ScriptPath = $PSScriptRoot
-
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+        
         Context 'Get-PowerShellFile returns 0 file' {
 
             Mock Get-PowerShellFile { }
@@ -87,28 +87,5 @@ Describe 'Get-PSCodeHealth' {
                 }
             }
         }
-<#        
-        Context 'Get-PowerShellFile returns 2 files' {
-
-            Mock Get-PowerShellFile { (Get-ChildItem "$ScriptPath\..\TestData" -Filter '*.ps*1').FullName }
-            $Result = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
-
-            It 'Should return 1 object for every function in every file' {
-                $Result.Count | Should Be 1
-            }
-        }
-
-        Context 'TestsPath parameter is not specified' {
-
-            Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
-            $ExpectedTestsPath = "$PSScriptRoot\..\TestData"
-            Mock New-PSCodeHealthReport { } -ParameterFilter {$TestsPath -eq $ExpectedTestsPath}
-
-            It 'Should set $TestsPath to the parent directory of the Path parameter' {
-                $Null = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData\2PublicFunctions.psm1"
-                Assert-MockCalled New-PSCodeHealthReport -Exactly 1 -Scope It
-            }
-        }
-    #>
     }
 }

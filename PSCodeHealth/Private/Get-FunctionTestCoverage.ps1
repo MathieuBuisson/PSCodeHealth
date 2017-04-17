@@ -46,23 +46,21 @@ Function Get-FunctionTestCoverage {
     }
 
     $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Show None -Verbose:$False
-    If ( -not($TestResult) ) {
-        return [System.Double]0
-    }
-    
-    $CodeCoverage = $TestResult.CodeCoverage
-    $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
-    Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
 
-    # To prevent any "Attempted to divide by zero" exceptions
-    If ( $CommandsFound -eq 0 ) {
-        return [System.Double]0
-    }
-    Else {
-        $CommandsExercised = $CodeCoverage.NumberOfCommandsExecuted
-        Write-VerboseOutput -Message "Number of commands exercised in the tests : $($CommandsExercised)"
+    If ( $TestResult.CodeCoverage ) {
+        $CodeCoverage = $TestResult.CodeCoverage
+        $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
+        Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
 
-        [System.Double]$CodeCoveragePerCent = [math]::Round(($CommandsExercised / $CommandsFound) * 100, 2)
+        # To prevent any "Attempted to divide by zero" exceptions
+        If ( $CommandsFound -ne 0 ) {
+            $CommandsExercised = $CodeCoverage.NumberOfCommandsExecuted
+            Write-VerboseOutput -Message "Number of commands exercised in the tests : $($CommandsExercised)"
+            [System.Double]$CodeCoveragePerCent = [math]::Round(($CommandsExercised / $CommandsFound) * 100, 2)
+        }
+        Else {
+            [System.Double]$CodeCoveragePerCent = 0
+        }
         return $CodeCoveragePerCent
     }
 }

@@ -19,6 +19,7 @@ Function Get-PowerShellFile {
 #>
     [CmdletBinding()]
     [OutputType([String[]])]
+
     Param (
         [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
         [validatescript({ Test-Path $_ -PathType Container })]
