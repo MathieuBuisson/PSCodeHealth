@@ -1,5 +1,5 @@
 # How to contribute
-Contributions to PSGithubSearch are highly encouraged and desired. Below are some guidelines that will help make the process as smooth as possible.
+Contributions to PSCodeHealth are highly encouraged and desired. Below are some guidelines that will help make the process as smooth as possible.
 
 # Getting Started
 * Make sure you have a [GitHub account](https://github.com/signup/free)
@@ -9,7 +9,7 @@ Contributions to PSGithubSearch are highly encouraged and desired. Below are som
 * Fork the repository on GitHub
 
 # Suggesting Enhancements
-I want to know what you think is missing from PSGithubSearch and how it can be made better.
+I want to know what you think is missing from PSCodeHealth and how it can be made better.
 * When submitting an issue for an enhancement, please be as clear as possible about why you think the enhancement is needed and what the benefit of
 it would be.
 
