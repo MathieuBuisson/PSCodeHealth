@@ -31,14 +31,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "LinesOfCodeTotal"' {
                 $Result.LinesOfCodeTotal | Should Be 0
             }
-            It 'Should return an object with the expected property "LinesOfCodePerFunction"' {
-                $Result.LinesOfCodePerFunction | Should Be 0
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 0
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
                 $Result.ScriptAnalyzerFindingsTotal | Should Be 0
             }
-            It 'Should return an object with the expected property "ScriptAnalyzerFindingsPerFunction"' {
-                $Result.ScriptAnalyzerFindingsPerFunction | Should Be 0
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -46,11 +46,11 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "CommandsMissedTotal"' {
                 $Result.CommandsMissedTotal | Should Be 3
             }
-            It 'Should return an object with the expected property "ComplexityPerFunction"' {
-                $Result.ComplexityPerFunction | Should Be 0
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 0
             }
-            It 'Should return an object with the expected property "NestingDepthPerFunction"' {
-                $Result.NestingDepthPerFunction | Should Be 0
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 0
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should BeNullOrEmpty
@@ -83,15 +83,15 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "LinesOfCodeTotal"' {
                 $Result.LinesOfCodeTotal | Should Be 101
             }
-            It 'Should return an object with the expected property "LinesOfCodePerFunction"' {
-                $Result.LinesOfCodePerFunction | Should Be 101
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 101
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
                 $Result.ScriptAnalyzerFindingsTotal | Should Be 11
             }
 
-            It 'Should return an object with the expected property "ScriptAnalyzerFindingsPerFunction"' {
-                $Result.ScriptAnalyzerFindingsPerFunction | Should Be 11
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 11
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -99,11 +99,11 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "CommandsMissedTotal"' {
                 $Result.CommandsMissedTotal | Should Be 3
             }
-            It 'Should return an object with the expected property "ComplexityPerFunction"' {
-                $Result.ComplexityPerFunction | Should Be 19
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 19
             }
-            It 'Should return an object with the expected property "NestingDepthPerFunction"' {
-                $Result.NestingDepthPerFunction | Should Be 5
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 5
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should Be $FunctionHealthRecord
@@ -132,14 +132,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "LinesOfCodeTotal"' {
                 $Result.LinesOfCodeTotal | Should Be 187
             }
-            It 'Should return an object with the expected property "LinesOfCodePerFunction"' {
-                $Result.LinesOfCodePerFunction | Should Be 93.5
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 93.5
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
                 $Result.ScriptAnalyzerFindingsTotal | Should Be 17
             }
-            It 'Should return an object with the expected property "ScriptAnalyzerFindingsPerFunction"' {
-                $Result.ScriptAnalyzerFindingsPerFunction | Should Be 8.5
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 8.5
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -147,11 +147,11 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "CommandsMissedTotal"' {
                 $Result.CommandsMissedTotal | Should Be 3
             }
-            It 'Should return an object with the expected property "ComplexityPerFunction"' {
-                $Result.ComplexityPerFunction | Should Be 15.5
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 15.5
             }
-            It 'Should return an object with the expected property "NestingDepthPerFunction"' {
-                $Result.NestingDepthPerFunction | Should Be 3.5
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 3.5
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should Be $FunctionHealthRecord
@@ -175,14 +175,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "LinesOfCodeTotal"' {
                 $Result.LinesOfCodeTotal | Should Be 0
             }
-            It 'Should return an object with the expected property "LinesOfCodePerFunction"' {
-                $Result.LinesOfCodePerFunction | Should Be 0
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 0
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
                 $Result.ScriptAnalyzerFindingsTotal | Should Be 3
             }
-            It 'Should return an object with the expected property "ScriptAnalyzerFindingsPerFunction"' {
-                $Result.ScriptAnalyzerFindingsPerFunction | Should Be 0
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -190,11 +190,11 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "CommandsMissedTotal"' {
                 $Result.CommandsMissedTotal | Should Be 0
             }
-            It 'Should return an object with the expected property "ComplexityPerFunction"' {
-                $Result.ComplexityPerFunction | Should Be 0
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 0
             }
-            It 'Should return an object with the expected property "NestingDepthPerFunction"' {
-                $Result.NestingDepthPerFunction | Should Be 0
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 0
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should BeNullOrEmpty
@@ -219,14 +219,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "LinesOfCodeTotal"' {
                 $Result.LinesOfCodeTotal | Should Be 0
             }
-            It 'Should return an object with the expected property "LinesOfCodePerFunction"' {
-                $Result.LinesOfCodePerFunction | Should Be 0
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 0
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
                 $Result.ScriptAnalyzerFindingsTotal | Should Be 3
             }
-            It 'Should return an object with the expected property "ScriptAnalyzerFindingsPerFunction"' {
-                $Result.ScriptAnalyzerFindingsPerFunction | Should Be 0
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should BeNullOrEmpty
@@ -234,11 +234,11 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "CommandsMissedTotal"' {
                 $Result.CommandsMissedTotal | Should BeNullOrEmpty
             }
-            It 'Should return an object with the expected property "ComplexityPerFunction"' {
-                $Result.ComplexityPerFunction | Should Be 0
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 0
             }
-            It 'Should return an object with the expected property "NestingDepthPerFunction"' {
-                $Result.NestingDepthPerFunction | Should Be 0
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 0
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should BeNullOrEmpty

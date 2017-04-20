@@ -32,4 +32,8 @@ Describe 'General Module behaviour' {
         (Get-FormatData -TypeName PSCodeHealth.Function.HealthRecord).FormatViewDefinition.Name |
         Should Be 'PSCodeHealth.Function.HealthRecord'
     }
+    It 'Links the type "PSCodeHealth.Overall.HealthReport" to the "PSCodeHealth.Overall.HealthReport" formatting view' {
+        (Get-FormatData -TypeName PSCodeHealth.Overall.HealthReport).FormatViewDefinition.Name |
+        Should Be 'PSCodeHealth.Overall.HealthReport'
+    }
 }

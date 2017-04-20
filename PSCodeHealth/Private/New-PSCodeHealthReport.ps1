@@ -79,13 +79,13 @@ Function New-PSCodeHealthReport {
         'Files'                             = $Path.Count
         'Functions'                         = $FunctionHealthRecord.Count
         'LinesOfCodeTotal'                  = ($FunctionHealthRecord.LinesOfCode | Measure-Object -Sum).Sum
-        'LinesOfCodePerFunction'            = [math]::Round(($FunctionHealthRecord.LinesOfCode | Measure-Object -Average).Average, 2)
+        'LinesOfCodeAverage'            = [math]::Round(($FunctionHealthRecord.LinesOfCode | Measure-Object -Average).Average, 2)
         'ScriptAnalyzerFindingsTotal'       = ($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Sum).Sum + $Psd1ScriptAnalyzerResults.Count
-        'ScriptAnalyzerFindingsPerFunction' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
+        'ScriptAnalyzerFindingsAverage' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
         'TestCoverage'                      = $CodeCoveragePerCent
         'CommandsMissedTotal'               = $CommandsMissed
-        'ComplexityPerFunction'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)
-        'NestingDepthPerFunction'           = [math]::Round(($FunctionHealthRecord.MaximumNestingDepth | Measure-Object -Average).Average, 2)
+        'ComplexityAverage'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)
+        'NestingDepthAverage'           = [math]::Round(($FunctionHealthRecord.MaximumNestingDepth | Measure-Object -Average).Average, 2)
         'FunctionHealthRecords'             = $FunctionHealthRecord
     }
 

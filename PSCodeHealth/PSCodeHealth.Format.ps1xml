@@ -55,5 +55,64 @@
                 </TableRowEntries>
             </TableControl>
         </View>
+        <View>
+            <Name>PSCodeHealth.Overall.HealthReport</Name> 
+            <ViewSelectedBy>
+                <TypeName>PSCodeHealth.Overall.HealthReport</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Files</Label>
+                        <Width>8</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Functions</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>LOC (Average)</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Findings (Total)</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Findings (Average)</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Complexity (Average)</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Test Coverage</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                    <TableColumnItems>
+                        <TableColumnItem>
+                            <PropertyName>Files</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Functions</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>LinesOfCodeAverage</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>ScriptAnalyzerFindingsTotal</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>ScriptAnalyzerFindingsAverage</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>ComplexityAverage</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <ScriptBlock>'{0} %' -f $_.TestCoverage.ToString()</ScriptBlock>
+                        </TableColumnItem>
+                    </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
     </ViewDefinitions>
 </Configuration>
