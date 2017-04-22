@@ -45,6 +45,9 @@ Describe 'Get-PSCodeHealth (again)' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0.25
             }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
             }
@@ -101,6 +104,9 @@ Describe 'Get-PSCodeHealth (again)' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0.5
+            }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0

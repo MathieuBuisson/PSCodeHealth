@@ -517,6 +517,16 @@
                     "NumberOfCommandsExecuted": 1
                 }
             }
+        },
+        {
+            "NumberOfTests": {
+                "TotalCount": 51,
+                "CodeCoverage": {
+                    "NumberOfCommandsAnalyzed": 27,
+                    "NumberOfCommandsMissed": 5,
+                    "NumberOfCommandsExecuted": 22
+                }
+            }
         }
     ],
     "New-FunctionHealthRecord": [

@@ -49,6 +49,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0
             }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
             }
@@ -66,10 +69,11 @@ Describe 'New-PSCodeHealthReport' {
             }
         }
 
-        Context 'The FunctionHealthRecord parameter contains 1 object' {
+        Context 'The FunctionHealthRecord parameter contains 1 object and there is test coverage' {
 
             $FunctionHealthRecord = ($Mocks.'New-FunctionHealthRecord'.Single)[0]
             $FunctionHealthRecord.psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
+            Mock Invoke-Pester { $Mocks.'Invoke-Pester'.'NumberOfTests' }
             $Result = New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
 
             It 'Should throw if the FunctionHealthRecord parameter does not contain PSCodeHealth.Function.HealthRecord object(s)' {
@@ -110,11 +114,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 3
             }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 51
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
-                $Result.TestCoverage | Should Be 0
+                $Result.TestCoverage | Should Be 81.48
             }
             It 'Should return an object with the expected property "CommandsMissedTotal"' {
-                $Result.CommandsMissedTotal | Should Be 3
+                $Result.CommandsMissedTotal | Should Be 5
             }
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 19
@@ -166,6 +173,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 4.5
+            }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -226,6 +236,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 4.5
             }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
             }
@@ -277,6 +290,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -330,6 +346,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should BeNullOrEmpty
