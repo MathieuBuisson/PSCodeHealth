@@ -49,10 +49,21 @@ Function New-PSCodeHealthReport {
     $Psd1Files = $Path | Where-Object { $_ -like "*.psd1" }
     If ( $Psd1Files ) {
         $Psd1ScriptAnalyzerResults = $Psd1Files | ForEach-Object { Invoke-ScriptAnalyzer -Path $_ }
+
+        # Have to do that because even if $Psd1ScriptAnalyzerResults is Null, it adds 1 to the number of items in $AllScriptAnalyzerResults
+        If ( $Psd1ScriptAnalyzerResults ) {
+            $AllScriptAnalyzerResults = ($FunctionHealthRecord.ScriptAnalyzerResultDetails | Where-Object { $_ }) + $Psd1ScriptAnalyzerResults
+        }
+        Else {
+            $AllScriptAnalyzerResults = ($FunctionHealthRecord.ScriptAnalyzerResultDetails | Where-Object { $_ })
+        }
     }
     Else {
-        $Psd1ScriptAnalyzerResults = $Null
+        $AllScriptAnalyzerResults = ($FunctionHealthRecord.ScriptAnalyzerResultDetails | Where-Object { $_ })
     }
+    $ScriptAnalyzerErrors = $AllScriptAnalyzerResults | Where-Object Severity -EQ 'Error'
+    $ScriptAnalyzerWarnings = $AllScriptAnalyzerResults | Where-Object Severity -EQ 'Warning'
+    $ScriptAnalyzerInformation = $AllScriptAnalyzerResults | Where-Object Severity -EQ 'Information'
 
     # Gettings overall test coverage for all code in $Path
     $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage $Path -Show None -PassThru -Verbose:$False -WarningAction SilentlyContinue
@@ -76,17 +87,20 @@ Function New-PSCodeHealthReport {
     }
 
     $ObjectProperties = [ordered]@{
-        'Files'                             = $Path.Count
-        'Functions'                         = $FunctionHealthRecord.Count
-        'LinesOfCodeTotal'                  = ($FunctionHealthRecord.LinesOfCode | Measure-Object -Sum).Sum
+        'Files'                         = $Path.Count
+        'Functions'                     = $FunctionHealthRecord.Count
+        'LinesOfCodeTotal'              = ($FunctionHealthRecord.LinesOfCode | Measure-Object -Sum).Sum
         'LinesOfCodeAverage'            = [math]::Round(($FunctionHealthRecord.LinesOfCode | Measure-Object -Average).Average, 2)
-        'ScriptAnalyzerFindingsTotal'       = ($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Sum).Sum + $Psd1ScriptAnalyzerResults.Count
+        'ScriptAnalyzerFindingsTotal'   = ($AllScriptAnalyzerResults | Measure-Object).Count
+        'ScriptAnalyzerErrors'          = ($ScriptAnalyzerErrors | Measure-Object).Count
+        'ScriptAnalyzerWarnings'        = ($ScriptAnalyzerWarnings | Measure-Object).Count
+        'ScriptAnalyzerInformation'     = ($ScriptAnalyzerInformation | Measure-Object).Count
         'ScriptAnalyzerFindingsAverage' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
-        'TestCoverage'                      = $CodeCoveragePerCent
-        'CommandsMissedTotal'               = $CommandsMissed
+        'TestCoverage'                  = $CodeCoveragePerCent
+        'CommandsMissedTotal'           = $CommandsMissed
         'ComplexityAverage'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)
         'NestingDepthAverage'           = [math]::Round(($FunctionHealthRecord.MaximumNestingDepth | Measure-Object -Average).Average, 2)
-        'FunctionHealthRecords'             = $FunctionHealthRecord
+        'FunctionHealthRecords'         = $FunctionHealthRecord
     }
 
     $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties

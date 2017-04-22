@@ -62,6 +62,15 @@ Describe 'Get-PSCodeHealth' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
                 $Result.ScriptAnalyzerFindingsTotal | Should Be 1
             }
+            It 'Should return an object with the expected property "ScriptAnalyzerErrors"' {
+                $Result.ScriptAnalyzerErrors | Should Be 0
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerWarnings"' {
+                $Result.ScriptAnalyzerWarnings | Should Be 1
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerInformation"' {
+                $Result.ScriptAnalyzerInformation | Should Be 0
+            }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0.5
             }
