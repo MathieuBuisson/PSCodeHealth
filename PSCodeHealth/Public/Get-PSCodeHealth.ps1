@@ -16,11 +16,21 @@ Function Get-PSCodeHealth {
 .PARAMETER Recurse
     To search PowerShell files in the Path directory and all subdirectories recursively.
 
+.PARAMETER Exclude
+    To specify file(s) to exclude from both the code analysis point of view and the test coverage point of view. The value of this parameter qualifies the Path parameter.
+    Enter a path element or pattern, such as *example*. Wildcards are permitted.
+
 .EXAMPLE
     Get-PowerShellFile -Path 'C:\GitRepos\MyModule' -Recurse -TestsPath 'C:\GitRepos\MyModule\Tests\Unit'
 
     Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
     This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\Unit, and any subdirectories.
+
+.EXAMPLE
+    Get-PowerShellFile -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -Recurse -Exclude "*example*"
+
+    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories, except for files containing "example" in their name.
+    This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\, and any subdirectories.
 
 .OUTPUTS
     PSCodeHealth.Overall.HealthReport
@@ -39,7 +49,10 @@ Function Get-PSCodeHealth {
         [validatescript({ Test-Path $_ })]
         [string]$TestsPath,
 
-        [switch]$Recurse
+        [switch]$Recurse,
+
+        [Parameter(Mandatory=$False)]
+        [string[]]$Exclude
     )
     If ( -not($PSBoundParameters.ContainsKey('Path')) ) {
 
@@ -52,8 +65,12 @@ Function Get-PSCodeHealth {
     }
     
     If ( (Get-Item -Path $Path).PSIsContainer ) {
-
-        $PowerShellFiles = Get-PowerShellFile -Path $Path -Recurse:$($Recurse.IsPresent)
+        If ( $PSBoundParameters.ContainsKey('Exclude') ) {
+            $PowerShellFiles = Get-PowerShellFile -Path $Path -Recurse:$($Recurse.IsPresent) -Exclude $Exclude
+        }
+        Else {
+            $PowerShellFiles = Get-PowerShellFile -Path $Path -Recurse:$($Recurse.IsPresent)
+        }
     }
     Else {
         $PowerShellFiles = $Path

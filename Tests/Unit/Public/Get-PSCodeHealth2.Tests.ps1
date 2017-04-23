@@ -144,5 +144,19 @@ Describe 'Get-PSCodeHealth (again)' {
                 Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
             }
         }
+        Context 'The Recurse and the Exclude parameters are used' {
+
+            Mock Get-PowerShellFile { } -ParameterFilter { $Recurse -and $Exclude -eq "Exclude*" }
+
+            It 'Should default to the current directory if we are in a FileSystem PowerShell drive' {
+                Set-Location $TestDrive
+                $Null = Get-PSCodeHealth -Recurse -Exclude "Exclude*"
+                Assert-MockCalled -CommandName Get-PowerShellFile -Scope It -ParameterFilter { $Recurse -and $Exclude -eq "Exclude*" }
+            }
+            It 'Should throw if we are in a PowerShell drive other than the FileSystem provider' {
+                { Set-Location HKLM:\ ; Get-PSCodeHealth -Recurse -Exclude "Exclude*" } |
+                Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
+            }
+        }
     }
 }
