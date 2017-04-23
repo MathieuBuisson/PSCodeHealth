@@ -1,4 +1,4 @@
-# PSCodeHealth  <img src= "https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png" alt="PSCodeHealth Logo" width="71" style="float: right"/>
+# PSCodeHealth  <img src= "https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png" alt="PSCodeHealth Logo" width="71" style="float: right;"/>
   
   
 PowerShell module gathering PowerShell code quality and maintainability metrics.  
