@@ -92,16 +92,16 @@ PrivateData = @{
     PSData = @{
 
         # Tags applied to this module. These help with module discovery in online galleries.
-        Tags = 'PowerShell', 'Quality', 'DevOps'
+        Tags = 'PowerShell', 'Quality', 'Metrics', 'DevOps'
 
         # A URL to the license for this module.
-        LicenseUri = 'https://github.com/MathieuBuisson/PSCodeHealth/blob/master/LICENSE'
+        LicenseUri = 'https://github.com/MathieuBuisson/PSCodeHealth/blob/master/LICENSE.md'
 
         # A URL to the main website for this project.
         ProjectUri = 'https://github.com/MathieuBuisson/PSCodeHealth'
 
         # A URL to an icon representing this module.
-        # IconUri = ''
+        IconUri = 'https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png'
 
         # ReleaseNotes of this module
         # ReleaseNotes = ''
