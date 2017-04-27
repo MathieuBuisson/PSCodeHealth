@@ -148,7 +148,7 @@ Describe 'Get-PSCodeHealth (again)' {
 
             Mock Get-PowerShellFile { } -ParameterFilter { $Recurse -and $Exclude -eq "Exclude*" }
 
-            It 'Should default to the current directory if we are in a FileSystem PowerShell drive' {
+            It 'Should pass the value of the Exclude parameter to Get-PowerShellFile if the Exclude parameter is specified' {
                 Set-Location $TestDrive
                 $Null = Get-PSCodeHealth -Recurse -Exclude "Exclude*"
                 Assert-MockCalled -CommandName Get-PowerShellFile -Scope It -ParameterFilter { $Recurse -and $Exclude -eq "Exclude*" }
