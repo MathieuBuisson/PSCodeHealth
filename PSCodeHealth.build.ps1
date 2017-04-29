@@ -19,7 +19,7 @@ task Clean {
     }
     Else {
         "$BuildOutput is not present, nothing to clean up."
-        New-Item -ItemType Directory -Path $BuildOutput
+        $Null = New-Item -ItemType Directory -Path $BuildOutput
     }
 }
 
@@ -42,8 +42,6 @@ task UnitTests {
         PassThru = $True
     }
     $Script:UnitTestsResult = Invoke-Pester @UnitTestParams
-    $TestsOutput = Invoke-Pester -Script '.\Tests' -CodeCoverage '.\PSCodeHealth\P*\*' -OutputFile TestResults.xml -PassThru
-
 }
 
 # Default task : runs all tasks
