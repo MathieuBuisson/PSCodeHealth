@@ -19,6 +19,7 @@ task Clean {
     }
     Else {
         "$BuildOutput is not present, nothing to clean up."
+        New-Item -ItemType Directory -Path $BuildOutput
     }
 }
 
@@ -26,10 +27,24 @@ task InstallDependencies {
     Write-TaskBanner -TaskName $Task.Name
 
     Foreach ( $Depend in $Script:Dependency ) {
-        Install-Module $Depend -Scope CurrentUser -Force -Verbose
-        Import-Module $Depend -Force -Verbose
+        Install-Module $Depend -Scope CurrentUser -Force
+        Import-Module $Depend -Force
     }
 }
 
+task UnitTests {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $UnitTestParams = @{
+        Script = '.\Tests'
+        CodeCoverage = '.\PSCodeHealth\P*\*'
+        OutputFile = 'UnitTestsResult.xml'
+        PassThru = $True
+    }
+    $Script:UnitTestsResult = Invoke-Pester @UnitTestParams
+    $TestsOutput = Invoke-Pester -Script '.\Tests' -CodeCoverage '.\PSCodeHealth\P*\*' -OutputFile TestResults.xml -PassThru
+
+}
+
 # Default task : runs all tasks
-task . Clean, InstallDependencies
+task . Clean, InstallDependencies, UnitTests

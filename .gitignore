@@ -33,7 +33,7 @@ bld/
 
 # NUNIT
 *.VisualState.xml
-TestResult.xml
+*TestResult*.xml
 
 # Build Results of an ATL Project
 [Dd]ebugPS/
@@ -253,3 +253,6 @@ paket-files/
 
 # Ignore VS Code workspace settings
 .vscode/*
+
+# Build results
+[Bb]uildOutput/
