@@ -6,46 +6,13 @@ environment:
   CA_Key:
     secure: 0eJvIYA/nSAW0zBTrjkNZ+7s76G3zGM5Oas2iWJicIwjZnRraAbtzrCCb8ndVMhq
 
-install:
+before_build:
   - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
   - ps: Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
   - ps: Install-PackageProvider -Name NuGet -Force
   - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
-  - ps: Install-Module Coveralls -Scope CurrentUser -Force
-  - ps: Import-Module Coveralls
-  - ps: Install-Module -Name Pester -Force
-  - ps: Install-Module PsScriptAnalyzer -Force
-  
-build: false
+  - ps: Install-Module InvokeBuild -Scope CurrentUser -AllowClobber -Force
+  - ps: Import-Module InvokeBuild
 
-test_script:
-  - ps: |
-      $TestsUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
-      $TestsOutput = Invoke-Pester -Script '.\Tests' -CodeCoverage '.\PSCodeHealth\P*\*' -OutputFile TestResults.xml -PassThru
-      (New-Object 'System.Net.WebClient').UploadFile($TestsUploadUrl, (Resolve-Path .\TestResults.xml))
-      $FailedCount = $TestsOutput.FailedCount
-      If ($FailedCount -gt 0) {
-        Add-AppveyorMessage -Message "$($FailedCount) Pester test(s) failed."
-
-        # Failing the build
-        Throw "Build failed because $($FailedCount) Pester test(s) failed"
-      }
-      $Coverage = Format-Coverage -PesterResults $TestsOutput -CoverallsApiToken $ENV:CA_Key -BranchName $ENV:APPVEYOR_REPO_BRANCH
-      Publish-Coverage -Coverage $Coverage
-
-  - ps: |
-      Add-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Running
-      $ScriptAnalyzerResults = Invoke-ScriptAnalyzer -Path '.\PSCodeHealth' -Severity Error -Recurse -ErrorAction SilentlyContinue
-      If ($ScriptAnalyzerResults) {
-        $ScriptAnalyzerResultString = $ScriptAnalyzerResults | Out-String
-        Write-Warning $ScriptAnalyzerResultString
-        Add-AppveyorMessage -Message "PSScriptAnalyzer output contained one or more result(s) with 'Error' severity.`
-        Check the 'Tests' tab of this build for more details." -Category Error
-        Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Failed -ErrorMessage $ScriptAnalyzerResultString
-        
-        # Failing the build
-        Throw "Build failed because there were one or more PSScriptAnalyzer violation(s)."
-      }
-      Else {
-        Update-AppveyorTest -Name "PsScriptAnalyzer" -Outcome Passed
-      }
+build_script:
+  - ps: Invoke-Build
