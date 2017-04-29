@@ -1,7 +1,7 @@
 $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
-Describe 'Get-PSCodeHealth' {
+Describe 'Invoke-PSCodeHealth' {
     InModuleScope $ModuleName {
 
         $ScriptPath = $PSScriptRoot
@@ -10,7 +10,7 @@ Describe 'Get-PSCodeHealth' {
         Context 'Get-PowerShellFile returns 0 file' {
 
             Mock Get-PowerShellFile { }
-            $Result = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+            $Result = Invoke-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
             It 'Should not throw but return $Null' {
                 $Result | Should Be $Null
@@ -20,7 +20,7 @@ Describe 'Get-PSCodeHealth' {
         Context 'Get-PowerShellFile returns 1 file' {
 
             Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
-            $Result = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+            $Result = Invoke-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
 
             It 'Should return 1 object' {
                 ($Result | Measure-Object).Count | Should Be 1
@@ -30,21 +30,21 @@ Describe 'Get-PSCodeHealth' {
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
             }
             It 'Should throw if the specified Path does not exist'  {
-                { Get-PSCodeHealth -Path 'Any' } |
+                { Invoke-PSCodeHealth -Path 'Any' } |
                 Should Throw
             }
             It 'Should not be $Null if Get-FunctionDefinition finds 0 function' {
                 Mock Get-FunctionDefinition { }
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
 
-                $ItResult = Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
+                $ItResult = Invoke-PSCodeHealth -Path "$PSScriptRoot\..\TestData"
                 $ItResult | Should Not BeNullOrEmpty
                 $ItResult.FunctionHealthRecords | Should BeNullOrEmpty
             }
             It 'Should remove TestsPath from $PSBoundParameters before calling Get-PowerShellFile' {
                 Mock Get-FunctionDefinition { }
                 Mock Get-PowerShellFile { "$ScriptPath\..\TestData\2PublicFunctions.psm1" }
-                { Get-PSCodeHealth -Path "$PSScriptRoot\..\TestData" -TestsPath "$PSScriptRoot\..\TestData" } |
+                { Invoke-PSCodeHealth -Path "$PSScriptRoot\..\TestData" -TestsPath "$PSScriptRoot\..\TestData" } |
                 Should Not Throw
             }
             It 'Should return an object with the expected property "Files"' {

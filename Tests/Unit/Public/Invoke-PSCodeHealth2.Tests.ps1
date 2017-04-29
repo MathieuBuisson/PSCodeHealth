@@ -3,7 +3,7 @@
 $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 
-Describe 'Get-PSCodeHealth (again)' {
+Describe 'Invoke-PSCodeHealth (again)' {
 
     $InitialLocation = $PWD.ProviderPath
     AfterEach {
@@ -16,7 +16,7 @@ Describe 'Get-PSCodeHealth (again)' {
             
         Context 'Get-PowerShellFile returns 2 files and TestsPath parameter is specified' {
 
-            $Result = Get-PSCodeHealth -Path $TestDrive -TestsPath $TestDrive
+            $Result = Invoke-PSCodeHealth -Path $TestDrive -TestsPath $TestDrive
 
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 2
@@ -72,7 +72,7 @@ Describe 'Get-PSCodeHealth (again)' {
         }
         Context 'The value for the Path parameter is a file' {
 
-            $Result = Get-PSCodeHealth -Path "$TestDrive\2PublicFunctions.psm1"
+            $Result = Invoke-PSCodeHealth -Path "$TestDrive\2PublicFunctions.psm1"
 
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
@@ -136,11 +136,11 @@ Describe 'Get-PSCodeHealth (again)' {
 
             It 'Should default to the current directory if we are in a FileSystem PowerShell drive' {
                 Set-Location $TestDrive
-                $Null = Get-PSCodeHealth -Recurse
+                $Null = Invoke-PSCodeHealth -Recurse
                 Assert-MockCalled -CommandName Get-PowerShellFile -Scope It -ParameterFilter { $Path  -eq $TestDrive }
             }
             It 'Should throw if we are in a PowerShell drive other than the FileSystem provider' {
-                { Set-Location HKLM:\ ; Get-PSCodeHealth } |
+                { Set-Location HKLM:\ ; Invoke-PSCodeHealth } |
                 Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
             }
         }
@@ -150,11 +150,11 @@ Describe 'Get-PSCodeHealth (again)' {
 
             It 'Should pass the value of the Exclude parameter to Get-PowerShellFile if the Exclude parameter is specified' {
                 Set-Location $TestDrive
-                $Null = Get-PSCodeHealth -Recurse -Exclude "Exclude*"
+                $Null = Invoke-PSCodeHealth -Recurse -Exclude "Exclude*"
                 Assert-MockCalled -CommandName Get-PowerShellFile -Scope It -ParameterFilter { $Recurse -and $Exclude -eq "Exclude*" }
             }
             It 'Should throw if we are in a PowerShell drive other than the FileSystem provider' {
-                { Set-Location HKLM:\ ; Get-PSCodeHealth -Recurse -Exclude "Exclude*" } |
+                { Set-Location HKLM:\ ; Invoke-PSCodeHealth -Recurse -Exclude "Exclude*" } |
                 Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
             }
         }

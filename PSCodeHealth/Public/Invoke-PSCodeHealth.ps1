@@ -1,4 +1,4 @@
-Function Get-PSCodeHealth {
+Function Invoke-PSCodeHealth {
 <#
 .SYNOPSIS
     Gets quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.
