@@ -26,8 +26,8 @@ task InstallDependencies {
     Write-TaskBanner -TaskName $Task.Name
 
     Foreach ( $Depend in $Script:Dependency ) {
-        Install-Module $Depend -Scope CurrentUser -Force
-        Import-Module $Depend -Force
+        Install-Module $Depend -Scope CurrentUser -Force -Verbose
+        Import-Module $Depend -Force -Verbose
     }
 }
 
