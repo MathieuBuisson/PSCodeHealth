@@ -21,20 +21,21 @@ Function Write-TaskBanner ( [string]$TaskName )
 task Clean {
     Write-TaskBanner -TaskName $Task.Name
 
-    If (Test-Path -Path $Script:BuildOutput) {
-        "Removing existing files and folders in $($Script:BuildOutput)\"
-        Get-ChildItem $Script:BuildOutput | Remove-Item -Force -Recurse
+    If (Test-Path -Path $BuildOutput) {
+        "Removing existing files and folders in $BuildOutput\"
+        Get-ChildItem $BuildOutput | Remove-Item -Force -Recurse
     }
     Else {
-        "$Script:BuildOutput is not present, nothing to clean up."
-        $Null = New-Item -ItemType Directory -Path $Script:BuildOutput
+        "$BuildOutput is not present, nothing to clean up."
+        $Null = New-Item -ItemType Directory -Path $BuildOutput
     }
 }
 
 task Install_Dependencies {
     Write-TaskBanner -TaskName $Task.Name
 
-    Foreach ( $Depend in $Script:Dependency ) {
+    Foreach ( $Depend in $Dependency ) {
+        "Installing build dependency : $Depend"
         Install-Module $Depend -Scope CurrentUser -Force
         Import-Module $Depend -Force
     }
@@ -46,7 +47,7 @@ task Unit_Tests {
     $UnitTestParams = @{
         Script = '.\Tests\Unit'
         CodeCoverage = '.\PSCodeHealth\P*\*'
-        OutputFile = "$($Script:BuildOutput)\UnitTestsResult.xml"
+        OutputFile = "$BuildOutput\UnitTestsResult.xml"
         PassThru = $True
     }
     $Script:UnitTestsResult = Invoke-Pester @UnitTestParams
@@ -55,14 +56,14 @@ task Unit_Tests {
 task Fail_If_Failed_Unit_Test {
     Write-TaskBanner -TaskName $Task.Name
 
-    $FailureMessage = '{0} Unit test(s) failed. Aborting build' -f $Script:UnitTestsResult.FailedCount
-    assert ($Script:UnitTestsResult.FailedCount -eq 0) $FailureMessage
+    $FailureMessage = '{0} Unit test(s) failed. Aborting build' -f $UnitTestsResult.FailedCount
+    assert ($UnitTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Publish_Unit_Tests_Coverage {
     Write-TaskBanner -TaskName $Task.Name
 
-    $Coverage = Format-Coverage -PesterResults $Script:UnitTestsResult -CoverallsApiToken $Script:CoverallsKey -BranchName $Script:Branch
+    $Coverage = Format-Coverage -PesterResults $UnitTestsResult -CoverallsApiToken $CoverallsKey -BranchName $Branch
     Publish-Coverage -Coverage $Coverage
 }
 
@@ -71,7 +72,7 @@ task Integration_Tests {
 
     $IntegrationTestParams = @{
         Script = '.\Tests\Integration'
-        OutputFile = "$($Script:BuildOutput)\IntegrationTestsResult.xml"
+        OutputFile = "$BuildOutput\IntegrationTestsResult.xml"
         PassThru = $True
     }
     $Script:IntegrationTestsResult = Invoke-Pester @IntegrationTestParams
@@ -80,17 +81,17 @@ task Integration_Tests {
 task Fail_If_Failed_Integration_Test {
     Write-TaskBanner -TaskName $Task.Name
 
-    $FailureMessage = '{0} Integration test(s) failed. Aborting build' -f $Script:IntegrationTestsResult.FailedCount
-    assert ($Script:IntegrationTestsResult.FailedCount -eq 0) $FailureMessage
+    $FailureMessage = '{0} Integration test(s) failed. Aborting build' -f $IntegrationTestsResult.FailedCount
+    assert ($IntegrationTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Upload_Test_Results_To_AppVeyor {
     Write-TaskBanner -TaskName $Task.Name
 
-    $TestResultFiles = (Get-ChildItem -Path $Script:BuildOutput -Filter '*TestsResult.xml').FullName
+    $TestResultFiles = (Get-ChildItem -Path $BuildOutput -Filter '*TestsResult.xml').FullName
     Foreach ( $TestResultFile in $TestResultFiles ) {
         "Uploading test result file : $TestResultFile"
-        (New-Object 'System.Net.WebClient').UploadFile($Script:TestUploadUrl, $TestResultFile)
+        (New-Object 'System.Net.WebClient').UploadFile($TestUploadUrl, $TestResultFile)
     }
 }
 
@@ -105,8 +106,8 @@ task Test Unit_Tests,
 Task Copy_Source_To_Build_Output {
     Write-TaskBanner -TaskName $Task.Name
 
-    "Copying the source folder [$Script:SourceFolder] into the build output folder : [$Script:BuildOutput]"
-    Copy-Item -Path $Script:SourceFolder -Destination $Script:BuildOutput -Recurse
+    "Copying the source folder [$SourceFolder] into the build output folder : [$BuildOutput]"
+    Copy-Item -Path $SourceFolder -Destination $BuildOutput -Recurse
 }
 
 # Default task :
