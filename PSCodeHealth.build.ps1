@@ -103,7 +103,34 @@ task Test Unit_Tests,
     # Fail_If_Failed_Integration_Test,
     Upload_Test_Results_To_AppVeyor
 
-Task Copy_Source_To_Build_Output {
+task Analyze {
+    Write-TaskBanner -TaskName $Task.Name
+
+    Add-AppveyorTest -Name 'Analyze' -Outcome Running
+    $AnalyzeParams = @{
+        Path = $SourceFolder
+        Severity = 'Error'
+        Recurse = $True
+    }
+    $Script:AnalyzeFindings = Invoke-ScriptAnalyzer @AnalyzeParams
+    If ( $AnalyzeFindings ) {
+        $FindingsString = $AnalyzeFindings | Out-String
+        Write-Warning $FindingsString
+        Update-AppveyorTest -Name 'Analyze' -Outcome Failed -ErrorMessage $FindingsString
+    }
+    Else {
+        Update-AppveyorTest -Name 'Analyze' -Outcome Passed
+    }
+}
+
+task Fail_If_Analyze_Findings {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $FailureMessage = 'PSScriptAnalyzer found {0} issues. Aborting build' -f $AnalyzeFindings.Count
+    assert ($AnalyzeFindings.Count -gt 0) $FailureMessage
+}
+
+task Copy_Source_To_Build_Output {
     Write-TaskBanner -TaskName $Task.Name
 
     "Copying the source folder [$SourceFolder] into the build output folder : [$BuildOutput]"
@@ -114,4 +141,6 @@ Task Copy_Source_To_Build_Output {
 task . Clean,
     Install_Dependencies,
     Test,
+    Analyze,
+    Fail_If_Analyze_Findings,
     Copy_Source_To_Build_Output
