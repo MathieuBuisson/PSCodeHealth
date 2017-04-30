@@ -127,7 +127,7 @@ task Fail_If_Analyze_Findings {
     Write-TaskBanner -TaskName $Task.Name
 
     $FailureMessage = 'PSScriptAnalyzer found {0} issues. Aborting build' -f $AnalyzeFindings.Count
-    assert ($AnalyzeFindings.Count -gt 0) $FailureMessage
+    assert ( -not($AnalyzeFindings) ) $FailureMessage
 }
 
 task Copy_Source_To_Build_Output {
