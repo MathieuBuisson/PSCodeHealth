@@ -15,4 +15,4 @@ before_build:
   - ps: Import-Module InvokeBuild
 
 build_script:
-  - ps: Invoke-Build
+  - ps: Invoke-Build -Summary
