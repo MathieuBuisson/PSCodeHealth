@@ -59,7 +59,7 @@ task Fail_If_Failed_Unit_Test {
     assert ($Script:UnitTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
-task Publish_Unit_Tests_Coverage -If ($Script:UnitTestsResult.CodeCoverage -ne $Null) {
+task Publish_Unit_Tests_Coverage {
     Write-TaskBanner -TaskName $Task.Name
 
     $Coverage = Format-Coverage -PesterResults $Script:UnitTestsResult -CoverallsApiToken $Script:CoverallsKey -BranchName $Script:Branch
