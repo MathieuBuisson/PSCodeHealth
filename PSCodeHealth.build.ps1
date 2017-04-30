@@ -58,7 +58,7 @@ task Fail_If_Failed_Unit_Test -If ( $Script:UnitTestsResult.FailedCount -ne 0 ) 
     assert ($Script:UnitTestsResult.FailedCount -eq 0) ('{0} Unit test(s) failed. Aborting build' -f $Script:UnitTestsResult.FailedCount)
 }
 
-task Publish_Unit_Tests_Coverage -If ( $($Script:UnitTestsResult).CodeCoverage ) {
+task Publish_Unit_Tests_Coverage -If ( $Script:UnitTestsResult.CodeCoverage ) {
     Write-TaskBanner -TaskName $Task.Name
 
     $Coverage = Format-Coverage -PesterResults $Script:UnitTestsResult -CoverallsApiToken $Script:CoverallsKey -BranchName $Script:Branch
