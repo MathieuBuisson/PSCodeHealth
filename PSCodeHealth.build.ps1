@@ -52,13 +52,14 @@ task Unit_Tests {
     $Script:UnitTestsResult = Invoke-Pester @UnitTestParams
 }
 
-task Fail_If_Failed_Unit_Test -If ( $Script:UnitTestsResult.FailedCount -ne 0 ) {
+task Fail_If_Failed_Unit_Test {
     Write-TaskBanner -TaskName $Task.Name
 
-    assert ($Script:UnitTestsResult.FailedCount -eq 0) ('{0} Unit test(s) failed. Aborting build' -f $Script:UnitTestsResult.FailedCount)
+    $FailureMessage = '{0} Unit test(s) failed. Aborting build' -f $Script:UnitTestsResult.FailedCount
+    assert ($Script:UnitTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
-task Publish_Unit_Tests_Coverage -If ( $Script:UnitTestsResult.CodeCoverage ) {
+task Publish_Unit_Tests_Coverage -If ($Script:UnitTestsResult.CodeCoverage -ne $Null) {
     Write-TaskBanner -TaskName $Task.Name
 
     $Coverage = Format-Coverage -PesterResults $Script:UnitTestsResult -CoverallsApiToken $Script:CoverallsKey -BranchName $Script:Branch
@@ -76,10 +77,11 @@ task Integration_Tests {
     $Script:IntegrationTestsResult = Invoke-Pester @IntegrationTestParams
 }
 
-task Fail_If_Failed_Integration_Test -If ( $Script:IntegrationTestsResult.FailedCount -ne 0 ) {
+task Fail_If_Failed_Integration_Test {
     Write-TaskBanner -TaskName $Task.Name
 
-    assert ($Script:IntegrationTestsResult.FailedCount -eq 0) ('{0} Integration test(s) failed. Aborting build' -f $Script:IntegrationTestsResult.FailedCount)
+    $FailureMessage = '{0} Integration test(s) failed. Aborting build' -f $Script:IntegrationTestsResult.FailedCount
+    assert ($Script:IntegrationTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Upload_Test_Results_To_AppVeyor {
