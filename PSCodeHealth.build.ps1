@@ -4,7 +4,13 @@ Param (
 
     [string[]]$Dependency = @('Coveralls','Pester','PsScriptAnalyzer'),
 
-    [string]$SourceFolder = "$PSScriptRoot\$($env:APPVEYOR_PROJECT_NAME)"
+    [string]$SourceFolder = "$PSScriptRoot\$($env:APPVEYOR_PROJECT_NAME)",
+
+    [string]$TestUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)",
+
+    [string]$CoverallsKey = $env:CA_Key,
+
+    [string]$Branch = $env:APPVEYOR_REPO_BRANCH
 )
 
 Function Write-TaskBanner ( [string]$TaskName )
@@ -17,7 +23,7 @@ task Clean {
 
     If (Test-Path -Path $Script:BuildOutput) {
         "Removing existing files and folders in $($Script:BuildOutput)\"
-        Get-ChildItem .\BuildOutput\ | Remove-Item -Force -Recurse
+        Get-ChildItem $Script:BuildOutput | Remove-Item -Force -Recurse
     }
     Else {
         "$Script:BuildOutput is not present, nothing to clean up."
@@ -40,7 +46,7 @@ task Unit_Tests {
     $UnitTestParams = @{
         Script = '.\Tests\Unit'
         CodeCoverage = '.\PSCodeHealth\P*\*'
-        OutputFile = 'UnitTestsResult.xml'
+        OutputFile = "$($Script:BuildOutput)\UnitTestsResult.xml"
         PassThru = $True
     }
     $Script:UnitTestsResult = Invoke-Pester @UnitTestParams
@@ -52,13 +58,57 @@ task Fail_If_Failed_Unit_Test -If ( $Script:UnitTestsResult.FailedCount -ne 0 ) 
     assert ($Script:UnitTestsResult.FailedCount -eq 0) ('{0} Unit test(s) failed. Aborting build' -f $Script:UnitTestsResult.FailedCount)
 }
 
+task Publish_Unit_Tests_Coverage -If ( $Script:UnitTestsResult.CodeCoverage ) {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $Coverage = Format-Coverage -PesterResults $Script:UnitTestsResult -CoverallsApiToken $Script:CoverallsKey -BranchName $Script:Branch
+    Publish-Coverage -Coverage $Coverage
+}
+
+task Integration_Tests {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $IntegrationTestParams = @{
+        Script = '.\Tests\Integration'
+        OutputFile = "$($Script:BuildOutput)\IntegrationTestsResult.xml"
+        PassThru = $True
+    }
+    $Script:IntegrationTestsResult = Invoke-Pester @IntegrationTestParams
+}
+
+task Fail_If_Failed_Integration_Test -If ( $Script:IntegrationTestsResult.FailedCount -ne 0 ) {
+    Write-TaskBanner -TaskName $Task.Name
+
+    assert ($Script:IntegrationTestsResult.FailedCount -eq 0) ('{0} Integration test(s) failed. Aborting build' -f $Script:IntegrationTestsResult.FailedCount)
+}
+
+task Upload_Test_Results_To_AppVeyor {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $TestResultFiles = (Get-ChildItem -Path $Script:BuildOutput -Filter '*TestsResult.xml').FullName
+    Foreach ( $TestResultFile in $TestResultFiles ) {
+        "Uploading test result file : $TestResultFile"
+        (New-Object 'System.Net.WebClient').UploadFile($Script:TestUploadUrl, $TestResultFile)
+    }
+}
+
+task Test Unit_Tests,
+    Fail_If_Failed_Unit_Test,
+    Publish_Unit_Tests_Coverage,
+    Integration_Tests,
+    # There are no integration tests at the moment
+    # Fail_If_Failed_Integration_Test,
+    Upload_Test_Results_To_AppVeyor
+
 Task Copy_Source_To_Build_Output {
     Write-TaskBanner -TaskName $Task.Name
 
-    "Copying the source directory [$Script:SourceFolder] into the build output folder : [$Script:BuildOutput]"
+    "Copying the source folder [$Script:SourceFolder] into the build output folder : [$Script:BuildOutput]"
     Copy-Item -Path $Script:SourceFolder -Destination $Script:BuildOutput -Recurse
 }
 
-
 # Default task :
-task . Clean, Install_Dependencies, Unit_Tests, Fail_If_Failed_Unit_Test, Copy_Source_To_Build_Output
+task . Clean,
+    Install_Dependencies,
+    Test,
+    Copy_Source_To_Build_Output
