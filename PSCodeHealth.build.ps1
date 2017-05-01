@@ -127,6 +127,7 @@ Task Build_Documentation {
     $PlatyPSSettings = $Settings.PlatyPSParams
     New-MarkdownHelp @PlatyPSSettings | Foreach-Object {
         $Part = '    - {0}: Functions/{1}' -f $_.BaseName, $_.Name
+        "Created markdown help file : $_.FullName"
         $HeaderContent += "{0}`n" -f $Part
     }
     $HeaderContent | Set-Content -Path $Settings.MkdocsPath -Force
