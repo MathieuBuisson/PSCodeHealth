@@ -2,7 +2,7 @@
 
 # Storing all values in a single $Settings variable to make it obvious that the values are coming from this BuildSettings file when accessing them.
 $Settings = @{
-    
+
     BuildOutput = "$PSScriptRoot\BuildOutput"
     Dependency = @('Coveralls','Pester','PsScriptAnalyzer')
     SourceFolder = "$PSScriptRoot\$($env:APPVEYOR_PROJECT_NAME)"
@@ -28,4 +28,9 @@ $Settings = @{
         Severity = 'Error'
         Recurse = $True
     }
+
+    IsPullRequest = ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0)
+    Version = $env:APPVEYOR_BUILD_VERSION
+    ManifestPath = '{0}\BuildOutput\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
+    VersionRegex = "ModuleVersion\s=\s'(?<ModuleVersion>\S+)'" -as [regex]
 }

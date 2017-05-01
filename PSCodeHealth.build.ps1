@@ -114,10 +114,28 @@ task Copy_Source_To_Build_Output {
     Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
 }
 
+task Set_Module_Version {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $ManifestContent = Get-Content -Path $Settings.ManifestPath
+    $CurrentVersion = $Settings.VersionRegex.Match($ManifestContent).Groups['ModuleVersion'].Value
+    "Current module version in the manifest : $CurrentVersion"
+
+    $ManifestContent -replace $CurrentVersion,$Settings.Version | Set-Content -Path $Settings.ManifestPath -Force
+    $NewManifestContent = Get-Content -Path $Settings.ManifestPath
+    $NewVersion = $Settings.VersionRegex.Match($NewManifestContent).Groups['ModuleVersion'].Value
+    "Updated module version in the manifest : $NewVersion"
+
+    If ( $NewVersion -ne $Settings.Version ) {
+        Throw "Module version was not updated correctly to $($Settings.Version) in the manifest."
+    }
+}
+
 # Default task :
 task . Clean,
     Install_Dependencies,
     Test,
     Analyze,
     Fail_If_Analyze_Findings,
-    Copy_Source_To_Build_Output
+    Copy_Source_To_Build_Output,
+    Set_Module_Version
