@@ -2,34 +2,42 @@ Function Invoke-PSCodeHealth {
 <#
 .SYNOPSIS
     Gets quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.
+
 .DESCRIPTION
     Gets quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.
+    These metrics relate to :  
+      - Length of functions  
+      - Complexity of functions  
+      - Code smells, styling issues and violations of best practices (using PSScriptAnalyzer)  
+      - Tests and test coverage (using Pester to run tests)  
+      - Comment-based help in functions  
 
 .PARAMETER Path
-    To specify the path of the directory to search for PowerShell files to analyze.
+    To specify the path of the directory to search for PowerShell files to analyze.  
     If the Path is not specified and the current location is in a FileSystem PowerShell drive, this will default to the current directory.
 
 .PARAMETER TestsPath
-    To specify the file or directory where tests are located.
+    To specify the file or directory where tests are located.  
     If not specified, the command will look for tests in the same directory as each function.
 
 .PARAMETER Recurse
     To search PowerShell files in the Path directory and all subdirectories recursively.
 
 .PARAMETER Exclude
-    To specify file(s) to exclude from both the code analysis point of view and the test coverage point of view. The value of this parameter qualifies the Path parameter.
+    To specify file(s) to exclude from both the code analysis point of view and the test coverage point of view.  
+    The value of this parameter qualifies the Path parameter.  
     Enter a path element or pattern, such as *example*. Wildcards are permitted.
 
 .EXAMPLE
-    Get-PowerShellFile -Path 'C:\GitRepos\MyModule' -Recurse -TestsPath 'C:\GitRepos\MyModule\Tests\Unit'
+    PS C:\> Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -Recurse -TestsPath 'C:\GitRepos\MyModule\Tests\Unit'
 
-    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
+    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.  
     This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\Unit, and any subdirectories.
 
 .EXAMPLE
-    Get-PowerShellFile -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -Recurse -Exclude "*example*"
+    PS C:\> Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -Recurse -Exclude "*example*"
 
-    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories, except for files containing "example" in their name.
+    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories, except for files containing "example" in their name.  
     This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\, and any subdirectories.
 
 .OUTPUTS

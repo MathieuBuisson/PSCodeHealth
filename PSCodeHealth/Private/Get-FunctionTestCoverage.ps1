@@ -16,7 +16,7 @@ Function Get-FunctionTestCoverage {
     If not specified, the directory of the file containing the specified function, and all subdirectories will be searched for tests.
 
 .EXAMPLE
-    Get-FunctionTestCoverage -FunctionDefinition $MyFunctionAst -TestsPath $MyModule.ModuleBase
+    PS C:\> Get-FunctionTestCoverage -FunctionDefinition $MyFunctionAst -TestsPath $MyModule.ModuleBase
 
     Gets the percentage of lines of code in the function $MyFunctionAst that are tested by all tests found in the module's parent directory.
 

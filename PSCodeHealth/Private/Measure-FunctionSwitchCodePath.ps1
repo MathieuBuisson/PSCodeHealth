@@ -9,7 +9,7 @@ Function Measure-FunctionSwitchCodePath {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionSwitchCodePath -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionSwitchCodePath -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to Switch statements in the specified function definition.
 

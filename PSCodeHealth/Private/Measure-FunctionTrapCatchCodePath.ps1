@@ -9,7 +9,7 @@ Function Measure-FunctionTrapCatchCodePath {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionTrapCatchCodePath -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionTrapCatchCodePath -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to Trap statements and Catch clauses in Try statements, in the specified function definition.
 

@@ -107,6 +107,46 @@ task Fail_If_Analyze_Findings {
     assert ( -not($AnalyzeFindings) ) $FailureMessage
 }
 
+Task Build_Documentation {
+    Write-TaskBanner -TaskName $Task.Name
+    
+    Remove-Module -Name $Settings.ModuleName -Force -ErrorAction SilentlyContinue
+    # platyPS + AppVeyor requires the module to be loaded in Global scope
+    Import-Module $Settings.ManifestPath -Force -Global
+    
+    $HeaderContent = Get-Content -Path $Settings.HeaderPath -Raw
+    $HeaderContent += "  - Public Functions:`n"
+
+    If (Test-Path -Path $Settings.FunctionDocsPath) {
+        Get-ChildItem $Settings.FunctionDocsPath | Remove-Item -Force -Recurse
+    }
+    Else {
+        $Null = New-Item -ItemType Directory -Path $Settings.FunctionDocsPath
+    }
+
+    $PlatyPSSettings = $Settings.PlatyPSParams
+    New-MarkdownHelp @PlatyPSSettings | Foreach-Object {
+        $Part = '    - {0}: Functions/{1}' -f $_.BaseName, $_.Name
+        $HeaderContent += "{0}`n" -f $Part
+    }
+    $HeaderContent | Set-Content -Path $Settings.MkdocsPath -Force
+}
+
+task Push_Build_Changes_To_Repo {
+    Write-TaskBanner -TaskName $Task.Name  
+    
+    cmd /c "git config --global credential.helper store 2>&1"    
+    Add-Content "$env:USERPROFILE\.git-credentials" "https://$($Settings.GitHubKey):x-oauth-basic@github.com`n"
+    cmd /c "git config --global user.email ""$($Settings.Email)"" 2>&1"
+    cmd /c "git config --global user.name ""$($Settings.Name)"" 2>&1"
+    cmd /c "git config --global core.autocrlf true 2>&1"
+    cmd /c "git checkout $($Settings.Branch) 2>&1"
+    cmd /c "git add -A 2>&1"
+    cmd /c "git commit -m ""Post-build commit[ci skip]"" 2>&1"
+    cmd /c "git status 2>&1"
+    cmd /c "git push origin $($Settings.Branch) 2>&1"
+}
+
 task Copy_Source_To_Build_Output {
     Write-TaskBanner -TaskName $Task.Name
 
@@ -117,12 +157,12 @@ task Copy_Source_To_Build_Output {
 task Set_Module_Version {
     Write-TaskBanner -TaskName $Task.Name
 
-    $ManifestContent = Get-Content -Path $Settings.ManifestPath
+    $ManifestContent = Get-Content -Path $Settings.NewManifestPath
     $CurrentVersion = $Settings.VersionRegex.Match($ManifestContent).Groups['ModuleVersion'].Value
     "Current module version in the manifest : $CurrentVersion"
 
-    $ManifestContent -replace $CurrentVersion,$Settings.Version | Set-Content -Path $Settings.ManifestPath -Force
-    $NewManifestContent = Get-Content -Path $Settings.ManifestPath
+    $ManifestContent -replace $CurrentVersion,$Settings.Version | Set-Content -Path $Settings.NewManifestPath -Force
+    $NewManifestContent = Get-Content -Path $Settings.NewManifestPath
     $NewVersion = $Settings.VersionRegex.Match($NewManifestContent).Groups['ModuleVersion'].Value
     "Updated module version in the manifest : $NewVersion"
 
@@ -137,5 +177,7 @@ task . Clean,
     Test,
     Analyze,
     Fail_If_Analyze_Findings,
+    Build_Documentation,
+    Push_Build_Changes_To_Repo,
     Copy_Source_To_Build_Output,
     Set_Module_Version

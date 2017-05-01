@@ -10,7 +10,7 @@ Function Get-FunctionLinesOfCode {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Get-FunctionLinesOfCode -FunctionDefinition $MyFunctionAst
+    PS C:\> Get-FunctionLinesOfCode -FunctionDefinition $MyFunctionAst
 
     Returns the number of lines of code in the specified function definition.
 

@@ -1,0 +1,8 @@
+site_name: PSCodeHealth
+repo_url: https://github.com/MathieuBuisson/PSCodeHealth
+site_author: Mathieu Buisson
+edit_uri: edit/master/docs/
+theme: readthedocs
+copyright: "PSCodeHealth is licensed under the <a href='https://github.com/MathieuBuisson/PSCodeHealth/raw/master/LICENSE.md'>MIT license"
+pages:
+  - Home: index.md

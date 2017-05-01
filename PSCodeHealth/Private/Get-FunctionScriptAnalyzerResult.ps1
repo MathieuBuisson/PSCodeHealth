@@ -10,7 +10,7 @@ Function Get-FunctionScriptAnalyzerResult {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Get-FunctionScriptAnalyzerResult -FunctionDefinition $MyFunctionAst
+    PS C:\> Get-FunctionScriptAnalyzerResult -FunctionDefinition $MyFunctionAst
 
     Returns the best practices violations details (PSScriptAnalyzer results) in the specified function definition.
 

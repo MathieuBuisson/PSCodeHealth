@@ -9,12 +9,13 @@ Function Get-FunctionDefinition {
     To specify the path of the file to analyze.
 
 .EXAMPLE
-    Get-FunctionDefinition -Path C:\GitRepos\MyModule\MyModule.psd1
+    PS C:\> Get-FunctionDefinition -Path C:\GitRepos\MyModule\MyModule.psd1
 
     Gets all function definitions in the module specified by its manifest, as FunctionDefinitionAst objects.
 
 .OUTPUTS
     System.Management.Automation.Language.FunctionDefinitionAst
+
 .NOTES
     
 #>

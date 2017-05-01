@@ -18,7 +18,7 @@ Function New-PSCodeHealthReport {
     If a directory is specified, the directory and all subdirectories will be searched recursively for tests.
 
 .EXAMPLE
-    New-PSCodeHealthReport -Path $MyPath -FunctionHealthRecord $FunctionHealthRecords -TestsPath "$MyPath\Tests"
+    PS C:\> New-PSCodeHealthReport -Path $MyPath -FunctionHealthRecord $FunctionHealthRecords -TestsPath "$MyPath\Tests"
 
     Returns new custom object of the type PSCodeHealth.Overall.HealthReport, containing metrics for the code in all the PowerShell files in $MyPath, using the function health records in $FunctionHealthRecords and running all tests in "$MyPath\Tests" (and its subdirectories) to generate test coverage information.
 

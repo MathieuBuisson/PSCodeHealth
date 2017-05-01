@@ -10,14 +10,16 @@ Function Measure-FunctionMaxNestingDepth {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionMaxNestingDepth -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionMaxNestingDepth -FunctionDefinition $MyFunctionAst
 
     Gets the depth of the most deeply nested statement in the specified function definition.
 
 .OUTPUTS
     System.Int32
 
-.NOTES
+.LINK
+    Additional information on why maximum nesting depth is an interesting measure of code complexity :
+    https://www.cqse.eu/en/blog/mccabe-cyclomatic-complexity/
     
 #>
     [CmdletBinding()]

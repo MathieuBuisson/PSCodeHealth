@@ -9,7 +9,7 @@ Function Measure-FunctionLogicalOpCodePath {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionLogicalOpCodePath -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionLogicalOpCodePath -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to Switch statements in the specified function definition.
 

@@ -12,7 +12,7 @@ Function New-FunctionHealthRecord {
     To specify the percentage of lines of code in the specified function that are tested by unit tests.
 
 .EXAMPLE
-    New-FunctionHealthRecord -FunctionDefinition $MyFunctionAst -FunctionTestCoverage $TestCoverage
+    PS C:\> New-FunctionHealthRecord -FunctionDefinition $MyFunctionAst -FunctionTestCoverage $TestCoverage
 
     Returns new custom object of the type PSCodeHealth.Function.HealthRecord.
 

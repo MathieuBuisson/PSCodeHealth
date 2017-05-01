@@ -9,7 +9,7 @@ Function Measure-FunctionForCodePath {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionForCodePath -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionForCodePath -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to for loops in the specified function definition.
 

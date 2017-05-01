@@ -17,14 +17,18 @@ Function Get-PowerShellFile {
     Enter a path element or pattern, such as *example*. Wildcards are permitted.
 
 .EXAMPLE
-    Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse
+    PS C:\> Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse
 
     Gets all PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
 
 .EXAMPLE
-    Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse -Exclude "*example*"
+    PS C:\> Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse -Exclude "*example*"
 
     Gets PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories, except for files containing "example" in their name.
+
+.OUTPUTS
+    System.String
+
 #>
     [CmdletBinding()]
     [OutputType([String[]])]

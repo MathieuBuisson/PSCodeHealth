@@ -12,7 +12,7 @@ Function Measure-FunctionComplexity {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionComplexity -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionComplexity -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to While statements in the specified function definition.
 

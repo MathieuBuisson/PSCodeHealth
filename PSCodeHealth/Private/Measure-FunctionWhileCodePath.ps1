@@ -9,7 +9,7 @@ Function Measure-FunctionWhileCodePath {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionWhileCodePath -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionWhileCodePath -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to While statements in the specified function definition.
 

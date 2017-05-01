@@ -9,7 +9,7 @@ Function Measure-FunctionIfCodePath {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Measure-FunctionIfCodePath -FunctionDefinition $MyFunctionAst
+    PS C:\> Measure-FunctionIfCodePath -FunctionDefinition $MyFunctionAst
 
     Gets the number of additional code paths due to If statements in the specified function definition.
 

@@ -9,7 +9,7 @@ Function Test-FunctionHelpCoverage {
     To specify the function definition to analyze.
 
 .EXAMPLE
-    Test-FunctionHelpCoverage -FunctionDefinition $MyFunctionAst
+    PS C:\> Test-FunctionHelpCoverage -FunctionDefinition $MyFunctionAst
 
     Returns $True if the specified function definition contains help information, returns $False if not.
 

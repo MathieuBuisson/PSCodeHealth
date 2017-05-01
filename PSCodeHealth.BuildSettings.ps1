@@ -4,7 +4,7 @@
 $Settings = @{
 
     BuildOutput = "$PSScriptRoot\BuildOutput"
-    Dependency = @('Coveralls','Pester','PsScriptAnalyzer')
+    Dependency = @('Coveralls','Pester','PsScriptAnalyzer','platyPS')
     SourceFolder = "$PSScriptRoot\$($env:APPVEYOR_PROJECT_NAME)"
     TestUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
     CoverallsKey = $env:Coveralls_Key
@@ -31,6 +31,22 @@ $Settings = @{
 
     IsPullRequest = ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0)
     Version = $env:APPVEYOR_BUILD_VERSION
-    ManifestPath = '{0}\BuildOutput\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
+    NewManifestPath = '{0}\BuildOutput\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
     VersionRegex = "ModuleVersion\s=\s'(?<ModuleVersion>\S+)'" -as [regex]
+
+    ModuleName = $env:APPVEYOR_PROJECT_NAME
+    ManifestPath = '{0}\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
+    HeaderPath = "$PSScriptRoot\header-mkdocs.yml"
+    MkdocsPath = "$PSScriptRoot\mkdocs.yml"
+    FunctionDocsPath = "$PSScriptRoot\docs\Functions"
+    PlatyPSParams = @{
+        Module = $env:APPVEYOR_PROJECT_NAME        
+        OutputFolder = "$PSScriptRoot\docs\Functions"
+        NoMetadata = $True
+        Force = $True
+    }
+
+    GitHubKey = $env:GitHub_Key
+    Email = 'email.example.com'
+    Name = 'Mathieu Buisson'
 }
