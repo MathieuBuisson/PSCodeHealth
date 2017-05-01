@@ -3,7 +3,7 @@ version: 0.1.{build}
 os: WMF 5
 
 environment:
-  CA_Key:
+  Coveralls_Key:
     secure: 0eJvIYA/nSAW0zBTrjkNZ+7s76G3zGM5Oas2iWJicIwjZnRraAbtzrCCb8ndVMhq
 
 before_build:

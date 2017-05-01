@@ -1,40 +1,29 @@
 #Requires -Modules 'InvokeBuild'
-Param (
-    [string]$BuildOutput = "$PSScriptRoot\BuildOutput",
 
-    [string[]]$Dependency = @('Coveralls','Pester','PsScriptAnalyzer'),
+# Importing all build settings into the current scope
+. '.\PSCodeHealth.BuildSettings.ps1'
 
-    [string]$SourceFolder = "$PSScriptRoot\$($env:APPVEYOR_PROJECT_NAME)",
-
-    [string]$TestUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)",
-
-    [string]$CoverallsKey = $env:CA_Key,
-
-    [string]$Branch = $env:APPVEYOR_REPO_BRANCH
-)
-
-Function Write-TaskBanner ( [string]$TaskName )
-{
+Function Write-TaskBanner ( [string]$TaskName ) {
     "`n" + ('-' * 79) + "`n" + "`t`t`t $($TaskName.ToUpper()) `n" + ('-' * 79) + "`n"
 }
 
 task Clean {
     Write-TaskBanner -TaskName $Task.Name
 
-    If (Test-Path -Path $BuildOutput) {
-        "Removing existing files and folders in $BuildOutput\"
-        Get-ChildItem $BuildOutput | Remove-Item -Force -Recurse
+    If (Test-Path -Path $Settings.BuildOutput) {
+        "Removing existing files and folders in $($Settings.BuildOutput)\"
+        Get-ChildItem $Settings.BuildOutput | Remove-Item -Force -Recurse
     }
     Else {
-        "$BuildOutput is not present, nothing to clean up."
-        $Null = New-Item -ItemType Directory -Path $BuildOutput
+        "$($Settings.BuildOutput) is not present, nothing to clean up."
+        $Null = New-Item -ItemType Directory -Path $Settings.BuildOutput
     }
 }
 
 task Install_Dependencies {
     Write-TaskBanner -TaskName $Task.Name
 
-    Foreach ( $Depend in $Dependency ) {
+    Foreach ( $Depend in $Settings.Dependency ) {
         "Installing build dependency : $Depend"
         Install-Module $Depend -Scope CurrentUser -Force
         Import-Module $Depend -Force
@@ -44,13 +33,8 @@ task Install_Dependencies {
 task Unit_Tests {
     Write-TaskBanner -TaskName $Task.Name
 
-    $UnitTestParams = @{
-        Script = '.\Tests\Unit'
-        CodeCoverage = '.\PSCodeHealth\P*\*'
-        OutputFile = "$BuildOutput\UnitTestsResult.xml"
-        PassThru = $True
-    }
-    $Script:UnitTestsResult = Invoke-Pester @UnitTestParams
+    $UnitTestSettings = $Settings.UnitTestParams
+    $Script:UnitTestsResult = Invoke-Pester @UnitTestSettings
 }
 
 task Fail_If_Failed_Unit_Test {
@@ -63,19 +47,15 @@ task Fail_If_Failed_Unit_Test {
 task Publish_Unit_Tests_Coverage {
     Write-TaskBanner -TaskName $Task.Name
 
-    $Coverage = Format-Coverage -PesterResults $UnitTestsResult -CoverallsApiToken $CoverallsKey -BranchName $Branch
+    $Coverage = Format-Coverage -PesterResults $UnitTestsResult -CoverallsApiToken $Settings.CoverallsKey -BranchName $Settings.Branch
     Publish-Coverage -Coverage $Coverage
 }
 
 task Integration_Tests {
     Write-TaskBanner -TaskName $Task.Name
 
-    $IntegrationTestParams = @{
-        Script = '.\Tests\Integration'
-        OutputFile = "$BuildOutput\IntegrationTestsResult.xml"
-        PassThru = $True
-    }
-    $Script:IntegrationTestsResult = Invoke-Pester @IntegrationTestParams
+    $IntegrationTestSettings = $Settings.IntegrationTestParams
+    $Script:IntegrationTestsResult = Invoke-Pester @IntegrationTestSettings
 }
 
 task Fail_If_Failed_Integration_Test {
@@ -88,10 +68,10 @@ task Fail_If_Failed_Integration_Test {
 task Upload_Test_Results_To_AppVeyor {
     Write-TaskBanner -TaskName $Task.Name
 
-    $TestResultFiles = (Get-ChildItem -Path $BuildOutput -Filter '*TestsResult.xml').FullName
+    $TestResultFiles = (Get-ChildItem -Path $Settings.BuildOutput -Filter '*TestsResult.xml').FullName
     Foreach ( $TestResultFile in $TestResultFiles ) {
         "Uploading test result file : $TestResultFile"
-        (New-Object 'System.Net.WebClient').UploadFile($TestUploadUrl, $TestResultFile)
+        (New-Object 'System.Net.WebClient').UploadFile($Settings.TestUploadUrl, $TestResultFile)
     }
 }
 
@@ -106,20 +86,17 @@ task Test Unit_Tests,
 task Analyze {
     Write-TaskBanner -TaskName $Task.Name
 
-    Add-AppveyorTest -Name 'Analyze' -Outcome Running
-    $AnalyzeParams = @{
-        Path = $SourceFolder
-        Severity = 'Error'
-        Recurse = $True
-    }
-    $Script:AnalyzeFindings = Invoke-ScriptAnalyzer @AnalyzeParams
+    Add-AppveyorTest -Name 'Code Analysis' -Outcome Running
+    $AnalyzeSettings = $Settings.AnalyzeParams
+    $Script:AnalyzeFindings = Invoke-ScriptAnalyzer @AnalyzeSettings
+
     If ( $AnalyzeFindings ) {
         $FindingsString = $AnalyzeFindings | Out-String
         Write-Warning $FindingsString
-        Update-AppveyorTest -Name 'Analyze' -Outcome Failed -ErrorMessage $FindingsString
+        Update-AppveyorTest -Name 'Code Analysis' -Outcome Failed -ErrorMessage $FindingsString
     }
     Else {
-        Update-AppveyorTest -Name 'Analyze' -Outcome Passed
+        Update-AppveyorTest -Name 'Code Analysis' -Outcome Passed
     }
 }
 
@@ -133,8 +110,8 @@ task Fail_If_Analyze_Findings {
 task Copy_Source_To_Build_Output {
     Write-TaskBanner -TaskName $Task.Name
 
-    "Copying the source folder [$SourceFolder] into the build output folder : [$BuildOutput]"
-    Copy-Item -Path $SourceFolder -Destination $BuildOutput -Recurse
+    "Copying the source folder [$($Settings.SourceFolder)] into the build output folder : [$($Settings.BuildOutput)]"
+    Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
 }
 
 # Default task :
