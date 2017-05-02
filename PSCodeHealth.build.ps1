@@ -160,7 +160,7 @@ task Push_Build_Changes_To_Repo {
     cmd /c "git config --global core.autocrlf true 2>&1"
     cmd /c "git checkout $($Settings.Branch) 2>&1"
     cmd /c "git add -A 2>&1"
-    cmd /c "git commit -m ""Post-build commit[ci skip]"" 2>&1"
+    cmd /c "git commit -m ""Commit build changes [ci skip]"" 2>&1"
     cmd /c "git status 2>&1"
     cmd /c "git push origin $($Settings.Branch) 2>&1"
 }

@@ -12,7 +12,6 @@
 RootModule = '.\PSCodeHealth.psm1'
 
 # Version number of this module.
-# The real version number is set by the build process and is only visible in the build logs and the resulting package
 ModuleVersion = '0.1.76'
 
 # ID used to uniquely identify this module
@@ -28,7 +27,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) 2016 Mathieu Buisson. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'This module gathers PowerShell code quality and maintainability metrics.'
+Description = 'This module generates quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.0'
