@@ -133,6 +133,23 @@ Task Build_Documentation {
     $HeaderContent | Set-Content -Path $Settings.MkdocsPath -Force
 }
 
+task Set_Module_Version {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $ManifestContent = Get-Content -Path $Settings.ManifestPath
+    $CurrentVersion = $Settings.VersionRegex.Match($ManifestContent).Groups['ModuleVersion'].Value
+    "Current module version in the manifest : $CurrentVersion"
+
+    $ManifestContent -replace $CurrentVersion,$Settings.Version | Set-Content -Path $Settings.ManifestPath -Force
+    $NewManifestContent = Get-Content -Path $Settings.ManifestPath
+    $NewVersion = $Settings.VersionRegex.Match($NewManifestContent).Groups['ModuleVersion'].Value
+    "Updated module version in the manifest : $NewVersion"
+
+    If ( $NewVersion -ne $Settings.Version ) {
+        Throw "Module version was not updated correctly to $($Settings.Version) in the manifest."
+    }
+}
+
 task Push_Build_Changes_To_Repo {
     Write-TaskBanner -TaskName $Task.Name  
     
@@ -155,23 +172,6 @@ task Copy_Source_To_Build_Output {
     Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
 }
 
-task Set_Module_Version {
-    Write-TaskBanner -TaskName $Task.Name
-
-    $ManifestContent = Get-Content -Path $Settings.NewManifestPath
-    $CurrentVersion = $Settings.VersionRegex.Match($ManifestContent).Groups['ModuleVersion'].Value
-    "Current module version in the manifest : $CurrentVersion"
-
-    $ManifestContent -replace $CurrentVersion,$Settings.Version | Set-Content -Path $Settings.NewManifestPath -Force
-    $NewManifestContent = Get-Content -Path $Settings.NewManifestPath
-    $NewVersion = $Settings.VersionRegex.Match($NewManifestContent).Groups['ModuleVersion'].Value
-    "Updated module version in the manifest : $NewVersion"
-
-    If ( $NewVersion -ne $Settings.Version ) {
-        Throw "Module version was not updated correctly to $($Settings.Version) in the manifest."
-    }
-}
-
 # Default task :
 task . Clean,
     Install_Dependencies,
@@ -179,6 +179,6 @@ task . Clean,
     Analyze,
     Fail_If_Analyze_Findings,
     Build_Documentation,
+    Set_Module_Version,
     Push_Build_Changes_To_Repo,
-    Copy_Source_To_Build_Output,
-    Set_Module_Version
+    Copy_Source_To_Build_Output

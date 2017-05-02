@@ -31,11 +31,10 @@ $Settings = @{
 
     IsPullRequest = ($env:APPVEYOR_PULL_REQUEST_NUMBER -gt 0)
     Version = $env:APPVEYOR_BUILD_VERSION
-    NewManifestPath = '{0}\BuildOutput\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
+    ManifestPath = '{0}\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
     VersionRegex = "ModuleVersion\s=\s'(?<ModuleVersion>\S+)'" -as [regex]
 
     ModuleName = $env:APPVEYOR_PROJECT_NAME
-    ManifestPath = '{0}\{1}\{1}.psd1' -f $PSScriptRoot, $env:APPVEYOR_PROJECT_NAME
     HeaderPath = "$PSScriptRoot\header-mkdocs.yml"
     MkdocsPath = "$PSScriptRoot\mkdocs.yml"
     FunctionDocsPath = "$PSScriptRoot\docs\Functions"
