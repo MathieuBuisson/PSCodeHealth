@@ -1,0 +1,114 @@
+{
+    "FunctionHealthRecordMetricsRules": [
+        {
+            "LinesOfCode": {
+                "WarningThreshold": 20,
+                "FailThreshold": 40
+            }
+        },
+        {
+            "ScriptAnalyzerFindings": {
+                "WarningThreshold": 7,
+                "FailThreshold": 12
+            }
+        },
+        {
+            "TestCoverage": {
+                "WarningThreshold": 80,
+                "FailThreshold": 70
+            }
+        },
+        {
+            "Complexity": {
+                "WarningThreshold": 15,
+                "FailThreshold": 30
+            }
+        },
+        {
+            "MaximumNestingDepth": {
+                "WarningThreshold": 4,
+                "FailThreshold": 8
+            }
+        }
+    ],
+    "OverallHealthReportMetricsRules": [
+        {
+            "LinesOfCodeTotal": {
+                "WarningThreshold": 1000,
+                "FailThreshold": 2000
+            }
+        },
+        {
+            "LinesOfCodeAverage": {
+                "WarningThreshold": 20,
+                "FailThreshold": 40
+            }
+        },
+        {
+            "ScriptAnalyzerFindingsTotal": {
+                "WarningThreshold": 30,
+                "FailThreshold": 60
+            }
+        },
+        {
+            "ScriptAnalyzerErrors": {
+                "WarningThreshold": 1,
+                "FailThreshold": 3
+            }
+        },
+        {
+            "ScriptAnalyzerWarnings": {
+                "WarningThreshold": 10,
+                "FailThreshold": 20
+            }
+        },
+        {
+            "ScriptAnalyzerInformation": {
+                "WarningThreshold": 20,
+                "FailThreshold": 40
+            }
+        },
+        {
+            "ScriptAnalyzerFindingsAverage": {
+                "WarningThreshold": 7,
+                "FailThreshold": 12
+            }
+        },
+        {
+            "NumberOfFailedTests": {
+                "WarningThreshold": 1,
+                "FailThreshold": 3
+            }
+        },
+        {
+            "TestsPassRate": {
+                "WarningThreshold": 99,
+                "FailThreshold": 97
+            }
+        },
+        {
+            "TestCoverage": {
+                "WarningThreshold": 80,
+                "FailThreshold": 70
+            }
+        },
+        {
+            "CommandsMissedTotal": {
+                "WarningThreshold": 20,
+                "FailThreshold": 40
+            }
+        },
+        {
+            "ComplexityAverage": {
+                "WarningThreshold": 15,
+                "FailThreshold": 30
+            }
+        },
+        {
+            "NestingDepthAverage": {
+                "WarningThreshold": 4,
+                "FailThreshold": 8
+            }
+        }
+    ]
+}

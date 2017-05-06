@@ -46,6 +46,6 @@ $Settings = @{
     }
 
     GitHubKey = $env:GitHub_Key
-    Email = 'email.example.com'
+    Email = 'MathieuBuisson@users.noreply.github.com'
     Name = 'Mathieu Buisson'
 }
