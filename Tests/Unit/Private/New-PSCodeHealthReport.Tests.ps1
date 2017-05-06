@@ -420,5 +420,61 @@ Describe 'New-PSCodeHealthReport' {
                 $Result.FunctionHealthRecords | Should BeNullOrEmpty
             }
         }
+        Context 'Invoke-Pester returns nothing at all, but the TestsResult parameter is used' {
+
+            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\ManifestWithFindings.psd1").FullName
+            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
+            Mock Invoke-Pester { }
+            $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null -TestsResult $PesterResult
+
+            It 'Should return an object with the expected property "LinesOfCodeTotal"' {
+                $Result.LinesOfCodeTotal | Should Be 0
+            }
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
+                $Result.ScriptAnalyzerFindingsTotal | Should Be 3
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerErrors"' {
+                $Result.ScriptAnalyzerErrors | Should Be 0
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerWarnings"' {
+                $Result.ScriptAnalyzerWarnings | Should Be 3
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerInformation"' {
+                $Result.ScriptAnalyzerInformation | Should Be 0
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 51
+            }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 7
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 44
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 86.27
+            }
+            It 'Should return an object with the expected property "TestCoverage"' {
+                $Result.TestCoverage | Should Be 81.48
+            }
+            It 'Should return an object with the expected property "CommandsMissedTotal"' {
+                $Result.CommandsMissedTotal | Should Be 5
+            }
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 0
+            }
+            It 'Should not call Invoke-Pester' {
+                Assert-MockCalled Invoke-Pester -Scope Context -Times 0
+            }
+        }
     }
 }

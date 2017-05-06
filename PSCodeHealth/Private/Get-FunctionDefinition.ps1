@@ -23,7 +23,7 @@ Function Get-FunctionDefinition {
     [OutputType([System.Management.Automation.Language.FunctionDefinitionAst[]])]
     Param (
         [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
-        [validatescript({ Test-Path $_ -PathType Leaf })]
+        [ValidateScript({ Test-Path $_ -PathType Leaf })]
         [string[]]$Path
     )
     Process {

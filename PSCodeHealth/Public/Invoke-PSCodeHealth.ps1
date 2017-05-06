@@ -20,6 +20,15 @@ Function Invoke-PSCodeHealth {
     To specify the file or directory where tests are located.  
     If not specified, the command will look for tests in the same directory as each function.
 
+.PARAMETER TestsResult
+    To use an existing Pester tests result object for generating the following metrics :  
+      - NumberOfTests  
+      - NumberOfFailedTests  
+      - NumberOfPassedTests  
+      - TestsPassRate (%)  
+      - TestCoverage (%)  
+      - CommandsMissedTotal  
+
 .PARAMETER Recurse
     To search PowerShell files in the Path directory and all subdirectories recursively.
 
@@ -50,12 +59,16 @@ Function Invoke-PSCodeHealth {
     [OutputType([PSCustomObject])]
     Param (
         [Parameter(Position=0, Mandatory=$False, ValueFromPipeline=$True)]
-        [validatescript({ Test-Path $_ })]
+        [ValidateScript({ Test-Path $_ })]
         [string]$Path,
 
         [Parameter(Position=1, Mandatory=$False)]
-        [validatescript({ Test-Path $_ })]
+        [ValidateScript({ Test-Path $_ })]
         [string]$TestsPath,
+
+        [Parameter(Position=2, Mandatory=$False)]
+        [ValidateScript({ $_.TotalCount -is [int] })]
+        [PSCustomObject]$TestsResult,
 
         [switch]$Recurse,
 
@@ -118,5 +131,20 @@ Function Invoke-PSCodeHealth {
         $TestsPath = If ( (Get-Item -Path $Path).PSIsContainer ) { $Path } Else { Split-Path -Path $Path -Parent }
     }
 
-    New-PSCodeHealthReport -Path $PowerShellFiles -FunctionHealthRecord $FunctionHealthRecords -TestsPath $TestsPath
+    If ( ($PSBoundParameters.ContainsKey('TestsResult')) ) {
+        $PSCodeHealthReportParams = @{
+            Path = $PowerShellFiles
+            FunctionHealthRecord = $FunctionHealthRecords
+            TestsPath = $TestsPath
+            TestsResult = $PSBoundParameters.TestsResult
+        }
+    }
+    Else {
+        $PSCodeHealthReportParams = @{
+            Path = $PowerShellFiles
+            FunctionHealthRecord = $FunctionHealthRecords
+            TestsPath = $TestsPath
+        }
+    }
+    New-PSCodeHealthReport @PSCodeHealthReportParams
 }

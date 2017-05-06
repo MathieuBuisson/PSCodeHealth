@@ -12,6 +12,7 @@ Describe 'Invoke-PSCodeHealth (again)' {
 
     InModuleScope $ModuleName {
 
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
         Copy-Item -Path (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName -Destination TestDrive:\
             
         Context 'Get-PowerShellFile returns 2 files and TestsPath parameter is specified' {
@@ -174,6 +175,60 @@ Describe 'Invoke-PSCodeHealth (again)' {
             It 'Should throw if we are in a PowerShell drive other than the FileSystem provider' {
                 { Set-Location HKLM:\ ; Invoke-PSCodeHealth -Recurse -Exclude "Exclude*" } |
                 Should Throw 'The current location is from the Registry provider, please provide a value for the Path parameter or change to a FileSystem location.'
+            }
+        }
+        Context 'The TestsResult parameter is specified' {
+
+            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
+            $Result = Invoke-PSCodeHealth -Path "$TestDrive\2PublicFunctions.psm1" -TestsResult $PesterResult
+
+            It 'Should return an object with the expected property "LinesOfCodeTotal"' {
+                $Result.LinesOfCodeTotal | Should Be 31
+            }
+            It 'Should return an object with the expected property "LinesOfCodeAverage"' {
+                $Result.LinesOfCodeAverage | Should Be 15.5
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsTotal"' {
+                $Result.ScriptAnalyzerFindingsTotal | Should Be 1
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerErrors"' {
+                $Result.ScriptAnalyzerErrors | Should Be 0
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerWarnings"' {
+                $Result.ScriptAnalyzerWarnings | Should Be 1
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerInformation"' {
+                $Result.ScriptAnalyzerInformation | Should Be 0
+            }
+            It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
+                $Result.ScriptAnalyzerFindingsAverage | Should Be 0.5
+            }
+            It 'Should return an object with the expected property "NumberOfTests"' {
+                $Result.NumberOfTests | Should Be 51
+            }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 7
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 44
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 86.27
+            }
+            It 'Should return an object with the expected property "TestCoverage"' {
+                $Result.TestCoverage | Should Be 81.48
+            }
+            It 'Should return an object with the expected property "CommandsMissedTotal"' {
+                $Result.CommandsMissedTotal | Should Be 5
+            }
+            It 'Should return an object with the expected property "ComplexityAverage"' {
+                $Result.ComplexityAverage | Should Be 1
+            }
+            It 'Should return an object with the expected property "NestingDepthAverage"' {
+                $Result.NestingDepthAverage | Should Be 1
+            }
+            It 'Should return 2 objects in the property "FunctionHealthRecords"' {
+                $Result.FunctionHealthRecords.Count | Should Be 2
             }
         }
     }

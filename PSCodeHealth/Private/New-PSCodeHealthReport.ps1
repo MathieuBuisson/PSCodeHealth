@@ -17,6 +17,15 @@ Function New-PSCodeHealthReport {
     To specify the file or directory where the Pester tests are located.
     If a directory is specified, the directory and all subdirectories will be searched recursively for tests.
 
+.PARAMETER TestsResult
+    To use an existing Pester tests result object for generating the following metrics :  
+      - NumberOfTests  
+      - NumberOfFailedTests  
+      - NumberOfPassedTests  
+      - TestsPassRate (%)  
+      - TestCoverage (%)  
+      - CommandsMissedTotal  
+
 .EXAMPLE
     PS C:\> New-PSCodeHealthReport -Path $MyPath -FunctionHealthRecord $FunctionHealthRecords -TestsPath "$MyPath\Tests"
 
@@ -40,8 +49,11 @@ Function New-PSCodeHealthReport {
         [PSCustomObject[]]$FunctionHealthRecord,
 
         [Parameter(Position=2, Mandatory)]
-        [validatescript({ Test-Path $_ })]
-        [string]$TestsPath
+        [ValidateScript({ Test-Path $_ })]
+        [string]$TestsPath,
+
+        [Parameter(Position=3, Mandatory=$False)]
+        [PSCustomObject]$TestsResult
     )
 
     # Getting ScriptAnalyzer findings from PowerShell manifests or data files and adding them to the report
@@ -66,9 +78,14 @@ Function New-PSCodeHealthReport {
     $ScriptAnalyzerInformation = $AllScriptAnalyzerResults | Where-Object Severity -EQ 'Information'
 
     # Gettings overall test coverage for all code in $Path
-    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage $Path -Show None -PassThru -Verbose:$False -WarningAction SilentlyContinue
-    If ( $TestResult.CodeCoverage ) {
-        $CodeCoverage = $TestResult.CodeCoverage
+    If ( ($PSBoundParameters.ContainsKey('TestsResult')) ) {
+        $TestsResult = $PSBoundParameters.TestsResult
+    }
+    Else {
+        $TestsResult = Invoke-Pester -Script $TestsPath -CodeCoverage $Path -Show None -PassThru -Verbose:$False -WarningAction SilentlyContinue
+    }
+    If ( $TestsResult.CodeCoverage ) {
+        $CodeCoverage = $TestsResult.CodeCoverage
         $CommandsMissed = $CodeCoverage.NumberOfCommandsMissed
         Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsMissed)"
 
@@ -96,10 +113,10 @@ Function New-PSCodeHealthReport {
         'ScriptAnalyzerWarnings'        = ($ScriptAnalyzerWarnings | Measure-Object).Count
         'ScriptAnalyzerInformation'     = ($ScriptAnalyzerInformation | Measure-Object).Count
         'ScriptAnalyzerFindingsAverage' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
-        'NumberOfTests'                 = If ( $TestResult ) { $TestResult.TotalCount } Else { 0 }
-        'NumberOfFailedTests'           = If ( $TestResult ) { $TestResult.FailedCount } Else { 0 }
-        'NumberOfPassedTests'           = If ( $TestResult ) { $TestResult.PassedCount } Else { 0 }
-        'TestsPassRate'                 = If ($TestResult.TotalCount) { [math]::Round(($TestResult.PassedCount / $TestResult.TotalCount) * 100, 2) } Else { 0 }
+        'NumberOfTests'                 = If ( $TestsResult ) { $TestsResult.TotalCount } Else { 0 }
+        'NumberOfFailedTests'           = If ( $TestsResult ) { $TestsResult.FailedCount } Else { 0 }
+        'NumberOfPassedTests'           = If ( $TestsResult ) { $TestsResult.PassedCount } Else { 0 }
+        'TestsPassRate'                 = If ($TestsResult.TotalCount) { [math]::Round(($TestsResult.PassedCount / $TestsResult.TotalCount) * 100, 2) } Else { 0 }
         'TestCoverage'                  = $CodeCoveragePerCent
         'CommandsMissedTotal'           = $CommandsMissed
         'ComplexityAverage'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)

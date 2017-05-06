@@ -527,7 +527,13 @@
                     "NumberOfCommandsAnalyzed": 27,
                     "NumberOfCommandsMissed": 5,
                     "NumberOfCommandsExecuted": 22
-                }
+                },
+                "Name": "MockResultName",
+                "Time": {
+                    "TotalSeconds": 3
+                },
+                "FailureMessage": "MockFailureMessage",
+                "StackTrace": "MockStackTrace"
             }
         }
     ],

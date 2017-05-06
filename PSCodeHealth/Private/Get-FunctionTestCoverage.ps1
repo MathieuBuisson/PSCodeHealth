@@ -33,7 +33,7 @@ Function Get-FunctionTestCoverage {
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition,
 
         [Parameter(Position=1, Mandatory=$False)]
-        [validatescript({ Test-Path $_ })]
+        [ValidateScript({ Test-Path $_ })]
         [string]$TestsPath
     )
 
@@ -45,10 +45,10 @@ Function Get-FunctionTestCoverage {
         $TestsPath = Split-Path -Path $SourcePath -Parent
     }
 
-    $TestResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Show None -Verbose:$False
+    $TestsResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Show None -Verbose:$False
 
-    If ( $TestResult.CodeCoverage ) {
-        $CodeCoverage = $TestResult.CodeCoverage
+    If ( $TestsResult.CodeCoverage ) {
+        $CodeCoverage = $TestsResult.CodeCoverage
         $CommandsFound = $CodeCoverage.NumberOfCommandsAnalyzed
         Write-VerboseOutput -Message "Number of commands found in the function : $($CommandsFound)"
 
