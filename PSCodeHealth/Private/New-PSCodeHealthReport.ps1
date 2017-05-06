@@ -97,6 +97,9 @@ Function New-PSCodeHealthReport {
         'ScriptAnalyzerInformation'     = ($ScriptAnalyzerInformation | Measure-Object).Count
         'ScriptAnalyzerFindingsAverage' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
         'NumberOfTests'                 = If ( $TestResult ) { $TestResult.TotalCount } Else { 0 }
+        'NumberOfFailedTests'           = If ( $TestResult ) { $TestResult.FailedCount } Else { 0 }
+        'NumberOfPassedTests'           = If ( $TestResult ) { $TestResult.PassedCount } Else { 0 }
+        'TestsPassRate'                 = If ($TestResult.TotalCount) { [math]::Round(($TestResult.PassedCount / $TestResult.TotalCount) * 100, 2) } Else { 0 }
         'TestCoverage'                  = $CodeCoveragePerCent
         'CommandsMissedTotal'           = $CommandsMissed
         'ComplexityAverage'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)

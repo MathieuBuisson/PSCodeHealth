@@ -521,6 +521,8 @@
         {
             "NumberOfTests": {
                 "TotalCount": 51,
+                "FailedCount": 7,
+                "PassedCount": 44,
                 "CodeCoverage": {
                     "NumberOfCommandsAnalyzed": 27,
                     "NumberOfCommandsMissed": 5,

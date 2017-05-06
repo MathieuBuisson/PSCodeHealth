@@ -52,6 +52,15 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
             }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 0
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
             }
@@ -117,6 +126,15 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 51
             }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 7
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 44
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 86.27
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 81.48
             }
@@ -176,6 +194,15 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -239,6 +266,15 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
             }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 0
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
             }
@@ -293,6 +329,15 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
@@ -349,6 +394,15 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfFailedTests"' {
+                $Result.NumberOfFailedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "NumberOfPassedTests"' {
+                $Result.NumberOfPassedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "TestsPassRate"' {
+                $Result.TestsPassRate | Should Be 0
             }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should BeNullOrEmpty
