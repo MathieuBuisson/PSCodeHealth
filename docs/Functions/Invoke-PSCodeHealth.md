@@ -6,7 +6,8 @@ Gets quality and maintainability metrics for PowerShell code contained in script
 ## SYNTAX
 
 ```
-Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [-Recurse] [-Exclude <String[]>]
+Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <PSObject>] [-Recurse]
+ [-Exclude <String[]>]
 ```
 
 ## DESCRIPTION
@@ -69,6 +70,27 @@ Aliases:
 
 Required: False
 Position: 2
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -TestsResult
+To use an existing Pester tests result object for generating the following metrics :  
+  - NumberOfTests  
+  - NumberOfFailedTests  
+  - NumberOfPassedTests  
+  - TestsPassRate (%)  
+  - TestCoverage (%)  
+  - CommandsMissedTotal
+
+```yaml
+Type: PSObject
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 3
 Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
