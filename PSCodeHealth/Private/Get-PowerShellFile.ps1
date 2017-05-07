@@ -34,7 +34,7 @@ Function Get-PowerShellFile {
     [OutputType([String[]])]
 
     Param (
-        [Parameter(Position=0, Mandatory=$True, ValueFromPipeline=$True)]
+        [Parameter(Position=0, Mandatory, ValueFromPipeline=$True)]
         [ValidateScript({ Test-Path $_ -PathType Container })]
         [string]$Path,
 

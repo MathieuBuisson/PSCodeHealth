@@ -29,7 +29,7 @@ Function Get-Nothing {
     [CmdletBinding()]
     
     Param(
-        [Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$True)]
+        [Parameter(Mandatory,Position=0,ValueFromPipeline=$True)]
         [PSObject[]]$InputObject,
 
         [Parameter(Position=1)]
@@ -69,7 +69,7 @@ Function Set-Nothing {
     [CmdletBinding()]
     
     Param(
-        [Parameter(Mandatory=$True,Position=0,ValueFromPipeline=$True)]
+        [Parameter(Mandatory,Position=0,ValueFromPipeline=$True)]
         [PSObject[]]$InputObject,
 
         [Parameter(Position=1)]

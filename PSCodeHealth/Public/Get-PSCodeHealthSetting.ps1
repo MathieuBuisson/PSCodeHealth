@@ -1,19 +1,18 @@
-﻿Function Merge-PSCodeHealthSetting {
+Function Get-PSCodeHealthSetting {
 <#
 .SYNOPSIS
-    Merges user-defined settings (metrics thresholds, etc...) into the default PSCodeHealth settings.
+    Get the PSCodeHealth settings (metrics thresholds, etc...) which are currently in effect.  
 
 .DESCRIPTION
-    Merges user-defined settings (metrics thresholds, etc...) into the default PSCodeHealth settings.  
-    The default PSCodeHealth settings are stored in PSCodeHealthSettings.json, but user-defined custom settings can override these defaults.  
-    The custom settings are stored in JSON format in a file (similar to PSCodeHealthSettings.json).
-    Any setting specified in the custom settings file override the default, and settings not specified in the custom settings file will use the defaults from PSCodeHealthSettings.json.  
+    Get the PSCodeHealth settings (metrics thresholds, etc...) which are currently in effect.  
+    By default, all the settings are coming from the file PSCodeHealthSettings.json in the module root.  
 
-.PARAMETER DefaultSettings
-    PSCustomObject converted from the JSON data in PSCodeHealthSettings.json.
+    Custom settings can be specified in JSON format in a file, via the parameter CustomSettingsPath.  
+    In this case, any setting specified in the custom settings file override the default, and settings not specified in the custom settings file will use the defaults from PSCodeHealthSettings.json.  
 
-.PARAMETER CustomSettings
-    PSCustomObject converted from the JSON data in a user-defined custom settings file.
+.PARAMETER CustomSettingsPath
+    To specify the path of a file containing user-defined settings (metrics thresholds, etc...) in JSON format.  
+    Any setting specified in this file override the default, and settings not specified in this file will use the default from PSCodeHealthSettings.json.  
 
 .OUTPUTS
     System.Management.Automation.PSCustomObject
@@ -21,11 +20,8 @@
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
     Param(
-        [Parameter(Mandatory,Position=0)]
-        [PSCustomObject]$DefaultSettings,
-
-        [Parameter(Mandatory,Position=1)]
-        [PSCustomObject]$CustomSettings
+        [Parameter(Mandatory=$False,Position=0)]
+        [PSCustomObject]$CustomSettingsPath
     )
 
     # Checking if $CustomSettings contains something
