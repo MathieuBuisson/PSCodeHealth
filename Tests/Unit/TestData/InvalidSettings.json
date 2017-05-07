@@ -1,0 +1,14 @@
+[
+        {
+            "LinesOfCodeTotal": {
+                "WarningThreshold": 1500,
+                "FailThreshold": 3000
+            }
+        }
+        {
+            "LinesOfCodeAverage": {
+                "WarningThreshold": 21,
+                "FailThreshold": 42
+            }
+        }
+]

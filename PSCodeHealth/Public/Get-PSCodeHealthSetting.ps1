@@ -14,78 +14,66 @@ Function Get-PSCodeHealthSetting {
     To specify the path of a file containing user-defined settings (metrics thresholds, etc...) in JSON format.  
     Any setting specified in this file override the default, and settings not specified in this file will use the default from PSCodeHealthSettings.json.  
 
+.PARAMETER SettingsGroup
+    To filter the output settings to only the settings located in the specified group.  
+    There 2 settings group in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'FunctionHealthRecordMetricsRules' and 'OverallHealthReportMetricsRules'.  
+    If not specified, all the settings are output.  
+
 .OUTPUTS
     System.Management.Automation.PSCustomObject
 #>
     [CmdletBinding()]
-    [OutputType([PSCustomObject])]
+    [OutputType([PSCustomObject[]])]
     Param(
         [Parameter(Mandatory=$False,Position=0)]
-        [PSCustomObject]$CustomSettingsPath
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
+        [string]$CustomSettingsPath,
+
+        [Parameter(Mandatory=$False,Position=1)]
+        [ValidateSet('FunctionHealthRecordMetricsRules','OverallHealthReportMetricsRules')]
+        [string]$SettingsGroup,
+
+        [Parameter(Mandatory=$False,Position=2)]
+        [ValidateSet('LinesOfCode','ScriptAnalyzerFindings','TestCoverage','Complexity','MaximumNestingDepth','LinesOfCodeTotal',
+        'LinesOfCodeAverage','ScriptAnalyzerFindingsTotal','ScriptAnalyzerErrors','ScriptAnalyzerWarnings',
+        'ScriptAnalyzerInformation','ScriptAnalyzerFindingsAverage','NumberOfFailedTests','TestsPassRate',
+        'CommandsMissedTotal','ComplexityAverage','NestingDepthAverage')]
+        [string]$MetricName
     )
 
-    # Checking if $CustomSettings contains something
-    $ContainsSettings = $CustomSettings | Get-Member -MemberType Properties
-    If ( -not($ContainsSettings) ) {
-        Write-VerboseOutput -Message 'Custom settings do not contain any data, the resulting settings will be the defaults.'
-        return $DefaultSettings
-    }
+    $DefaultSettingsPath = "$PSScriptRoot\..\PSCodeHealthSettings.json"
+    $DefaultSettings = ConvertFrom-Json (Get-Content -Path $DefaultSettingsPath -Raw)
 
-    $ContainsFunctionHealthRecordSettings = 'FunctionHealthRecordMetricsRules' -in $ContainsSettings.Name
-    $ContainsOverallHealthReportSettings = 'OverallHealthReportMetricsRules' -in $ContainsSettings.Name
-
-    If ( -not($ContainsFunctionHealthRecordSettings) -and -not($ContainsOverallHealthReportSettings) ) {
-        Write-Warning -Message 'Custom settings do not contain any of the settings groups expected by PSCodeHealth.'
-        return $DefaultSettings
-    }
-
-    If ( $ContainsFunctionHealthRecordSettings) {
-        $CustomFunctionSettings = $CustomSettings.FunctionHealthRecordMetricsRules | Where-Object { $_ }
-
-        # Casting to a list in case we need to add elements to it
-        $DefaultFunctionSettings = ($DefaultSettings.FunctionHealthRecordMetricsRules | Where-Object { $_ }) -as [System.Collections.ArrayList]
-                
-        Foreach ( $CustomFunctionSetting in $CustomFunctionSettings ) {
-            $MetricName = ($CustomFunctionSetting | Get-Member -MemberType Properties).Name
-            Write-VerboseOutput -Message "Processing custom settings for metric : $MetricName"
-
-            $DefaultFunctionSetting = $DefaultFunctionSettings | Where-Object { $_.$($MetricName) }
-            If ( $DefaultFunctionSetting ) {
-                Write-VerboseOutput -Message "The setting '$MetricName' is present in the default settings, overriding it."
-                $DefaultFunctionSetting.$($MetricName) = $CustomFunctionSetting.$($MetricName)
-            }
-            Else {
-                Write-VerboseOutput -Message "The setting '$MetricName' is absent from the default settings, adding it."
-                $Null = $DefaultFunctionSettings.Add($CustomFunctionSetting)
-            }
+    If ( $PSBoundParameters.ContainsKey('CustomSettingsPath') ) {
+        Try {
+            $CustomSettings = ConvertFrom-Json (Get-Content -Path $CustomSettingsPath -Raw) -ErrorAction Stop
+        }
+        Catch {
+            Throw "An error occurred when attempting to convert JSON data from the file $CustomSettingsPath to an object. Please verify that the content of this file is in valid JSON format."
         }
     }
-
-    If ( $ContainsOverallHealthReportSettings ) {
-        $CustomOverallSettings = $CustomSettings.OverallHealthReportMetricsRules | Where-Object { $_ }
-
-        # Casting to a list in case we need to add elements to it
-        $DefaultOverallSettings = ($DefaultSettings.OverallHealthReportMetricsRules | Where-Object { $_ }) -as [System.Collections.ArrayList]
-
-        Foreach ( $CustomOverallSetting in $CustomOverallSettings ) {
-            $MetricName = ($CustomOverallSetting | Get-Member -MemberType Properties).Name
-            Write-VerboseOutput -Message "Processing custom settings for metric : $MetricName"
-
-            $DefaultOverallSetting = $DefaultOverallSettings | Where-Object { $_.$($MetricName) }
-            If ( $DefaultOverallSetting ) {
-                Write-VerboseOutput -Message "The setting '$MetricName' is present in the default settings, overriding it."
-                $DefaultOverallSetting.$($MetricName) = $CustomOverallSetting.$($MetricName)
-            }
-            Else {
-                Write-VerboseOutput -Message "The setting '$MetricName' is absent from the default settings, adding it."
-                $Null = $DefaultOverallSettings.Add($CustomOverallSetting)
-            }
+    
+    If ( $CustomSettings ) {
+        $SettingsInEffect = Merge-PSCodeHealthSetting -DefaultSettings $DefaultSettings -CustomSettings $CustomSettings
+    }
+    Else {
+        $SettingsInEffect = $DefaultSettings
+    }
+    If ( $PSBoundParameters.ContainsKey('SettingsGroup') ) {
+        $OutputSettings = $SettingsInEffect.$($PSBoundParameters.SettingsGroup)
+        If ( $PSBoundParameters.ContainsKey('MetricName') ) {
+            $OutputSettings = $OutputSettings.$($PSBoundParameters.MetricName)
         }
     }
-    $MergedSettingsProperties = [ordered]@{
-        FunctionHealthRecordMetricsRules = $DefaultFunctionSettings
-        OverallHealthReportMetricsRules = $DefaultOverallSettings
+    Else {
+        $OutputSettings = $SettingsInEffect
+        If ( $PSBoundParameters.ContainsKey('MetricName') ) {
+            $SettingsGroupNames = ($OutputSettings | Get-Member -MemberType Properties).Name
+
+            # There can be more than 1 object because a few metrics are available in both settings groups
+            $MetricObjects = $SettingsGroupNames | ForEach-Object { $OutputSettings.$($_) } | Where-Object { $_.$($PSBoundParameters.MetricName) }
+            $OutputSettings = $MetricObjects | ForEach-Object { $_.$($MetricName) }
+        }
     }
-    $MergedSettings = New-Object -TypeName PSCustomObject -Property $MergedSettingsProperties
-    return $MergedSettings
+    return $OutputSettings
 }

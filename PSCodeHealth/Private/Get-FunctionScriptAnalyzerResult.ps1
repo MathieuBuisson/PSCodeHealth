@@ -23,7 +23,7 @@ Function Get-FunctionScriptAnalyzerResult {
     [CmdletBinding()]
     [OutputType([Microsoft.Windows.PowerShell.ScriptAnalyzer.Generic.DiagnosticRecord])]
     Param (
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position=0, Mandatory)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
     )
     

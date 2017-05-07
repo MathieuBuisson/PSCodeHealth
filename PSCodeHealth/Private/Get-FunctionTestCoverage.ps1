@@ -29,7 +29,7 @@ Function Get-FunctionTestCoverage {
     [CmdletBinding()]
     [OutputType([System.Double])]
     Param (
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position=0, Mandatory)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition,
 
         [Parameter(Position=1, Mandatory=$False)]

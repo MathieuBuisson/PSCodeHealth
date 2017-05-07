@@ -127,5 +127,6 @@ Describe 'Merge-PSCodeHealthSetting' {
                 $Result.OverallHealthReportMetricsRules.DummyMetric2.FailThreshold | Should Be 8
             }
         }
+        Remove-Variable -Name 'DefaultSettings' -Force -ErrorAction SilentlyContinue
     }
 }

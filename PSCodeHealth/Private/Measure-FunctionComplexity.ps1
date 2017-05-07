@@ -29,7 +29,7 @@ Function Measure-FunctionComplexity {
     [CmdletBinding()]
     [OutputType([System.Int32])]
     Param (
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position=0, Mandatory)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
     )
     # Default complexity value for code which contains no branching statement (1 code path)

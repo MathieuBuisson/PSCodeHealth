@@ -22,7 +22,7 @@ Function Test-FunctionHelpCoverage {
     [CmdletBinding()]
     [OutputType([System.Boolean])]
     Param (
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position=0, Mandatory)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
     )
     

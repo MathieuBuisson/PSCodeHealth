@@ -5,7 +5,7 @@ Function Write-VerboseOutput {
 #>
     [CmdletBinding()]
     Param(
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position=0, Mandatory)]
         [string]$Message
     )
 

@@ -66,7 +66,7 @@ FormatsToProcess = @('PSCodeHealth.Format.ps1xml')
 # NestedModules = @()
 
 # Functions to export from this module
-FunctionsToExport = @('Invoke-PSCodeHealth')
+FunctionsToExport = @('Invoke-PSCodeHealth','Get-PSCodeHealthSetting')
 
 # Cmdlets to export from this module
 # CmdletsToExport = '*'

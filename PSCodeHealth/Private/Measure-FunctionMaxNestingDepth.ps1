@@ -25,7 +25,7 @@ Function Measure-FunctionMaxNestingDepth {
     [CmdletBinding()]
     [OutputType([System.Int32])]
     Param (
-        [Parameter(Position=0, Mandatory=$True)]
+        [Parameter(Position=0, Mandatory)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition
     )
 
