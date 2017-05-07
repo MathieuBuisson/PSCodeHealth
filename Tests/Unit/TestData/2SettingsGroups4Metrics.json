@@ -1,0 +1,30 @@
+{
+    "FunctionHealthRecordMetricsRules": [
+        {
+            "Complexity": {
+                "WarningThreshold": 17,
+                "FailThreshold": 33
+            }
+        },
+        {
+            "MaximumNestingDepth": {
+                "WarningThreshold": 6,
+                "FailThreshold": 12
+            }
+        }
+    ],
+    "OverallHealthReportMetricsRules": [
+        {
+            "LinesOfCodeTotal": {
+                "WarningThreshold": 1500,
+                "FailThreshold": 3000
+            }
+        },
+        {
+            "LinesOfCodeAverage": {
+                "WarningThreshold": 21,
+                "FailThreshold": 42
+            }
+        }
+    ]
+}

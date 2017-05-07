@@ -1,0 +1,18 @@
+{
+    "FunctionHealthRecordMetricsRules": [
+        {
+            "DummyMetric": {
+                "WarningThreshold": 2,
+                "FailThreshold": 4
+            }
+        }
+    ],
+    "OverallHealthReportMetricsRules": [
+        {
+            "DummyMetric2": {
+                "WarningThreshold": 7,
+                "FailThreshold": 8
+            }
+        }
+    ]
+}
