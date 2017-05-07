@@ -8,5 +8,6 @@ pages:
   - Home: index.md
   - Metrics collected by PSCodeHealth: Metrics.md
   - Public Functions:
+    - Get-PSCodeHealthSetting: Functions/Get-PSCodeHealthSetting.md
     - Invoke-PSCodeHealth: Functions/Invoke-PSCodeHealth.md
 
