@@ -8,9 +8,9 @@ The single line comments, multiple lines comments and comment-based help are not
 
 This metric should be kept as low as possible because lenghty functions tend to be difficult to read and maintain.  
 
-Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#NbLinesOfCode))  
-  - Warning : greater or equal to 20
-  - Fail : greater or equal to 40
+#### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#NbLinesOfCode))  
+  - Warning : greater or equal to 20  
+  - Fail : greater or equal to 40  
            
 ### ScriptAnalyzerFindings  
 It counts the total number of best practice violations found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) in the specified function definition, regardless of their severity.  
@@ -21,9 +21,9 @@ PSCodeHealth uses the default PSScriptAnalyzer rules.
 
 This metric should be kept as low as possible because high numbers of PSScriptAnlyzer findings generally reflects low code quality, maintainability or safety.  
 
-Default thresholds :  
-  - Warning : greater or equal to 7
-  - Fail : greater or equal to 12
+#### Default thresholds :  
+  - Warning : greater or equal to 7  
+  - Fail : greater or equal to 12  
   
 ### ContainsHelp  
 Tells whether or not the specified function definition contains comment-based help. Possible values are : True or False.  
@@ -36,15 +36,15 @@ It measures the percentage of lines of code in the specified function definition
 
 Good tests provide confidence that the code behaves as expected. How confident depends mostly on the percentage of code which is covered by the tests. This is why code coverage of the tests is an important metric. It is a good indicator of how thoroughly the different possible code paths and edge cases are tested.  
 
-Default thresholds : ([Source](https://github.com/PowerShell/DscResources/blob/master/HighQualityModuleGuidelines.md))  
-  - Warning : less than 80
-  - Fail : less than 70
+#### Default thresholds : ([Source](https://github.com/PowerShell/DscResources/blob/master/HighQualityModuleGuidelines.md))  
+  - Warning : less than 80  
+  - Fail : less than 70  
 
 ### Complexity  
 
 
-Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#CC))  
-  - Warning : greater or equal to 15
+#### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#CC))  
+  - Warning : greater or equal to 15  
   - Fail : greater or equal to 30  
 
 For more details on how the cyclomatic complexity is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).
@@ -52,8 +52,8 @@ For more details on how the cyclomatic complexity is calculated, please refer to
 ### MaximumNestingDepth  
 
 
-Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#ILNestingDepth))  
-  - Warning : greater or equal to 4
+#### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#ILNestingDepth))  
+  - Warning : greater or equal to 4  
   - Fail : greater or equal to 8  
 
 For more details on how the maximum nesting depth is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).
