@@ -4,7 +4,7 @@ Function Get-PSCodeHealthSetting {
     Get the PSCodeHealth settings (metrics thresholds, etc...) which are currently in effect.  
 
 .DESCRIPTION
-    Get the PSCodeHealth settings (metrics thresholds, etc...) which are currently in effect.  
+    Get the PSCodeHealth settings (metrics warning and fail thresholds, etc...) which are currently in effect.  
     By default, all the settings are coming from the file PSCodeHealthSettings.json in the module root.  
 
     Custom settings can be specified in JSON format in a file, via the parameter CustomSettingsPath.  
@@ -16,8 +16,29 @@ Function Get-PSCodeHealthSetting {
 
 .PARAMETER SettingsGroup
     To filter the output settings to only the settings located in the specified group.  
-    There 2 settings group in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'FunctionHealthRecordMetricsRules' and 'OverallHealthReportMetricsRules'.  
+    There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'FunctionHealthRecordMetricsRules' and 'OverallHealthReportMetricsRules'.  
+    Metrics in the FunctionHealthRecordMetricsRules group are generated for each individual function and metrics in the OverallHealthReportMetricsRules group are calculated for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.  
     If not specified, all the settings are output.  
+
+.PARAMETER MetricName
+    To filter the output settings to only the settings for the specified metric.  
+    There is a large number of metrics, so for convenience, all the possible values are available via tab completion.
+
+.EXAMPLE
+    PS C:\> Get-PSCodeHealthSetting
+
+    Gets all the default PSCodeHealth settings (metrics warning and fail thresholds, etc...).
+
+.EXAMPLE
+    PS C:\> Get-PSCodeHealthSetting -CustomSettingsPath .\MySettings.json -SettingsGroup OverallHealthReportMetricsRules
+
+    Gets all PSCodeHealth settings (metrics warning and fail thresholds, etc...) in effect in the group 'OverallHealthReportMetricsRules'.  
+    This also output any setting overriding the defaults because they were specified in the file MySettings.json.
+
+.EXAMPLE
+    PS C:\> Get-PSCodeHealthSetting -MetricName TestCoverage
+
+    Gets the default settings (metrics warning and fail thresholds) in effect for the metric(s) named 'TestCoverage'. In this case, this metric exists in both FunctionHealthRecordMetricsRules and OverallHealthReportMetricsRules, so the TestCoverage settings from both groups will be output.  
 
 .OUTPUTS
     System.Management.Automation.PSCustomObject
