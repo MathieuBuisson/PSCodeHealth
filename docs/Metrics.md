@@ -32,9 +32,10 @@ It is an important best practice to have help information for each function, eve
 At the very least, it should have a short statement describing the function's purpose. That is the **Synopsis**.
 
 ### TestCoverage  
-It measures the percentage of lines of code in the specified function definition that are exercised (run) during a suite of tests. It uses Pester's CodeCoverage feature.  
+It measures the percentage of lines of code in the specified function definition that are exercised (executed) during a suite of tests.  
+Note : the code **executed** during tests cannot always be considered as **tested**. It is only **tested** if it is executed **and** there is one or more test(s) specifically designed to validate that the code behaves as expected.  
 
-Good tests provide confidence that the code behaves as expected. How confident depends mostly on the percentage of code which is covered by the tests. This is why code coverage of the tests is an important metric. It is a good indicator of how thoroughly the different possible code paths and edge cases are tested.  
+Good tests provide confidence that the code behaves as expected. How confident depends mostly on the percentage of code which is covered by the tests. This is why code coverage of the tests is an important metric. It is an indicator of how thoroughly the different possible code paths and edge cases are tested.  
 
 #### Default thresholds : ([Source](https://github.com/PowerShell/DscResources/blob/master/HighQualityModuleGuidelines.md))  
   - Warning : less than 80  
