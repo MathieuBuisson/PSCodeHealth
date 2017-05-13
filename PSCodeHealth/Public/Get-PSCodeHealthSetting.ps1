@@ -63,11 +63,11 @@ Function Get-PSCodeHealthSetting {
     )
 
     $DefaultSettingsPath = "$PSScriptRoot\..\PSCodeHealthSettings.json"
-    $DefaultSettings = ConvertFrom-Json (Get-Content -Path $DefaultSettingsPath -Raw)
+    $DefaultSettings = ConvertFrom-Json (Get-Content -Path $DefaultSettingsPath -Raw) -ErrorAction Stop | Where-Object { $_ }
 
     If ( $PSBoundParameters.ContainsKey('CustomSettingsPath') ) {
         Try {
-            $CustomSettings = ConvertFrom-Json (Get-Content -Path $CustomSettingsPath -Raw) -ErrorAction Stop
+            $CustomSettings = ConvertFrom-Json (Get-Content -Path $CustomSettingsPath -Raw) -ErrorAction Stop | Where-Object { $_ }
         }
         Catch {
             Throw "An error occurred when attempting to convert JSON data from the file $CustomSettingsPath to an object. Please verify that the content of this file is in valid JSON format."
@@ -83,7 +83,7 @@ Function Get-PSCodeHealthSetting {
     If ( $PSBoundParameters.ContainsKey('SettingsGroup') ) {
         $OutputSettings = $SettingsInEffect.$($PSBoundParameters.SettingsGroup)
         If ( $PSBoundParameters.ContainsKey('MetricName') ) {
-            $OutputSettings = $OutputSettings.$($PSBoundParameters.MetricName)
+            $OutputSettings = $OutputSettings.$($PSBoundParameters.MetricName) | Where-Object { $_ }
         }
     }
     Else {
@@ -93,7 +93,7 @@ Function Get-PSCodeHealthSetting {
 
             # There can be more than 1 object because a few metrics are available in both settings groups
             $MetricObjects = $SettingsGroupNames | ForEach-Object { $OutputSettings.$($_) } | Where-Object { $_.$($PSBoundParameters.MetricName) }
-            $OutputSettings = $MetricObjects | ForEach-Object { $_.$($MetricName) }
+            $OutputSettings = $MetricObjects | ForEach-Object { $_.$($MetricName) } | Where-Object { $_ }
         }
     }
     return $OutputSettings
