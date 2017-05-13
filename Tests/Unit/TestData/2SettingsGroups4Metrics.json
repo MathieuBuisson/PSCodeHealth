@@ -3,13 +3,15 @@
         {
             "Complexity": {
                 "WarningThreshold": 17,
-                "FailThreshold": 33
+                "FailThreshold": 33,
+                "HigherIsBetter": false
             }
         },
         {
             "MaximumNestingDepth": {
                 "WarningThreshold": 6,
-                "FailThreshold": 12
+                "FailThreshold": 12,
+                "HigherIsBetter": false
             }
         }
     ],
@@ -17,13 +19,15 @@
         {
             "LinesOfCodeTotal": {
                 "WarningThreshold": 1500,
-                "FailThreshold": 3000
+                "FailThreshold": 3000,
+                "HigherIsBetter": false
             }
         },
         {
             "LinesOfCodeAverage": {
                 "WarningThreshold": 21,
-                "FailThreshold": 42
+                "FailThreshold": 42,
+                "HigherIsBetter": false
             }
         }
     ]

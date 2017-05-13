@@ -3,7 +3,8 @@
         {
             "DummyMetric": {
                 "WarningThreshold": 2,
-                "FailThreshold": 4
+                "FailThreshold": 4,
+                "HigherIsBetter": false
             }
         }
     ],
@@ -11,7 +12,8 @@
         {
             "DummyMetric2": {
                 "WarningThreshold": 7,
-                "FailThreshold": 8
+                "FailThreshold": 8,
+                "HigherIsBetter": false
             }
         }
     ]

@@ -3,31 +3,36 @@
         {
             "LinesOfCode": {
                 "WarningThreshold": 20,
-                "FailThreshold": 40
+                "FailThreshold": 40,
+                "HigherIsBetter": false
             }
         },
         {
             "ScriptAnalyzerFindings": {
                 "WarningThreshold": 7,
-                "FailThreshold": 12
+                "FailThreshold": 12,
+                "HigherIsBetter": false
             }
         },
         {
             "TestCoverage": {
                 "WarningThreshold": 80,
-                "FailThreshold": 70
+                "FailThreshold": 70,
+                "HigherIsBetter": true
             }
         },
         {
             "Complexity": {
                 "WarningThreshold": 15,
-                "FailThreshold": 30
+                "FailThreshold": 30,
+                "HigherIsBetter": false
             }
         },
         {
             "MaximumNestingDepth": {
                 "WarningThreshold": 4,
-                "FailThreshold": 8
+                "FailThreshold": 8,
+                "HigherIsBetter": false
             }
         }
     ],
@@ -35,79 +40,92 @@
         {
             "LinesOfCodeTotal": {
                 "WarningThreshold": 1000,
-                "FailThreshold": 2000
+                "FailThreshold": 2000,
+                "HigherIsBetter": false
             }
         },
         {
             "LinesOfCodeAverage": {
                 "WarningThreshold": 20,
-                "FailThreshold": 40
+                "FailThreshold": 40,
+                "HigherIsBetter": false
             }
         },
         {
             "ScriptAnalyzerFindingsTotal": {
                 "WarningThreshold": 30,
-                "FailThreshold": 60
+                "FailThreshold": 60,
+                "HigherIsBetter": false
             }
         },
         {
             "ScriptAnalyzerErrors": {
                 "WarningThreshold": 1,
-                "FailThreshold": 3
+                "FailThreshold": 3,
+                "HigherIsBetter": false
             }
         },
         {
             "ScriptAnalyzerWarnings": {
                 "WarningThreshold": 10,
-                "FailThreshold": 20
+                "FailThreshold": 20,
+                "HigherIsBetter": false
             }
         },
         {
             "ScriptAnalyzerInformation": {
                 "WarningThreshold": 20,
-                "FailThreshold": 40
+                "FailThreshold": 40,
+                "HigherIsBetter": false
             }
         },
         {
             "ScriptAnalyzerFindingsAverage": {
                 "WarningThreshold": 7,
-                "FailThreshold": 12
+                "FailThreshold": 12,
+                "HigherIsBetter": false
             }
         },
         {
             "NumberOfFailedTests": {
                 "WarningThreshold": 1,
-                "FailThreshold": 3
+                "FailThreshold": 3,
+                "HigherIsBetter": false
             }
         },
         {
             "TestsPassRate": {
                 "WarningThreshold": 99,
-                "FailThreshold": 97
+                "FailThreshold": 97,
+                "HigherIsBetter": true
             }
         },
         {
             "TestCoverage": {
                 "WarningThreshold": 80,
-                "FailThreshold": 70
+                "FailThreshold": 70,
+                "HigherIsBetter": true
             }
         },
         {
             "CommandsMissedTotal": {
                 "WarningThreshold": 20,
-                "FailThreshold": 40
+                "FailThreshold": 40,
+                "HigherIsBetter": false
             }
         },
         {
             "ComplexityAverage": {
                 "WarningThreshold": 15,
-                "FailThreshold": 30
+                "FailThreshold": 30,
+                "HigherIsBetter": false
             }
         },
         {
             "NestingDepthAverage": {
                 "WarningThreshold": 4,
-                "FailThreshold": 8
+                "FailThreshold": 8,
+                "HigherIsBetter": false
             }
         }
     ]

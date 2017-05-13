@@ -2,13 +2,15 @@
         {
             "LinesOfCodeTotal": {
                 "WarningThreshold": 1500,
-                "FailThreshold": 3000
+                "FailThreshold": 3000,
+                "HigherIsBetter": false
             }
         },
         {
             "LinesOfCodeAverage": {
                 "WarningThreshold": 21,
-                "FailThreshold": 42
+                "FailThreshold": 42,
+                "HigherIsBetter": false
             }
         }
 ]
