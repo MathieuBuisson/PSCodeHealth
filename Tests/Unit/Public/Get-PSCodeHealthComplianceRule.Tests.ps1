@@ -65,7 +65,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
         }
         Context 'No custom settings file is specified' {
 
-            $Results = Get-PSCodeHealthComplianceRule -CustomSettingsPath $EmptyJsonPath
+            $Results = Get-PSCodeHealthComplianceRule
 
             It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
                 Foreach ( $Result in $Results ) {
