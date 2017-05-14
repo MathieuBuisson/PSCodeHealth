@@ -56,7 +56,7 @@ Function Test-PSCodeHealthCompliance {
     In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this outputs the compliance level for the TestCoverage metric from both groups.  
 
 .OUTPUTS
-    System.Management.Automation.PSCustomObject
+    PSCodeHealth.Compliance.Result
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject[]])]
@@ -81,9 +81,66 @@ Function Test-PSCodeHealthCompliance {
         [string[]]$MetricName
     )
 
-    # First, we get the compliance rules for the specified settings groups and/or metrics
+    # First, we get the compliance rules for the specified metrics group and/or metric name(s) we are interested in
+    $Null = $PSBoundParameters.Remove('HealthReport')
+    $ComplianceRules = Get-PSCodeHealthComplianceRule @PSBoundParameters
+    Write-VerboseOutput "Evaluating the specified health report against $($ComplianceRules.Count) compliance rules."
 
+    # Now, we evaluate the values from the PSCodeHealth report against our compliance rules
+    Foreach ( $ComplianceRule in $ComplianceRules ) {
+        If ( $ComplianceRule.SettingsGroup -eq 'PerFunctionMetrics' ) {
 
-    # Now, we get the values for the specified settings groups and/or metrics from the PSCodeHealth report
+            $MetricsFromReport = $HealthReport.FunctionHealthRecords.$($ComplianceRule.MetricName)
+            If ( $MetricsFromReport ) {
+                If ( $ComplianceRule.HigherIsBetter ) {
+                    # We always retain the worst value of all the analyzed functions
+                    $RetainedValue = ($MetricsFromReport | Measure-Object -Minimum).Minimum
+                    Write-VerboseOutput "Retained value for $($ComplianceRule.MetricName) : $($RetainedValue)"
 
+                    Switch ($RetainedValue) {
+                        { $_ -lt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                        { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                        Default { $ComplianceResult = 'Pass' }
+                    }
+                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                }
+                Else {
+                    # We always retain the worst value of all the analyzed functions
+                    $RetainedValue = ($MetricsFromReport | Measure-Object -Maximum).Maximum
+                    Write-VerboseOutput "Retained value for $($ComplianceRule.MetricName) : $($RetainedValue)"
+
+                    Switch ($RetainedValue) {
+                        { $_ -gt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                        { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                        Default { $ComplianceResult = 'Pass' }
+                    }
+                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                }
+            }
+        }
+        Else { # If the compliance rule is for an overall metric
+
+            $MetricFromReport = $HealthReport.$($ComplianceRule.MetricName)
+            If ( $MetricFromReport ) {
+                If ( $ComplianceRule.HigherIsBetter ) {
+
+                    Switch ($MetricFromReport) {
+                        { $_ -lt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                        { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                        Default { $ComplianceResult = 'Pass' }
+                    }
+                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                }
+                Else {
+
+                    Switch ($MetricFromReport) {
+                        { $_ -gt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                        { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                        Default { $ComplianceResult = 'Pass' }
+                    }
+                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                }
+            }
+        }
+    }
 }

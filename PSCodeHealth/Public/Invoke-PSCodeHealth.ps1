@@ -123,7 +123,7 @@ Function Invoke-PSCodeHealth {
             $TestCoverage = Get-FunctionTestCoverage @TestCoverageParams
 
             $FunctionHealthRecord = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage $TestCoverage
-            $FunctionHealthRecords += $FunctionHealthRecord
+            $Null = $FunctionHealthRecords.Add($FunctionHealthRecord)
         }
     }
 
