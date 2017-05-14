@@ -36,4 +36,8 @@ Describe 'General Module behaviour' {
         (Get-FormatData -TypeName PSCodeHealth.Overall.HealthReport).FormatViewDefinition.Name |
         Should Be 'PSCodeHealth.Overall.HealthReport'
     }
+    It 'Links the type "PSCodeHealth.Compliance.Rule" to the "PSCodeHealth.Compliance.Rule" formatting view' {
+        (Get-FormatData -TypeName PSCodeHealth.Compliance.Rule).FormatViewDefinition.Name |
+        Should Be 'PSCodeHealth.Compliance.Rule'
+    }
 }
