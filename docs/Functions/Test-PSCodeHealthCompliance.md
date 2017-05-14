@@ -53,11 +53,12 @@ This checks compliance against compliance rules in the defaults compliance rules
 
 ### -------------------------- EXAMPLE 4 --------------------------
 ```
-Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -MetricName TestCoverage
+Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -MetricName 'TestCoverage','Complexity','MaximumNestingDepth'
 ```
 
-Gets the compliance levels for the metric(s) named 'TestCoverage'.
-In this case, this metric exists in both PerFunctionMetrics and OverallMetrics, so this will output the compliance level for the TestCoverage metric from both groups.
+Gets the compliance levels for the TestCoverage, Complexity and MaximumNestingDepth metrics.
+ 
+In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this outputs the compliance level for the TestCoverage metric from both groups.
 
 ## PARAMETERS
 
