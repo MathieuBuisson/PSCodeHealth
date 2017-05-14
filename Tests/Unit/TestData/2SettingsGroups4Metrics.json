@@ -1,5 +1,5 @@
 {
-    "FunctionHealthRecordMetricsRules": [
+    "PerFunctionMetrics": [
         {
             "Complexity": {
                 "WarningThreshold": 17,
@@ -15,7 +15,7 @@
             }
         }
     ],
-    "OverallHealthReportMetricsRules": [
+    "OverallMetrics": [
         {
             "LinesOfCodeTotal": {
                 "WarningThreshold": 1500,

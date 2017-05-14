@@ -1,5 +1,5 @@
 {
-    "FunctionHealthRecordMetricsRules": [
+    "PerFunctionMetrics": [
         {
             "LinesOfCode": {
                 "WarningThreshold": 20,
@@ -36,7 +36,7 @@
             }
         }
     ],
-    "OverallHealthReportMetricsRules": [
+    "OverallMetrics": [
         {
             "LinesOfCodeTotal": {
                 "WarningThreshold": 1000,

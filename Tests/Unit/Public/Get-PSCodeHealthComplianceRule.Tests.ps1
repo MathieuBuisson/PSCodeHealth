@@ -26,11 +26,13 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                     ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
                 }
             }
-            It 'Should return 5 objects where the SettingsGroup property is equal to "FunctionHealthRecordMetricsRules"' {
-                $Results | Where-Object SettingsGroup -eq 'FunctionHealthRecordMetricsRules'
+            It 'Should return 5 objects where the SettingsGroup property is equal to "PerFunctionMetrics"' {
+                ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
+                Should Be 5
             }
-            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallHealthReportMetricsRules"' {
-                $Results | Where-Object SettingsGroup -eq 'OverallHealthReportMetricsRules'
+            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
+                ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
+                Should Be 13
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
@@ -39,7 +41,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
-                $TestCoverageResult = $Results | Where-Object MetricName -eq 'TestCoverage' | Where-Object SettingsGroup -eq 'FunctionHealthRecordMetricsRules'
+                $TestCoverageResult = $Results | Where-Object MetricName -eq 'TestCoverage' | Where-Object SettingsGroup -eq 'PerFunctionMetrics'
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True
@@ -61,6 +63,10 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 $LinesOfCodeTotalResult.WarningThreshold | Should Be 1000
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 2000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
+            }
+            It 'Should return 2 objects for the MetricName "TestCoverage" because this metric is present in both groups' {
+                ($Results | Where-Object MetricName -eq 'TestCoverage').Count |
+                Should Be 2
             }
         }
         Context 'No custom settings file is specified' {
@@ -73,11 +79,13 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                     ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
                 }
             }
-            It 'Should return 5 objects where the SettingsGroup property is equal to "FunctionHealthRecordMetricsRules"' {
-                $Results | Where-Object SettingsGroup -eq 'FunctionHealthRecordMetricsRules'
+            It 'Should return 5 objects where the SettingsGroup property is equal to "PerFunctionMetrics"' {
+                ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
+                Should Be 5
             }
-            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallHealthReportMetricsRules"' {
-                $Results | Where-Object SettingsGroup -eq 'OverallHealthReportMetricsRules'
+            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
+                ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
+                Should Be 13
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
@@ -86,7 +94,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
-                $TestCoverageResult = $Results | Where-Object MetricName -eq 'TestCoverage' | Where-Object SettingsGroup -eq 'FunctionHealthRecordMetricsRules'
+                $TestCoverageResult = $Results | Where-Object MetricName -eq 'TestCoverage' | Where-Object SettingsGroup -eq 'PerFunctionMetrics'
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True
@@ -109,60 +117,92 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 2000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
             }
+            It 'Should return 2 objects for the MetricName "TestCoverage" because this metric is present in both groups' {
+                ($Results | Where-Object MetricName -eq 'TestCoverage').Count |
+                Should Be 2
+            }
         }
-        <#Context 'The value of the SettingsGroup parameter is "OverallHealthReportMetricsRules"' {
+        Context 'The value of the SettingsGroup parameter is "OverallMetrics"' {
 
-            $Result = Get-PSCodeHealthComplianceRule -SettingsGroup OverallHealthReportMetricsRules
+            $Results = Get-PSCodeHealthComplianceRule -SettingsGroup 'OverallMetrics'
 
-            It 'Should return an array of [PSCustomObject]' {
-                ($Result | Get-Member).TypeName[0] | Should Be 'System.Management.Automation.PSCustomObject'
+            It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
+                Foreach ( $Result in $Results ) {
+                    $Result | Should BeOfType [PSCustomObject]
+                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
+                }
             }
-            It 'Should return an object with "LinesOfCodeTotal" property' {
-                $Result.LinesOfCodeTotal | Should Not BeNullOrEmpty
+            It 'Should return 13 objects' {
+                $Results.Count | Should Be 13
             }
-            It 'Should return an object with "LinesOfCodeAverage" property' {
-                $Result.LinesOfCodeAverage | Should Not BeNullOrEmpty
+            It 'Should return only objects with the SettingsGroup property equal to "OverallMetrics"' {
+                Foreach ( $Result in $Results ) {
+                    $Result.SettingsGroup | Should Be 'OverallMetrics'
+                }
             }
-            It 'Should return an object with "ScriptAnalyzerFindingsTotal" property' {
-                $Result.ScriptAnalyzerFindingsTotal | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "LinesOfCodeTotal"' {
+                (($Results | Where-Object MetricName -eq 'LinesOfCodeTotal' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "ScriptAnalyzerErrors" property' {
-                $Result.ScriptAnalyzerErrors | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "LinesOfCodeAverage"' {
+                (($Results | Where-Object MetricName -eq 'LinesOfCodeAverage' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "ScriptAnalyzerWarnings" property' {
-                $Result.ScriptAnalyzerWarnings | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "ScriptAnalyzerFindingsTotal"' {
+                (($Results | Where-Object MetricName -eq 'ScriptAnalyzerFindingsTotal' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "ScriptAnalyzerInformation" property' {
-                $Result.ScriptAnalyzerInformation | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "ScriptAnalyzerErrors"' {
+                (($Results | Where-Object MetricName -eq 'ScriptAnalyzerErrors' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "ScriptAnalyzerFindingsAverage" property' {
-                $Result.ScriptAnalyzerFindingsAverage | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "ScriptAnalyzerWarnings"' {
+                (($Results | Where-Object MetricName -eq 'ScriptAnalyzerWarnings' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "NumberOfFailedTests" property' {
-                $Result.NumberOfFailedTests | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "ScriptAnalyzerInformation"' {
+                (($Results | Where-Object MetricName -eq 'ScriptAnalyzerInformation' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "TestsPassRate" property' {
-                $Result.TestsPassRate | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "ScriptAnalyzerFindingsAverage"' {
+                (($Results | Where-Object MetricName -eq 'ScriptAnalyzerFindingsAverage' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "TestCoverage" property' {
-                $Result.TestCoverage | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "NumberOfFailedTests"' {
+                (($Results | Where-Object MetricName -eq 'NumberOfFailedTests' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "CommandsMissedTotal" property' {
-                $Result.CommandsMissedTotal | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "TestsPassRate"' {
+                (($Results | Where-Object MetricName -eq 'TestsPassRate' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "ComplexityAverage" property' {
-                $Result.ComplexityAverage | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "TestCoverage"' {
+                (($Results | Where-Object MetricName -eq 'TestCoverage' | Measure-Object )).Count |
+                Should Be 1
             }
-            It 'Should return an object with "NestingDepthAverage" property' {
-                $Result.NestingDepthAverage | Should Not BeNullOrEmpty
+            It 'Should return an object with the MetricName property equal to "CommandsMissedTotal"' {
+                (($Results | Where-Object MetricName -eq 'CommandsMissedTotal' | Measure-Object )).Count |
+                Should Be 1
+            }
+            It 'Should return an object with the MetricName property equal to "ComplexityAverage"' {
+                (($Results | Where-Object MetricName -eq 'ComplexityAverage' | Measure-Object )).Count |
+                Should Be 1
+            }
+            It 'Should return an object with the MetricName property equal to "NestingDepthAverage"' {
+                (($Results | Where-Object MetricName -eq 'NestingDepthAverage' | Measure-Object )).Count |
+                Should Be 1
             }
         }
         Context 'The SettingsGroup and the MetricName parameters are both specified' {
 
-            $Result = Get-PSCodeHealthComplianceRule -SettingsGroup OverallHealthReportMetricsRules -MetricName TestCoverage
+            $Result = Get-PSCodeHealthComplianceRule -SettingsGroup OverallMetrics -MetricName TestCoverage
 
-            It 'Should return 1 object of the type [PSCustomObject]' {
+            It 'Should return an object of the type [PSCodeHealth.Compliance.Rule]' {
                 $Result | Should BeOfType [PSCustomObject]
+                ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
+            }
+            It 'Should return 1 object' {
+                ($Result | Measure-Object).Count | Should Be 1
             }
             It 'Should return an object with the expected "WarningThreshold" property' {
                 $Result.WarningThreshold | Should Be 80
@@ -170,17 +210,26 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             It 'Should return an object with the expected "FailThreshold" property' {
                 $Result.FailThreshold | Should Be 70
             }
+            It 'Should return an object with the expected "HigherIsBetter" property' {
+                $Result.HigherIsBetter | Should Be $True
+            }
         }
         Context 'The MetricName parameter is specified, but not the SettingsGroup parameter' {
 
             $Results = Get-PSCodeHealthComplianceRule -MetricName TestCoverage
 
-            It 'Should return 2 objects when the metric is present in both settings groups' {
-                $Results.Count | Should Be 2
-            }
-            It 'Should return objects of the type [PSCustomObject]' {
+            It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
                 Foreach ( $Result in $Results ) {
                     $Result | Should BeOfType [PSCustomObject]
+                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
+                }
+            }
+            It 'Should return 2 objects' {
+                $Results.Count | Should Be 2
+            }
+            It 'Should return only objects with the MetricName property equal to "TestCoverage"' {
+                Foreach ( $Result in $Results ) {
+                    $Result.MetricName | Should Be 'TestCoverage'
                 }
             }
             It 'Should return objects with the expected "WarningThreshold" property' {
@@ -193,48 +242,110 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                     $Result.FailThreshold | Should Be 70
                 }
             }
+            It 'Should return objects with the expected "HigherIsBetter" property' {
+                Foreach ( $Result in $Results ) {
+                    $Result.HigherIsBetter | Should Be $True
+                }
+            }
+        }
+        Context 'The MetricName parameter contains multiple values' {
+            $MetricsSet = @('TestCoverage','Complexity','MaximumNestingDepth')
+            $Results = Get-PSCodeHealthComplianceRule -MetricName $MetricsSet
+
+            It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
+                Foreach ( $Result in $Results ) {
+                    $Result | Should BeOfType [PSCustomObject]
+                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
+                }
+            }
+            It 'Should return 4 objects' {
+                $Results.Count | Should Be 4
+            }
+            It 'Should return 1 object with the MetricName property equal to "Complexity"' {
+                (($Results | Where-Object MetricName -eq 'Complexity' | Measure-Object )).Count |
+                Should Be 1
+            }
+            It 'Should return 1 object with the MetricName property equal to "MaximumNestingDepth"' {
+                (($Results | Where-Object MetricName -eq 'MaximumNestingDepth' | Measure-Object )).Count |
+                Should Be 1
+            }
+            It 'Should return 2 object with the MetricName property equal to "TestCoverage"' {
+                (($Results | Where-Object MetricName -eq 'TestCoverage' | Measure-Object )).Count |
+                Should Be 2
+            }
         }
         Context 'The custom settings file contains 2 metrics in both settings groups' {
 
             $MetricsInBothGroups = "$PSScriptRoot\..\TestData\2SettingsGroups4Metrics.json"
-            $Result = Get-PSCodeHealthComplianceRule -CustomSettingsPath $MetricsInBothGroups
+            $Results = Get-PSCodeHealthComplianceRule -CustomSettingsPath $MetricsInBothGroups
 
-            It 'Should return an object of the type [PSCustomObject]' {
-                $Result | Should BeOfType [PSCustomObject]
+            It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
+                Foreach ( $Result in $Results ) {
+                    $Result | Should BeOfType [PSCustomObject]
+                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
+                }
+            }
+            It 'Should return 5 objects where the SettingsGroup property is equal to "PerFunctionMetrics"' {
+                ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
+                Should Be 5
+            }
+            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
+                ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
+                Should Be 13
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
-                $Result.FunctionHealthRecordMetricsRules.LinesOfCode.WarningThreshold | Should Be 20
-                $Result.FunctionHealthRecordMetricsRules.LinesOfCode.FailThreshold | Should Be 40
+                $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
+                $LinesOfCodeResult.WarningThreshold | Should Be 20
+                $LinesOfCodeResult.FailThreshold | Should Be 40
+                $LinesOfCodeResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
-                $Result.FunctionHealthRecordMetricsRules.TestCoverage.WarningThreshold | Should Be 80
-                $Result.FunctionHealthRecordMetricsRules.TestCoverage.FailThreshold | Should Be 70
+                $TestCoverageResult = $Results | Where-Object MetricName -eq 'TestCoverage' | Where-Object SettingsGroup -eq 'PerFunctionMetrics'
+                $TestCoverageResult.WarningThreshold | Should Be 80
+                $TestCoverageResult.FailThreshold | Should Be 70
+                $TestCoverageResult.HigherIsBetter | Should Be $True
             }
             It 'Resulting compliance rules override the defaults for metric "Complexity"' {
-                $Result.FunctionHealthRecordMetricsRules.Complexity.WarningThreshold | Should Be 17
-                $Result.FunctionHealthRecordMetricsRules.Complexity.FailThreshold | Should Be 33
+                $ComplexityResult = $Results | Where-Object MetricName -eq Complexity
+                $ComplexityResult.WarningThreshold | Should Be 17
+                $ComplexityResult.FailThreshold | Should Be 33
+                $ComplexityResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules override the defaults for metric "MaximumNestingDepth"' {
-                $Result.FunctionHealthRecordMetricsRules.MaximumNestingDepth.WarningThreshold | Should Be 6
-                $Result.FunctionHealthRecordMetricsRules.MaximumNestingDepth.FailThreshold | Should Be 12
+                $MaximumNestingDepthResult = $Results | Where-Object MetricName -eq MaximumNestingDepth
+                $MaximumNestingDepthResult.WarningThreshold | Should Be 6
+                $MaximumNestingDepthResult.FailThreshold | Should Be 12
+                $MaximumNestingDepthResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $Result.OverallHealthReportMetricsRules.TestsPassRate.WarningThreshold | Should Be 99
-                $Result.OverallHealthReportMetricsRules.TestsPassRate.FailThreshold | Should Be 97
+                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult.WarningThreshold | Should Be 99
+                $TestsPassRateResult.FailThreshold | Should Be 97
+                $TestsPassRateResult.HigherIsBetter | Should Be $True
             }
             It 'Resulting compliance rules are the same as the defaults for metric "CommandsMissedTotal"' {
-                $Result.OverallHealthReportMetricsRules.CommandsMissedTotal.WarningThreshold | Should Be 20
-                $Result.OverallHealthReportMetricsRules.CommandsMissedTotal.FailThreshold | Should Be 40
+                $CommandsMissedTotalResult = $Results | Where-Object MetricName -eq CommandsMissedTotal
+                $CommandsMissedTotalResult.WarningThreshold | Should Be 20
+                $CommandsMissedTotalResult.FailThreshold | Should Be 40
+                $CommandsMissedTotalResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules override the defaults for metric "LinesOfCodeTotal"' {
-                $Result.OverallHealthReportMetricsRules.LinesOfCodeTotal.WarningThreshold | Should Be 1500
-                $Result.OverallHealthReportMetricsRules.LinesOfCodeTotal.FailThreshold | Should Be 3000
+                $LinesOfCodeTotalResult = $Results | Where-Object MetricName -eq LinesOfCodeTotal
+                $LinesOfCodeTotalResult.WarningThreshold | Should Be 1500
+                $LinesOfCodeTotalResult.FailThreshold | Should Be 3000
+                $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules override the defaults for metric "LinesOfCodeAverage"' {
-                $Result.OverallHealthReportMetricsRules.LinesOfCodeAverage.WarningThreshold | Should Be 21
-                $Result.OverallHealthReportMetricsRules.LinesOfCodeAverage.FailThreshold | Should Be 42
+                $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
+                $LinesOfCodeAverageResult.WarningThreshold | Should Be 21
+                $LinesOfCodeAverageResult.FailThreshold | Should Be 42
+                $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
             }
-        }#>
+            It 'Should return 2 objects for the MetricName "TestCoverage" because this metric is present in both groups' {
+                ($Results | Where-Object MetricName -eq 'TestCoverage').Count |
+                Should Be 2
+            }
+        }
         Remove-Variable -Name 'DefaultSettings' -Force -ErrorAction SilentlyContinue
     }
 }

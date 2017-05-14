@@ -35,8 +35,8 @@
         return $DefaultSettings
     }
 
-    $ContainsFunctionHealthRecordSettings = 'FunctionHealthRecordMetricsRules' -in $ContainsSettings.Name
-    $ContainsOverallHealthReportSettings = 'OverallHealthReportMetricsRules' -in $ContainsSettings.Name
+    $ContainsFunctionHealthRecordSettings = 'PerFunctionMetrics' -in $ContainsSettings.Name
+    $ContainsOverallHealthReportSettings = 'OverallMetrics' -in $ContainsSettings.Name
 
     If ( -not($ContainsFunctionHealthRecordSettings) -and -not($ContainsOverallHealthReportSettings) ) {
         Write-Warning -Message 'Custom settings do not contain any of the settings groups expected by PSCodeHealth.'
@@ -44,10 +44,10 @@
     }
 
     If ( $ContainsFunctionHealthRecordSettings) {
-        $CustomFunctionSettings = $CustomSettings.FunctionHealthRecordMetricsRules | Where-Object { $_ }
+        $CustomFunctionSettings = $CustomSettings.PerFunctionMetrics | Where-Object { $_ }
 
         # Casting to a list in case we need to add elements to it
-        $DefaultFunctionSettings = ($DefaultSettings.FunctionHealthRecordMetricsRules | Where-Object { $_ }) -as [System.Collections.ArrayList]
+        $DefaultFunctionSettings = ($DefaultSettings.PerFunctionMetrics | Where-Object { $_ }) -as [System.Collections.ArrayList]
                 
         Foreach ( $CustomFunctionSetting in $CustomFunctionSettings ) {
             $MetricName = ($CustomFunctionSetting | Get-Member -MemberType Properties).Name
@@ -66,10 +66,10 @@
     }
 
     If ( $ContainsOverallHealthReportSettings ) {
-        $CustomOverallSettings = $CustomSettings.OverallHealthReportMetricsRules | Where-Object { $_ }
+        $CustomOverallSettings = $CustomSettings.OverallMetrics | Where-Object { $_ }
 
         # Casting to a list in case we need to add elements to it
-        $DefaultOverallSettings = ($DefaultSettings.OverallHealthReportMetricsRules | Where-Object { $_ }) -as [System.Collections.ArrayList]
+        $DefaultOverallSettings = ($DefaultSettings.OverallMetrics | Where-Object { $_ }) -as [System.Collections.ArrayList]
 
         Foreach ( $CustomOverallSetting in $CustomOverallSettings ) {
             $MetricName = ($CustomOverallSetting | Get-Member -MemberType Properties).Name
@@ -87,8 +87,8 @@
         }
     }
     $MergedSettingsProperties = [ordered]@{
-        FunctionHealthRecordMetricsRules = $DefaultFunctionSettings
-        OverallHealthReportMetricsRules = $DefaultOverallSettings
+        PerFunctionMetrics = $DefaultFunctionSettings
+        OverallMetrics = $DefaultOverallSettings
     }
     $MergedSettings = New-Object -TypeName PSCustomObject -Property $MergedSettingsProperties
     return $MergedSettings

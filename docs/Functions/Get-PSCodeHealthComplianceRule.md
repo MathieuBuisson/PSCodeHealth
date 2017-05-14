@@ -34,10 +34,10 @@ Gets all the default PSCodeHealth compliance rules (metrics warning and fail thr
 
 ### -------------------------- EXAMPLE 2 --------------------------
 ```
-Get-PSCodeHealthComplianceRule -CustomSettingsPath .\MySettings.json -SettingsGroup OverallHealthReportMetricsRules
+Get-PSCodeHealthComplianceRule -CustomSettingsPath .\MySettings.json -SettingsGroup OverallMetrics
 ```
 
-Gets all PSCodeHealth compliance rules (metrics warning and fail thresholds, etc...) in effect in the group 'OverallHealthReportMetricsRules'.
+Gets all PSCodeHealth compliance rules (metrics warning and fail thresholds, etc...) in effect in the group 'OverallMetrics'.
  
 This also output any compliance rule overriding the defaults because they are specified in the file MySettings.json.
 
@@ -48,7 +48,7 @@ Get-PSCodeHealthComplianceRule -MetricName 'TestCoverage','Complexity','MaximumN
 
 Gets the default compliance rules in effect for the TestCoverage, Complexity and MaximumNestingDepth metrics.
  
-In the case of TestCoverage, this metric exists in both FunctionHealthRecordMetricsRules and OverallHealthReportMetricsRules, so the TestCoverage compliance rules from both groups will be output.
+In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so the TestCoverage compliance rules from both groups will be output.
 
 ## PARAMETERS
 
@@ -72,9 +72,9 @@ Accept wildcard characters: False
 ### -SettingsGroup
 To filter the output compliance rules to only the ones located in the specified group.
  
-There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'FunctionHealthRecordMetricsRules' and 'OverallHealthReportMetricsRules'.
+There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'PerFunctionMetrics' and 'OverallMetrics'.
  
-Metrics in the FunctionHealthRecordMetricsRules group are generated for each individual function and metrics in the OverallHealthReportMetricsRules group are calculated for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.
+Metrics in the PerFunctionMetrics group are generated for each individual function and metrics in the OverallMetrics group are calculated for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.
  
 If not specified, compliance rules from both groups are output.
 

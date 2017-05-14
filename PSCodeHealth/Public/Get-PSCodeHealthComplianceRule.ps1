@@ -18,8 +18,8 @@ Function Get-PSCodeHealthComplianceRule {
 
 .PARAMETER SettingsGroup
     To filter the output compliance rules to only the ones located in the specified group.  
-    There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'FunctionHealthRecordMetricsRules' and 'OverallHealthReportMetricsRules'.  
-    Metrics in the FunctionHealthRecordMetricsRules group are generated for each individual function and metrics in the OverallHealthReportMetricsRules group are calculated for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.  
+    There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'PerFunctionMetrics' and 'OverallMetrics'.  
+    Metrics in the PerFunctionMetrics group are generated for each individual function and metrics in the OverallMetrics group are calculated for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.  
     If not specified, compliance rules from both groups are output.  
 
 .PARAMETER MetricName
@@ -32,16 +32,16 @@ Function Get-PSCodeHealthComplianceRule {
     Gets all the default PSCodeHealth compliance rules (metrics warning and fail thresholds, etc...).
 
 .EXAMPLE
-    PS C:\> Get-PSCodeHealthComplianceRule -CustomSettingsPath .\MySettings.json -SettingsGroup OverallHealthReportMetricsRules
+    PS C:\> Get-PSCodeHealthComplianceRule -CustomSettingsPath .\MySettings.json -SettingsGroup OverallMetrics
 
-    Gets all PSCodeHealth compliance rules (metrics warning and fail thresholds, etc...) in effect in the group 'OverallHealthReportMetricsRules'.  
+    Gets all PSCodeHealth compliance rules (metrics warning and fail thresholds, etc...) in effect in the group 'OverallMetrics'.  
     This also output any compliance rule overriding the defaults because they are specified in the file MySettings.json.
 
 .EXAMPLE
     PS C:\> Get-PSCodeHealthComplianceRule -MetricName 'TestCoverage','Complexity','MaximumNestingDepth'
 
     Gets the default compliance rules in effect for the TestCoverage, Complexity and MaximumNestingDepth metrics.  
-    In the case of TestCoverage, this metric exists in both FunctionHealthRecordMetricsRules and OverallHealthReportMetricsRules, so the TestCoverage compliance rules from both groups will be output.  
+    In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so the TestCoverage compliance rules from both groups will be output.  
 
 .OUTPUTS
     PSCodeHealth.Compliance.Rule
@@ -54,7 +54,7 @@ Function Get-PSCodeHealthComplianceRule {
         [string]$CustomSettingsPath,
 
         [Parameter(Mandatory=$False,Position=1)]
-        [ValidateSet('FunctionHealthRecordMetricsRules','OverallHealthReportMetricsRules')]
+        [ValidateSet('PerFunctionMetrics','OverallMetrics')]
         [string]$SettingsGroup,
 
         [Parameter(Mandatory=$False,Position=2)]
@@ -65,7 +65,7 @@ Function Get-PSCodeHealthComplianceRule {
         [string[]]$MetricName
     )
 
-    $MetricsGroups = @('FunctionHealthRecordMetricsRules','OverallHealthReportMetricsRules')
+    $MetricsGroups = @('PerFunctionMetrics','OverallMetrics')
     $DefaultSettingsPath = "$PSScriptRoot\..\PSCodeHealthSettings.json"
     $DefaultSettings = ConvertFrom-Json (Get-Content -Path $DefaultSettingsPath -Raw) -ErrorAction Stop | Where-Object { $_ }
 
@@ -89,14 +89,14 @@ Function Get-PSCodeHealthComplianceRule {
             $MetricsInGroup = $SettingsInEffect.$($SettingsGroup) | Where-Object { ($_ | Get-Member -MemberType Properties).Name -in $MetricName }
             Write-VerboseOutput "Found $($MetricsInGroup.Count) relevant metrics in the group $SettingsGroup"
             Foreach ( $MetricRule in $MetricsInGroup ) {
-                New-PSCodeHealthComplianceRule -MetricRule $MetricRule -SettingsGroup $MetricGroup
+                New-PSCodeHealthComplianceRule -MetricRule $MetricRule -SettingsGroup $SettingsGroup
             }
         }
         Else {
             $MetricsInGroup = $SettingsInEffect.$($SettingsGroup)
             Write-VerboseOutput "Found $($MetricsInGroup.Count) relevant metrics in the group $SettingsGroup"
             Foreach ( $MetricRule in $MetricsInGroup ) {
-                New-PSCodeHealthComplianceRule -MetricRule $MetricRule -SettingsGroup $MetricGroup
+                New-PSCodeHealthComplianceRule -MetricRule $MetricRule -SettingsGroup $SettingsGroup
             }
         }
     }

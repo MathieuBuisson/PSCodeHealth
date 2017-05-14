@@ -25,8 +25,8 @@ Function Test-PSCodeHealthCompliance {
 
 .PARAMETER SettingsGroup
     To get compliance levels only for the metrics located in the specified group.  
-    There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'FunctionHealthRecordMetricsRules' and 'OverallHealthReportMetricsRules'.  
-    Metrics in the FunctionHealthRecordMetricsRules group are for each individual function and metrics in the OverallHealthReportMetricsRules group are for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.  
+    There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'PerFunctionMetrics' and 'OverallMetrics'.  
+    Metrics in the PerFunctionMetrics group are for each individual function and metrics in the OverallMetrics group are for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.  
     If not specified, compliance levels for metrics in both groups are output.  
 
 .PARAMETER MetricName
@@ -44,15 +44,15 @@ Function Test-PSCodeHealthCompliance {
     Gets the compliance levels for every metrics, based on the PSCodeHealth report specified via pipeline input and the compliance rules in the default settings.
 
 .EXAMPLE
-    PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -CustomSettingsPath .\MySettings.json -SettingsGroup OverallHealthReportMetricsRules
+    PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -CustomSettingsPath .\MySettings.json -SettingsGroup OverallMetrics
 
-    Gets the compliance levels for the metrics in the settings group OverallHealthReportMetricsRules, based on the specified PSCodeHealth report ($MyProjectHealthReport).  
+    Gets the compliance levels for the metrics in the settings group OverallMetrics, based on the specified PSCodeHealth report ($MyProjectHealthReport).  
     This checks compliance against compliance rules in the defaults compliance rules and any custom compliance rule from the file 'MySettings.json'.  
 
 .EXAMPLE
     PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -MetricName TestCoverage
 
-    Gets the compliance levels for the metric(s) named 'TestCoverage'. In this case, this metric exists in both FunctionHealthRecordMetricsRules and OverallHealthReportMetricsRules, so this will output the compliance level for the TestCoverage metric from both groups.  
+    Gets the compliance levels for the metric(s) named 'TestCoverage'. In this case, this metric exists in both PerFunctionMetrics and OverallMetrics, so this will output the compliance level for the TestCoverage metric from both groups.  
 
 .OUTPUTS
     System.Management.Automation.PSCustomObject
@@ -69,7 +69,7 @@ Function Test-PSCodeHealthCompliance {
         [string]$CustomSettingsPath,
 
         [Parameter(Mandatory=$False,Position=2)]
-        [ValidateSet('FunctionHealthRecordMetricsRules','OverallHealthReportMetricsRules')]
+        [ValidateSet('PerFunctionMetrics','OverallMetrics')]
         [string]$SettingsGroup,
 
         [Parameter(Mandatory=$False,Position=3)]

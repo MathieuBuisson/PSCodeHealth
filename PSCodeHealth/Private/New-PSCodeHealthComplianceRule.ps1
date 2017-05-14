@@ -12,7 +12,7 @@ Function New-PSCodeHealthComplianceRule {
     To specify from which settings group the current metric rule comes from.
 
 .EXAMPLE
-    PS C:\> New-PSCodeHealthComplianceRule -MetricRule $MetricRule -SettingsGroup FunctionHealthRecordMetricsRules
+    PS C:\> New-PSCodeHealthComplianceRule -MetricRule $MetricRule -SettingsGroup PerFunctionMetrics
 
     Returns new custom object of the type PSCodeHealth.Compliance.Rule.
 
@@ -26,7 +26,7 @@ Function New-PSCodeHealthComplianceRule {
         [PSCustomObject]$MetricRule,
 
         [Parameter(Mandatory, Position=1)]
-        [ValidateSet('FunctionHealthRecordMetricsRules','OverallHealthReportMetricsRules')]
+        [ValidateSet('PerFunctionMetrics','OverallMetrics')]
         [string]$SettingsGroup
     )
 

@@ -1,5 +1,5 @@
 {
-    "FunctionHealthRecordMetricsRules": [
+    "PerFunctionMetrics": [
         {
             "DummyMetric": {
                 "WarningThreshold": 2,
@@ -8,7 +8,7 @@
             }
         }
     ],
-    "OverallHealthReportMetricsRules": [
+    "OverallMetrics": [
         {
             "DummyMetric2": {
                 "WarningThreshold": 7,
