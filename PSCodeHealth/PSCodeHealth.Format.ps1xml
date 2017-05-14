@@ -162,5 +162,52 @@
                 </TableRowEntries>
             </TableControl>
         </View>
+        <View>
+            <Name>PSCodeHealth.Compliance.Result</Name> 
+            <ViewSelectedBy>
+                <TypeName>PSCodeHealth.Compliance.Result</TypeName>
+            </ViewSelectedBy>
+            <TableControl>
+                <TableHeaders>
+                    <TableColumnHeader>
+                        <Label>Metric Name</Label>
+                        <Width>29</Width>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Warning Threshold</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Fail Threshold</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Value</Label>
+                    </TableColumnHeader>
+                    <TableColumnHeader>
+                        <Label>Result</Label>
+                    </TableColumnHeader>
+                </TableHeaders>
+                <TableRowEntries>
+                    <TableRowEntry>
+                    <TableColumnItems>
+                        <TableColumnItem>
+                            <PropertyName>MetricName</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>WarningThreshold</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>FailThreshold</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Value</PropertyName>
+                        </TableColumnItem>
+                        <TableColumnItem>
+                            <PropertyName>Result</PropertyName>
+                        </TableColumnItem>
+                    </TableColumnItems>
+                    </TableRowEntry>
+                </TableRowEntries>
+            </TableControl>
+        </View>
     </ViewDefinitions>
 </Configuration>

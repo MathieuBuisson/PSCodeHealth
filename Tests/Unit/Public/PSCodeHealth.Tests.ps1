@@ -40,4 +40,8 @@ Describe 'General Module behaviour' {
         (Get-FormatData -TypeName PSCodeHealth.Compliance.Rule).FormatViewDefinition.Name |
         Should Be 'PSCodeHealth.Compliance.Rule'
     }
+    It 'Links the type "PSCodeHealth.Compliance.Result" to the "PSCodeHealth.Compliance.Result" formatting view' {
+        (Get-FormatData -TypeName PSCodeHealth.Compliance.Result).FormatViewDefinition.Name |
+        Should Be 'PSCodeHealth.Compliance.Result'
+    }
 }
