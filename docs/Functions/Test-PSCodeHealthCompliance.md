@@ -137,7 +137,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Management.Automation.PSCustomObject
+### PSCodeHealth.Compliance.Result
 
 ## NOTES
 
