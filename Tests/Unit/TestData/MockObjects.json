@@ -607,5 +607,140 @@
                 }
             ]
         }
+    ],
+    "Invoke-PSCodeHealth": [
+        {
+            "NoFunctionHealthRecord": {
+                "Files": 4,
+                "Functions": 0,
+                "LinesOfCodeTotal": 291,
+                "LinesOfCodeAverage": 0,
+                "ScriptAnalyzerFindingsTotal": 9,
+                "ScriptAnalyzerErrors": 1,
+                "ScriptAnalyzerWarnings": 4,
+                "ScriptAnalyzerInformation": 6,
+                "ScriptAnalyzerFindingsAverage": 0,
+                "NumberOfTests" : 10,
+                "NumberOfFailedTests": 1,
+                "NumberOfPassedTests": 9,
+                "TestsPassRate": 90,
+                "TestCoverage": 0,
+                "CommandsMissedTotal": 296,
+                "ComplexityAverage": 0,
+                "NestingDepthAverage": 0,
+                "FunctionHealthRecords": null
+            }
+        },
+        {
+            "1FunctionHealthRecord": {
+                "Files": 4,
+                "Functions": 0,
+                "LinesOfCodeTotal": 291,
+                "LinesOfCodeAverage": 0,
+                "ScriptAnalyzerFindingsTotal": 9,
+                "ScriptAnalyzerErrors": 1,
+                "ScriptAnalyzerWarnings": 4,
+                "ScriptAnalyzerInformation": 6,
+                "ScriptAnalyzerFindingsAverage": 0,
+                "NumberOfTests" : 10,
+                "NumberOfFailedTests": 1,
+                "NumberOfPassedTests": 9,
+                "TestsPassRate": 90,
+                "TestCoverage": 77,
+                "CommandsMissedTotal": 296,
+                "ComplexityAverage": 0,
+                "NestingDepthAverage": 0,
+                "FunctionHealthRecords":                 
+                {
+                    "FunctionName": "Test-Function1",
+                    "LinesOfCode": 101,
+                    "ScriptAnalyzerFindings": 3,
+                    "Complexity": 19,
+                    "MaximumNestingDepth": 5,
+                    "TestCoverage": 95,
+                    "ScriptAnalyzerResultDetails": [
+                        {
+                            "Severity": "Error"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "2FunctionHealthRecords": {
+                "Files": 4,
+                "Functions": 2,
+                "LinesOfCodeTotal": 187,
+                "LinesOfCodeAverage": 93.5,
+                "ScriptAnalyzerFindingsTotal": 11,
+                "ScriptAnalyzerErrors": 2,
+                "ScriptAnalyzerWarnings": 4,
+                "ScriptAnalyzerInformation": 3,
+                "ScriptAnalyzerFindingsAverage": 5.5,
+                "NumberOfTests" : 10,
+                "NumberOfFailedTests": 1,
+                "NumberOfPassedTests": 9,
+                "TestsPassRate": 90,
+                "TestCoverage": 81,
+                "CommandsMissedTotal": 21,
+                "ComplexityAverage": 15.5,
+                "NestingDepthAverage": 3.5,
+                "FunctionHealthRecords": [
+                {
+                    "FunctionName": "Test-Function1",
+                    "LinesOfCode": 101,
+                    "ScriptAnalyzerFindings": 3,
+                    "Complexity": 19,
+                    "MaximumNestingDepth": 5,
+                    "TestCoverage": 79,
+                    "ScriptAnalyzerResultDetails": [
+                        {
+                            "Severity": "Error"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        }
+                    ]
+                },
+                {
+                    "FunctionName": "Test-Function2",
+                    "LinesOfCode": 86,
+                    "ScriptAnalyzerFindings": 6,
+                    "Complexity": 12,
+                    "MaximumNestingDepth": 2,
+                    "TestCoverage": 83,
+                    "ScriptAnalyzerResultDetails": [
+                        {
+                            "Severity": "Error"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        },
+                        {
+                            "Severity": "Warning"
+                        }
+                    ]
+                }
+            ]
+        }
+        }
     ]
 }

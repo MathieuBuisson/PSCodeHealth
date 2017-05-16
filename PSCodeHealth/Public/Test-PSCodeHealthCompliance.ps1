@@ -121,7 +121,7 @@ Function Test-PSCodeHealthCompliance {
         Else { # If the compliance rule is for an overall metric
 
             $MetricFromReport = $HealthReport.$($ComplianceRule.MetricName)
-            If ( $MetricFromReport ) {
+            If ( $MetricFromReport -or $MetricFromReport -eq 0 ) {
                 If ( $ComplianceRule.HigherIsBetter ) {
 
                     Switch ($MetricFromReport) {
