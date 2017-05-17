@@ -36,8 +36,8 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
-                $LinesOfCodeResult.WarningThreshold | Should Be 20
-                $LinesOfCodeResult.FailThreshold | Should Be 40
+                $LinesOfCodeResult.WarningThreshold | Should Be 30
+                $LinesOfCodeResult.FailThreshold | Should Be 60
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
@@ -89,8 +89,8 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
-                $LinesOfCodeResult.WarningThreshold | Should Be 20
-                $LinesOfCodeResult.FailThreshold | Should Be 40
+                $LinesOfCodeResult.WarningThreshold | Should Be 30
+                $LinesOfCodeResult.FailThreshold | Should Be 60
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
@@ -295,8 +295,8 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
-                $LinesOfCodeResult.WarningThreshold | Should Be 20
-                $LinesOfCodeResult.FailThreshold | Should Be 40
+                $LinesOfCodeResult.WarningThreshold | Should Be 30
+                $LinesOfCodeResult.FailThreshold | Should Be 60
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {

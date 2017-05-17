@@ -9,8 +9,9 @@ The single line comments, multiple lines comments and comment-based help are not
 Lower is better, because lenghty functions tend to be difficult to read and maintain.  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#NbLinesOfCode))  
-  - Warning : greater or equal to 20  
-  - Fail : greater or equal to 40  
+The thresholds are 50% higher than the recommendations in the above article because PowerShell advanced functions tend have more boilerplate code than C# methods (mainly due to the various parameter attributes being more widely used in PowerShell, for validation purposes, pipeline input, etc...).  
+  - Warning : greater or equal to 30  
+  - Fail : greater or equal to 60  
            
 ### ScriptAnalyzerFindings  
 It counts the total number of best practice violations found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) in the specified function definition, regardless of their severity.  
@@ -90,8 +91,9 @@ The total number of lines of code across all files and functions.
 The average number of lines of code per function.  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#NbLinesOfCode))  
-  - Warning : greater or equal to 20  
-  - Fail : greater or equal to 40  
+The thresholds are 50% higher than the recommendations in the above article because PowerShell advanced functions tend have more boilerplate code than C# methods (mainly due to the various parameter attributes being more widely used in PowerShell, for validation purposes, pipeline input, etc...).  
+  - Warning : greater or equal to 30  
+  - Fail : greater or equal to 60  
            
 ### ScriptAnalyzerFindingsTotal  
 The total number of best practice violations found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) across all files.  

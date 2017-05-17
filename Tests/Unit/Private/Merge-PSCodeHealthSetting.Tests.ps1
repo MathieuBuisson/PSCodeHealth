@@ -45,8 +45,8 @@ Describe 'Merge-PSCodeHealthSetting' {
                 $Result | Should BeOfType [PSCustomObject]
             }
             It 'Resulting settings are the same as the defaults for metric "LinesOfCode"' {
-                $Result.PerFunctionMetrics.LinesOfCode.WarningThreshold | Should Be 20
-                $Result.PerFunctionMetrics.LinesOfCode.FailThreshold | Should Be 40
+                $Result.PerFunctionMetrics.LinesOfCode.WarningThreshold | Should Be 30
+                $Result.PerFunctionMetrics.LinesOfCode.FailThreshold | Should Be 60
             }
             It 'Resulting settings are the same as the defaults for metric "TestCoverage"' {
                 $Result.PerFunctionMetrics.TestCoverage.WarningThreshold | Should Be 80
@@ -87,8 +87,8 @@ Describe 'Merge-PSCodeHealthSetting' {
                 $Result | Should BeOfType [PSCustomObject]
             }
             It 'Resulting settings are the same as the defaults for metric "LinesOfCode"' {
-                $Result.PerFunctionMetrics.LinesOfCode.WarningThreshold | Should Be 20
-                $Result.PerFunctionMetrics.LinesOfCode.FailThreshold | Should Be 40
+                $Result.PerFunctionMetrics.LinesOfCode.WarningThreshold | Should Be 30
+                $Result.PerFunctionMetrics.LinesOfCode.FailThreshold | Should Be 60
             }
             It 'Resulting settings are the same as the defaults for metric "TestCoverage"' {
                 $Result.PerFunctionMetrics.TestCoverage.WarningThreshold | Should Be 80
@@ -115,8 +115,8 @@ Describe 'Merge-PSCodeHealthSetting' {
                 $Result.OverallMetrics.LinesOfCodeTotal.FailThreshold | Should Be 2000
             }
             It 'Resulting settings are the same as the defaults for metric "LinesOfCodeAverage"' {
-                $Result.OverallMetrics.LinesOfCodeAverage.WarningThreshold | Should Be 20
-                $Result.OverallMetrics.LinesOfCodeAverage.FailThreshold | Should Be 40
+                $Result.OverallMetrics.LinesOfCodeAverage.WarningThreshold | Should Be 30
+                $Result.OverallMetrics.LinesOfCodeAverage.FailThreshold | Should Be 60
             }
             It 'Resulting settings have metric absent from the defaults : "DummyMetric"' {
                 $Result.PerFunctionMetrics.DummyMetric.WarningThreshold | Should Be 2

@@ -2,8 +2,8 @@
     "PerFunctionMetrics": [
         {
             "LinesOfCode": {
-                "WarningThreshold": 20,
-                "FailThreshold": 40,
+                "WarningThreshold": 30,
+                "FailThreshold": 60,
                 "HigherIsBetter": false
             }
         },
@@ -46,8 +46,8 @@
         },
         {
             "LinesOfCodeAverage": {
-                "WarningThreshold": 20,
-                "FailThreshold": 40,
+                "WarningThreshold": 30,
+                "FailThreshold": 60,
                 "HigherIsBetter": false
             }
         },

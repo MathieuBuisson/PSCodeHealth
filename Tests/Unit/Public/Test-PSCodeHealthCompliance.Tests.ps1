@@ -42,8 +42,8 @@ Describe 'Test-PSCodeHealthCompliance' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
                 $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
-                $LinesOfCodeAverageResult.WarningThreshold | Should Be 20
-                $LinesOfCodeAverageResult.FailThreshold | Should Be 40
+                $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
+                $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
                 $LinesOfCodeAverageResult.Value | Should Be 0
                 $LinesOfCodeAverageResult.Result | Should Be 'Pass'
@@ -95,8 +95,8 @@ Describe 'Test-PSCodeHealthCompliance' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
                 $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
-                $LinesOfCodeAverageResult.WarningThreshold | Should Be 20
-                $LinesOfCodeAverageResult.FailThreshold | Should Be 40
+                $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
+                $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
                 $LinesOfCodeAverageResult.Value | Should Be 93.5
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
@@ -164,8 +164,8 @@ Describe 'Test-PSCodeHealthCompliance' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
                 $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
-                $LinesOfCodeAverageResult.WarningThreshold | Should Be 20
-                $LinesOfCodeAverageResult.FailThreshold | Should Be 40
+                $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
+                $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
                 $LinesOfCodeAverageResult.Value | Should Be 93.5
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
@@ -249,8 +249,8 @@ Describe 'Test-PSCodeHealthCompliance' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
                 $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
-                $LinesOfCodeAverageResult.WarningThreshold | Should Be 20
-                $LinesOfCodeAverageResult.FailThreshold | Should Be 40
+                $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
+                $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
                 $LinesOfCodeAverageResult.Value | Should Be 93.5
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
@@ -327,8 +327,8 @@ Describe 'Test-PSCodeHealthCompliance' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq LinesOfCode
-                $LinesOfCodeResult.WarningThreshold | Should Be 20
-                $LinesOfCodeResult.FailThreshold | Should Be 40
+                $LinesOfCodeResult.WarningThreshold | Should Be 30
+                $LinesOfCodeResult.FailThreshold | Should Be 60
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
                 $LinesOfCodeResult.Value | Should Be 101
                 $LinesOfCodeResult.Result | Should Be 'Fail'
