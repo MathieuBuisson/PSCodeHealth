@@ -608,6 +608,34 @@
             ]
         }
     ],
+    "New-PSCodeHealthComplianceResult": [
+        {
+            "WarningsAndPass": [
+                {
+                    "Result": "Warning"
+                },
+                {
+                    "Result": "Pass"
+                },
+                {
+                    "Result": "Pass"
+                }
+            ]
+        },
+        {
+            "AllPass": [
+                {
+                    "Result": "Pass"
+                },
+                {
+                    "Result": "Pass"
+                },
+                {
+                    "Result": "Pass"
+                }
+            ]
+        }
+    ],
     "Invoke-PSCodeHealth": [
         {
             "NoFunctionHealthRecord": {

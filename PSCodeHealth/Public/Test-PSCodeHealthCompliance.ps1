@@ -1,10 +1,10 @@
 Function Test-PSCodeHealthCompliance {
 <#
 .SYNOPSIS
-    Gets the compliance level(s) of the analyzed PowerShell code, based on a PSCodeHealth report and compliance rules contained in PSCodeHealth settings.  
+    Gets the compliance result(s) of the analyzed PowerShell code, based on a PSCodeHealth report and compliance rules contained in PSCodeHealth settings.  
 
 .DESCRIPTION
-    Gets the compliance level(s) of the analyzed PowerShell code, based on a PSCodeHealth report and compliance rules contained in PSCodeHealth settings.  
+    Gets the compliance result(s) of the analyzed PowerShell code, based on a PSCodeHealth report and compliance rules contained in PSCodeHealth settings.  
     The values in the input PSCodeHealth report will be checked for compliance against the rules in the PSCodeHealth settings which are currently in effect.  
     By default, all compliance rules are coming from the file PSCodeHealthSettings.json in the module root. Custom compliance rules can be specified in JSON format in a file, via the parameter CustomSettingsPath.  
 
@@ -13,7 +13,7 @@ Function Test-PSCodeHealthCompliance {
       - Warning  
       - Fail  
     
-    By default, this function outputs the compliance levels for every metrics in every settings groups, but this can filtered via the MetricName and the SettingsGroup parameters.  
+    By default, this function outputs the compliance results for every metrics in every settings groups, but this can filtered via the MetricName and the SettingsGroup parameters.  
 
 .PARAMETER HealthReport
     The PSCodeHealth report (object of the type PSCodeHealth.Overall.HealthReport) to analyze for compliance.  
@@ -24,42 +24,57 @@ Function Test-PSCodeHealthCompliance {
     Any compliance rule specified in this file override the default, and rules not specified in this file will use the default from PSCodeHealthSettings.json.  
 
 .PARAMETER SettingsGroup
-    To get compliance levels only for the metrics located in the specified group.  
+    To evaluate compliance only for the metrics located in the specified group.  
     There are 2 settings groups in PSCodeHealthSettings.json, so there are 2 possible values for this parameter : 'PerFunctionMetrics' and 'OverallMetrics'.  
     Metrics in the PerFunctionMetrics group are for each individual function and metrics in the OverallMetrics group are for the entire file or folder specified in the 'Path' parameter of Invoke-PSCodeHealth.  
-    If not specified, compliance levels for metrics in both groups are output.  
+    If not specified, compliance is evaluated for metrics in both groups.  
 
 .PARAMETER MetricName
-    To get compliance levels only for the specified metric or metrics.
+    To get compliance results only for the specified metric(s).
     There is a large number of metrics, so for convenience, all the possible values are available via tab completion.
+    If not specified, compliance is evaluated for all metrics.
+
+.PARAMETER Summary
+    To output a single overall compliance result based on all the evaluated metrics.  
+    This retains the worst compliance level, meaning :  
+      - If any evaluated metric has the 'Fail' compliance level, the overall result is 'Fail'  
+      - If any evaluated metric has the 'Warning' compliance level and none has 'Fail', the overall result is 'Warning'  
+      - If all evaluated metrics has the 'Pass' compliance level, the overall result is 'Pass'  
 
 .EXAMPLE
     PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport
 
-    Gets the compliance levels for every metrics, based on the specified PSCodeHealth report ($MyProjectHealthReport) and the compliance rules in the default settings.
+    Gets the compliance results for every metrics, based on the specified PSCodeHealth report ($MyProjectHealthReport) and the compliance rules in the default settings.
 
 .EXAMPLE
     PS C:\> Invoke-PSCodeHealth | Test-PSCodeHealthCompliance
 
-    Gets the compliance levels for every metrics, based on the PSCodeHealth report specified via pipeline input and the compliance rules in the default settings.
+    Gets the compliance results for every metrics, based on the PSCodeHealth report specified via pipeline input and the compliance rules in the default settings.
 
 .EXAMPLE
     PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -CustomSettingsPath .\MySettings.json -SettingsGroup OverallMetrics
 
-    Gets the compliance levels for the metrics in the settings group OverallMetrics, based on the specified PSCodeHealth report ($MyProjectHealthReport).  
+    Evaluates the compliance results for the metrics in the settings group OverallMetrics, based on the specified PSCodeHealth report ($MyProjectHealthReport).  
     This checks compliance against compliance rules in the defaults compliance rules and any custom compliance rule from the file 'MySettings.json'.  
 
 .EXAMPLE
     PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -MetricName 'TestCoverage','Complexity','MaximumNestingDepth'
 
-    Gets the compliance levels for the TestCoverage, Complexity and MaximumNestingDepth metrics.  
-    In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this outputs the compliance level for the TestCoverage metric from both groups.  
+    Evaluates the compliance results only for the TestCoverage, Complexity and MaximumNestingDepth metrics.  
+    In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this evaluates the compliance result for the TestCoverage metric from both groups.  
+
+.EXAMPLE
+    PS C:\> Invoke-PSCodeHealth | Test-PSCodeHealthCompliance -Summary
+
+    Evaluates the compliance results for every metrics, based on the PSCodeHealth report specified via pipeline input and the compliance rules in the default settings.  
+    This outputs an overall 'Fail','Warning' or 'Pass' value for all the evaluated metrics.
+
 
 .OUTPUTS
-    PSCodeHealth.Compliance.Result
+    PSCodeHealth.Compliance.Result, System.String
 #>
     [CmdletBinding()]
-    [OutputType([PSCustomObject[]])]
+    [OutputType([PSCustomObject[]], [string])]
     Param(
         [Parameter(Mandatory, Position=0, ValueFromPipeline=$True)]
         [PSTypeName('PSCodeHealth.Overall.HealthReport')]
@@ -78,11 +93,18 @@ Function Test-PSCodeHealthCompliance {
         'LinesOfCodeAverage','ScriptAnalyzerFindingsTotal','ScriptAnalyzerErrors','ScriptAnalyzerWarnings',
         'ScriptAnalyzerInformation','ScriptAnalyzerFindingsAverage','NumberOfFailedTests','TestsPassRate',
         'CommandsMissedTotal','ComplexityAverage','NestingDepthAverage')]
-        [string[]]$MetricName
+        [string[]]$MetricName,
+
+        [Parameter(Mandatory=$False)]
+        [switch]$Summary
     )
 
     # First, we get the compliance rules for the specified metrics group and/or metric name(s) we are interested in
     $Null = $PSBoundParameters.Remove('HealthReport')
+    If ( $PSBoundParameters.ContainsKey('Summary') ) {
+        $Null = $PSBoundParameters.Remove('Summary')
+    }
+    [System.Collections.ArrayList]$ComplianceResults = @()
     $ComplianceRules = Get-PSCodeHealthComplianceRule @PSBoundParameters
     Write-VerboseOutput "Evaluating the specified health report against $($ComplianceRules.Count) compliance rules."
 
@@ -102,7 +124,8 @@ Function Test-PSCodeHealthCompliance {
                         { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
                         Default { $ComplianceResult = 'Pass' }
                     }
-                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                    $Null = $ComplianceResults.Add($ComplianceResultObj)
                 }
                 Else {
                     # We always retain the worst value of all the analyzed functions
@@ -114,7 +137,8 @@ Function Test-PSCodeHealthCompliance {
                         { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
                         Default { $ComplianceResult = 'Pass' }
                     }
-                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                    $Null = $ComplianceResults.Add($ComplianceResultObj)
                 }
             }
         }
@@ -129,7 +153,8 @@ Function Test-PSCodeHealthCompliance {
                         { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
                         Default { $ComplianceResult = 'Pass' }
                     }
-                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                    $Null = $ComplianceResults.Add($ComplianceResultObj)
                 }
                 Else {
 
@@ -138,9 +163,22 @@ Function Test-PSCodeHealthCompliance {
                         { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
                         Default { $ComplianceResult = 'Pass' }
                     }
-                    New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                    $Null = $ComplianceResults.Add($ComplianceResultObj)
                 }
             }
         }
+    }
+    If ( $Summary ) {
+        If ( $ComplianceResults.Result -contains 'Fail') {
+            return 'Fail'
+        }
+        If ( $ComplianceResults.Result -contains 'Warning') {
+            return 'Warning'
+        }
+        return 'Pass'
+    }
+    Else {
+        return $ComplianceResults
     }
 }

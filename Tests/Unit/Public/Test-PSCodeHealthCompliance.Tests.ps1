@@ -372,5 +372,40 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestCoverageResult.Result | Should Be 'Pass'
             }
         }
+        Context 'The Summary parameter is specified and there is a compliance result equal to "Fail"' {
+            $HealthReport = $Mocks.'Invoke-PSCodeHealth'.NoFunctionHealthRecord | Where-Object { $_ }
+            $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
+            $SummaryResult = Test-PSCodeHealthCompliance -HealthReport $HealthReport -Summary
+
+            It 'Should return a [string]' {
+                $SummaryResult | Should BeOfType [string]
+            }
+            It 'Should return "Fail"' {
+                $SummaryResult | Should Be 'Fail'
+            }
+        }
+        Context 'The Summary parameter is specified and compliance results are all equal to "Warning" or "Pass"' {
+            $HealthReport = $Mocks.'Invoke-PSCodeHealth'.NoFunctionHealthRecord | Where-Object { $_ }
+            $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
+            Mock New-PSCodeHealthComplianceResult { $Mocks.'New-PSCodeHealthComplianceResult'.WarningsAndPass | Where-Object { $_ } }
+            $SummaryResult = Test-PSCodeHealthCompliance -HealthReport $HealthReport -Summary
+
+            It 'Should return a [string]' {
+                $SummaryResult | Should BeOfType [string]
+            }
+            It 'Should return "Warning"' {
+                $SummaryResult | Should Be 'Warning'
+            }
+        }
+        Context 'The Summary parameter is specified and compliance results are all equal to "Pass"' {
+            $HealthReport = $Mocks.'Invoke-PSCodeHealth'.NoFunctionHealthRecord | Where-Object { $_ }
+            $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
+            Mock New-PSCodeHealthComplianceResult { $Mocks.'New-PSCodeHealthComplianceResult'.AllPass | Where-Object { $_ } }
+            $SummaryResult = Test-PSCodeHealthCompliance -HealthReport $HealthReport -Summary
+
+            It 'Should return "Pass"' {
+                $SummaryResult | Should Be 'Pass'
+            }
+        }
     }
 }
