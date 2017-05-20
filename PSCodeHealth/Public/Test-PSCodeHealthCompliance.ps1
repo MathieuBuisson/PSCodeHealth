@@ -178,7 +178,5 @@ Function Test-PSCodeHealthCompliance {
         }
         return 'Pass'
     }
-    Else {
-        return $ComplianceResults
-    }
+    return $ComplianceResults
 }

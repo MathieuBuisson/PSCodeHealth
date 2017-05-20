@@ -104,7 +104,7 @@ PrivateData = @{
         IconUri = 'https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png'
 
         # ReleaseNotes of this module
-        # ReleaseNotes = ''
+        ReleaseNotes = 'https://github.com/MathieuBuisson/PSCodeHealth/blob/master/docs/Release.md'
 
     } # End of PSData hashtable
 
