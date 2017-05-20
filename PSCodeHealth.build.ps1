@@ -78,9 +78,8 @@ task Upload_Test_Results_To_AppVeyor {
 task Test Unit_Tests,
     Fail_If_Failed_Unit_Test,
     Publish_Unit_Tests_Coverage,
-    # There are no integration tests at the moment
-    # Integration_Tests,
-    # Fail_If_Failed_Integration_Test,
+    Integration_Tests,
+    Fail_If_Failed_Integration_Test,
     Upload_Test_Results_To_AppVeyor
 
 task Analyze {

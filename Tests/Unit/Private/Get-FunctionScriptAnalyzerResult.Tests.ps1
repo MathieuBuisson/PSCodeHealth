@@ -4,8 +4,8 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Get-FunctionScriptAnalyzerResult' {
     InModuleScope $ModuleName {
 
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
-        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
+        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\" -Filter '*.psm1').FullName
         $FunctionDefinitions = Get-FunctionDefinition -Path $Files
 
         Context 'No Invoke-ScriptAnalyzer Mock' {

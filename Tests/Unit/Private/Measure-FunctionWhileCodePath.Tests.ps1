@@ -4,7 +4,7 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Measure-FunctionWhileCodePath' {
     InModuleScope $ModuleName {
 
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
 
         Context 'There is no While statement in the specified function' {
 

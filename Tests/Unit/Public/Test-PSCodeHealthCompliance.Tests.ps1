@@ -5,7 +5,7 @@ Describe 'Test-PSCodeHealthCompliance' {
     InModuleScope $ModuleName {
 
         $ScriptPath = $PSScriptRoot
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
         
         Context 'The specified health report does not contain any FunctionHealthRecord' {
 
@@ -275,7 +275,7 @@ Describe 'Test-PSCodeHealthCompliance' {
         Context 'The specified health report contains 2 FunctionHealthRecords and CustomSettingsPath is specified' {
             $HealthReport = $Mocks.'Invoke-PSCodeHealth'.'2FunctionHealthRecords' | Where-Object { $_ }
             $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
-            $MetricsInBothGroups = "$PSScriptRoot\..\TestData\2SettingsGroups4Metrics.json"
+            $MetricsInBothGroups = "$PSScriptRoot\..\..\TestData\2SettingsGroups4Metrics.json"
             $MetricsToTest = @('TestsPassRate','LinesOfCodeTotal','LinesOfCodeAverage','Complexity','MaximumNestingDepth','LinesOfCode')
             $Results = $HealthReport | Test-PSCodeHealthCompliance -MetricName $MetricsToTest -CustomSettingsPath $MetricsInBothGroups
 
@@ -337,7 +337,7 @@ Describe 'Test-PSCodeHealthCompliance' {
         Context 'The specified health report contains 2 FunctionHealthRecords and CustomSettingsPath is specified' {
             $HealthReport = $Mocks.'Invoke-PSCodeHealth'.'1FunctionHealthRecord' | Where-Object { $_ }
             $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
-            $MetricsInBothGroups = "$PSScriptRoot\..\TestData\2SettingsGroups4Metrics.json"
+            $MetricsInBothGroups = "$PSScriptRoot\..\..\TestData\2SettingsGroups4Metrics.json"
             $MetricsToTest = @('TestsPassRate','TestCoverage')
             $Results = $HealthReport | Test-PSCodeHealthCompliance -MetricName $MetricsToTest -CustomSettingsPath $MetricsInBothGroups
 

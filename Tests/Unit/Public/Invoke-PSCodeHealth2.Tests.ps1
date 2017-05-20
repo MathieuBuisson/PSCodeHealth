@@ -12,8 +12,8 @@ Describe 'Invoke-PSCodeHealth (again)' {
 
     InModuleScope $ModuleName {
 
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
-        Copy-Item -Path (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName -Destination TestDrive:\
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
+        Copy-Item -Path (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\" -Filter '*.psm1').FullName -Destination TestDrive:\
             
         Context 'Get-PowerShellFile returns 2 files and TestsPath parameter is specified' {
 

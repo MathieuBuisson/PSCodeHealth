@@ -4,7 +4,7 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Measure-FunctionLogicalOpCodePath' {
     InModuleScope $ModuleName {
 
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
 
         Context 'There is no logical operator in the specified function' {
 

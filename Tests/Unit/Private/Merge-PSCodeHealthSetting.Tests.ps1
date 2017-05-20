@@ -8,7 +8,7 @@ Describe 'Merge-PSCodeHealthSetting' {
 
         Context 'Custom settings do not contain any data' {
 
-            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\TestData\Empty.json" -Raw )
+            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\TestData\Empty.json" -Raw )
             $Result = Merge-PSCodeHealthSetting -DefaultSettings $DefaultSettings -CustomSettings $CustomSettings
 
             It 'Should return an object of the type [PSCustomObject]' {
@@ -23,7 +23,7 @@ Describe 'Merge-PSCodeHealthSetting' {
         }
         Context 'Custom settings do not contain any of the expected settings groups' {
 
-            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\TestData\NoSettingsGroup.json" -Raw )
+            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\TestData\NoSettingsGroup.json" -Raw )
             $Result = Merge-PSCodeHealthSetting -DefaultSettings $DefaultSettings -CustomSettings $CustomSettings
             
             It 'Should return an object of the type [PSCustomObject]' {
@@ -38,7 +38,7 @@ Describe 'Merge-PSCodeHealthSetting' {
         }
         Context 'Custom settings contains only expected settings groups and metrics' {
 
-            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\TestData\2SettingsGroups4Metrics.json" -Raw )
+            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\TestData\2SettingsGroups4Metrics.json" -Raw )
             $Result = Merge-PSCodeHealthSetting -DefaultSettings $DefaultSettings -CustomSettings $CustomSettings
             
             It 'Should return an object of the type [PSCustomObject]' {
@@ -80,7 +80,7 @@ Describe 'Merge-PSCodeHealthSetting' {
         Context 'Custom settings contains expected settings groups but contains metrics absent from the defaults' {
 
             $DefaultSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\..\PSCodeHealth\PSCodeHealthSettings.json" -Raw)
-            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\TestData\NewMetrics.json" -Raw )
+            $CustomSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\TestData\NewMetrics.json" -Raw )
             $Result = Merge-PSCodeHealthSetting -DefaultSettings $DefaultSettings -CustomSettings $CustomSettings
             
             It 'Should return an object of the type [PSCustomObject]' {

@@ -4,7 +4,7 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Test-FunctionHelpCoverage' {
     InModuleScope $ModuleName {
 
-        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
+        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\" -Filter '*.psm1').FullName
         $FunctionDefinitions = Get-FunctionDefinition -Path $Files
         $FunctionsWithHelp = @('Set-Nothing', 'Get-Nothing', 'Public')
         $FunctionWithNoHelp = 'Private'

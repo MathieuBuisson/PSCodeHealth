@@ -4,9 +4,9 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'New-PSCodeHealthReport' {
     InModuleScope $ModuleName {
 
-        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\TestData\MockObjects.json" -Raw )
-        [System.Collections.ArrayList]$Path = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
-        $TestsPath = "$($PSScriptRoot)\..\TestData\"
+        $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
+        [System.Collections.ArrayList]$Path = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\" -Filter '*.psm1').FullName
+        $TestsPath = "$($PSScriptRoot)\..\..\TestData\FakeTestFile.ps1"
 
         Context 'The value of the FunctionHealthRecord parameter is Null' {
 
@@ -225,7 +225,7 @@ Describe 'New-PSCodeHealthReport' {
             $FunctionHealthRecord = $Mocks.'New-FunctionHealthRecord'.'2HealthRecords' | Where-Object { $_ }
             $FunctionHealthRecord[0].psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
             $FunctionHealthRecord[1].psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
-            $Null = $Path.Add((Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\ManifestWithNoFindings.psd1").FullName)
+            $Null = $Path.Add((Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithNoFindings.psd1").FullName)
 
             $Result = New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
 
@@ -293,7 +293,7 @@ Describe 'New-PSCodeHealthReport' {
         }
         Context 'The Path parameter contains only a .psd1 file' {
 
-            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\ManifestWithFindings.psd1").FullName
+            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithFindings.psd1").FullName
             $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null
 
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
@@ -357,7 +357,7 @@ Describe 'New-PSCodeHealthReport' {
         }
         Context 'Invoke-Pester returns nothing at all' {
 
-            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\ManifestWithFindings.psd1").FullName
+            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithFindings.psd1").FullName
             Mock Invoke-Pester { }
             $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null
 
@@ -422,7 +422,7 @@ Describe 'New-PSCodeHealthReport' {
         }
         Context 'Invoke-Pester returns nothing at all, but the TestsResult parameter is used' {
 
-            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\ManifestWithFindings.psd1").FullName
+            $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithFindings.psd1").FullName
             $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
             Mock Invoke-Pester { }
             $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null -TestsResult $PesterResult

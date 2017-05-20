@@ -4,7 +4,7 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Get-FunctionDefinition' {
     InModuleScope $ModuleName {
 
-        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
+        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\" -Filter '*.psm1').FullName
         
         $TestDataPublicFunctions = @('Get-Nothing', 'Set-Nothing', 'Public')
         $TestDataPrivateFunctions = 'Private'

@@ -4,7 +4,7 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Get-FunctionLinesOfCode' {
     InModuleScope $ModuleName {
 
-        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\TestData\" -Filter '*.psm1').FullName
+        $Files = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\" -Filter '*.psm1').FullName
         $FunctionDefinitions = Get-FunctionDefinition -Path $Files
         $TestCases = @(
             @{ FunctionName = 'Public'; ExpectedNumberOfLines = 6 }

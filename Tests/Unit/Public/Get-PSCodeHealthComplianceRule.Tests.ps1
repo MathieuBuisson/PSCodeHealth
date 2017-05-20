@@ -8,7 +8,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
 
         Context 'The file specified via the CustomSettingsPath parameter does not contain valid JSON' {
 
-            $InvalidJsonPath = "$PSScriptRoot\..\TestData\InvalidSettings.json"
+            $InvalidJsonPath = "$PSScriptRoot\..\..\TestData\InvalidSettings.json"
 
             It 'Should throw "An error occurred when attempting to convert JSON data"' {
                 { Get-PSCodeHealthComplianceRule -CustomSettingsPath $InvalidJsonPath } |
@@ -17,7 +17,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
         }
         Context 'The file specified via the CustomSettingsPath parameter does not contain any data' {
 
-            $EmptyJsonPath = "$PSScriptRoot\..\TestData\Empty.json"
+            $EmptyJsonPath = "$PSScriptRoot\..\..\TestData\Empty.json"
             $Results = Get-PSCodeHealthComplianceRule -CustomSettingsPath $EmptyJsonPath
 
             It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
@@ -276,7 +276,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
         }
         Context 'The custom settings file contains 2 metrics in both settings groups' {
 
-            $MetricsInBothGroups = "$PSScriptRoot\..\TestData\2SettingsGroups4Metrics.json"
+            $MetricsInBothGroups = "$PSScriptRoot\..\..\TestData\2SettingsGroups4Metrics.json"
             $Results = Get-PSCodeHealthComplianceRule -CustomSettingsPath $MetricsInBothGroups
 
             It 'Should return objects of the type [PSCodeHealth.Compliance.Rule]' {
