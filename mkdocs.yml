@@ -7,6 +7,7 @@ copyright: "PSCodeHealth is licensed under the <a href='https://github.com/Mathi
 pages:
   - Home: index.md
   - Metrics collected by PSCodeHealth: Metrics.md
+  - Release Notes: Release.md
   - Public Functions:
     - Get-PSCodeHealthComplianceRule: Functions/Get-PSCodeHealthComplianceRule.md
     - Invoke-PSCodeHealth: Functions/Invoke-PSCodeHealth.md
