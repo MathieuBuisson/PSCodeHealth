@@ -12,7 +12,7 @@ Describe 'Invoke-PSCodeHealth' {
     $FormatCoverage = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Format-Coverage'
     $GetCoveragePercentage = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Get-CoveragePercentage'
 
-    Context 'Given code in coveralls module, Invoke-PSCodeHealth return the expected FunctionHealthRecords' {
+    Context 'Given code in coveralls module, Invoke-PSCodeHealth returns the expected FunctionHealthRecords' {
 
         It 'Should find 9 function definitions' {
             $Result.FunctionHealthRecords.Count | Should Be 9
@@ -97,6 +97,9 @@ Describe 'Invoke-PSCodeHealth' {
         It 'Should return correct MaximumNestingDepth metric for the function Get-CoveragePercentage' {
             $GetCoveragePercentage.MaximumNestingDepth | Should Be 1
         }
+    }
+    Context 'Given code in coveralls module, Invoke-PSCodeHealth returns the expected PSCodeHealthReport' {
+
         It 'The health report should have the expected Files property' {
             $Result.Files | Should Be 3
         }
