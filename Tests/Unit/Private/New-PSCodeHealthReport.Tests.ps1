@@ -10,9 +10,9 @@ Describe 'New-PSCodeHealthReport' {
 
         Context 'The value of the FunctionHealthRecord parameter is Null' {
 
-            $Result = New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $Null
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $Null
             It 'Should not throw' {
-                { New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $Null } |
+                { New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $Null } |
                 Should Not Throw
             }
             It 'Should return only 1 object' {
@@ -21,6 +21,12 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'Any'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be 'C:\Any'
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 2
@@ -83,10 +89,10 @@ Describe 'New-PSCodeHealthReport' {
             $FunctionHealthRecord = ($Mocks.'New-FunctionHealthRecord'.Single)[0]
             $FunctionHealthRecord.psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
             Mock Invoke-Pester { $Mocks.'Invoke-Pester'.'NumberOfTests' }
-            $Result = New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
 
             It 'Should throw if the FunctionHealthRecord parameter does not contain PSCodeHealth.Function.HealthRecord object(s)' {
-                { New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord [PSCustomObject]$FunctionHealthRecord } |
+                { New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Path -TestsPath $TestsPath -FunctionHealthRecord [PSCustomObject]$FunctionHealthRecord } |
                 Should Throw
             }
             It 'Should return only 1 object' {
@@ -95,6 +101,12 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'Any'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be 'C:\Any'
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 2
@@ -156,7 +168,7 @@ Describe 'New-PSCodeHealthReport' {
             $FunctionHealthRecord = $Mocks.'New-FunctionHealthRecord'.'2HealthRecords' | Where-Object { $_ }
             $FunctionHealthRecord[0].psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
             $FunctionHealthRecord[1].psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
-            $Result = New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
 
             It 'Should return only 1 object' {
                 ($Result | Measure-Object).Count | Should Be 1
@@ -164,6 +176,12 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'Any'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be 'C:\Any'
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 2
@@ -227,7 +245,7 @@ Describe 'New-PSCodeHealthReport' {
             $FunctionHealthRecord[1].psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.HealthRecord')
             $Null = $Path.Add((Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithNoFindings.psd1").FullName)
 
-            $Result = New-PSCodeHealthReport -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Path -TestsPath $TestsPath -FunctionHealthRecord $FunctionHealthRecord
 
             It 'Should return only 1 object' {
                 ($Result | Measure-Object).Count | Should Be 1
@@ -235,6 +253,12 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'Any'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be 'C:\Any'
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 3
@@ -294,11 +318,17 @@ Describe 'New-PSCodeHealthReport' {
         Context 'The Path parameter contains only a .psd1 file' {
 
             $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithFindings.psd1").FullName
-            $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null
 
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'Any'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be 'C:\Any'
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 1
@@ -359,11 +389,17 @@ Describe 'New-PSCodeHealthReport' {
 
             $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithFindings.psd1").FullName
             Mock Invoke-Pester { }
-            $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null
 
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'Any'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be 'C:\Any'
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 1
@@ -425,7 +461,7 @@ Describe 'New-PSCodeHealthReport' {
             $Psd1 = (Get-ChildItem -Path "$($PSScriptRoot)\..\..\TestData\ManifestWithFindings.psd1").FullName
             $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
             Mock Invoke-Pester { }
-            $Result = New-PSCodeHealthReport -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null -TestsResult $PesterResult
+            $Result = New-PSCodeHealthReport -ReportTitle 'Any' -AnalyzedPath 'C:\Any' -Path $Psd1 -TestsPath $TestsPath -FunctionHealthRecord $Null -TestsResult $PesterResult
 
             It 'Should return an object with the expected property "LinesOfCodeTotal"' {
                 $Result.LinesOfCodeTotal | Should Be 0

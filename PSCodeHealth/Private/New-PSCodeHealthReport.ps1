@@ -41,18 +41,24 @@ Function New-PSCodeHealthReport {
     [OutputType([PSCustomObject])]
     Param (
         [Parameter(Position=0, Mandatory)]
-        [string[]]$Path,
+        [string]$ReportTitle,
 
         [Parameter(Position=1, Mandatory)]
+        [string]$AnalyzedPath,
+        
+        [Parameter(Position=2, Mandatory)]
+        [string[]]$Path,
+
+        [Parameter(Position=3, Mandatory)]
         [AllowNull()]
         [PSTypeName('PSCodeHealth.Function.HealthRecord')]
         [PSCustomObject[]]$FunctionHealthRecord,
 
-        [Parameter(Position=2, Mandatory)]
+        [Parameter(Position=4, Mandatory)]
         [ValidateScript({ Test-Path $_ })]
         [string]$TestsPath,
 
-        [Parameter(Position=3, Mandatory=$False)]
+        [Parameter(Position=5, Mandatory=$False)]
         [PSCustomObject]$TestsResult
     )
 
@@ -104,6 +110,8 @@ Function New-PSCodeHealthReport {
     }
 
     $ObjectProperties = [ordered]@{
+        'ReportTitle'                   = $ReportTitle
+        'AnalyzedPath'                  = $AnalyzedPath
         'Files'                         = $Path.Count
         'Functions'                     = $FunctionHealthRecord.Count
         'LinesOfCodeTotal'              = ($FunctionHealthRecord.LinesOfCode | Measure-Object -Sum).Sum

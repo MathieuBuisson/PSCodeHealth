@@ -19,6 +19,12 @@ Describe 'Invoke-PSCodeHealth (again)' {
 
             $Result = Invoke-PSCodeHealth -Path $TestDrive -TestsPath $TestDrive
 
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be (Get-Item -Path $TestDrive).Name
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be $TestDrive.ToString()
+            }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 2
             }
@@ -87,6 +93,12 @@ Describe 'Invoke-PSCodeHealth (again)' {
             It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
                 $Result | Should BeOfType [PSCustomObject]
                 ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be '2PublicFunctions.psm1'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should Be "$TestDrive\2PublicFunctions.psm1"
             }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 1

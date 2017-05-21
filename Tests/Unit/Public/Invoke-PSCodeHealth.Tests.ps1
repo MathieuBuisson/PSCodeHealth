@@ -47,6 +47,12 @@ Describe 'Invoke-PSCodeHealth' {
                 { Invoke-PSCodeHealth -Path "$PSScriptRoot\..\..\TestData" -TestsPath "$PSScriptRoot\..\..\TestData\FakeTestFile.ps1" } |
                 Should Not Throw
             }
+            It 'Should return an object with the expected property "ReportTitle"' {
+                $Result.ReportTitle | Should Be 'TestData'
+            }
+            It 'Should return an object with the expected property "AnalyzedPath"' {
+                $Result.AnalyzedPath | Should BeLike '*\TestData'
+            }
             It 'Should return an object with the expected property "Files"' {
                 $Result.Files | Should Be 1
             }

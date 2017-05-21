@@ -130,21 +130,21 @@ Function Invoke-PSCodeHealth {
     If ( -not $TestsPath ) {
         $TestsPath = If ( (Get-Item -Path $Path).PSIsContainer ) { $Path } Else { Split-Path -Path $Path -Parent }
     }
+    $PathItem = (Get-Item -Path $Path)
+    $ReportTitle = $PathItem.Name
+    $AnalyzedPath = $PathItem.FullName
 
+    $PSCodeHealthReportParams = @{
+        ReportTitle = $ReportTitle
+        AnalyzedPath = $AnalyzedPath
+        Path = $PowerShellFiles
+        FunctionHealthRecord = $FunctionHealthRecords
+        TestsPath = $TestsPath
+    }
     If ( ($PSBoundParameters.ContainsKey('TestsResult')) ) {
-        $PSCodeHealthReportParams = @{
-            Path = $PowerShellFiles
-            FunctionHealthRecord = $FunctionHealthRecords
-            TestsPath = $TestsPath
-            TestsResult = $PSBoundParameters.TestsResult
-        }
+        New-PSCodeHealthReport @PSCodeHealthReportParams -TestsResult $PSBoundParameters.TestsResult
     }
     Else {
-        $PSCodeHealthReportParams = @{
-            Path = $PowerShellFiles
-            FunctionHealthRecord = $FunctionHealthRecords
-            TestsPath = $TestsPath
-        }
+        New-PSCodeHealthReport @PSCodeHealthReportParams
     }
-    New-PSCodeHealthReport @PSCodeHealthReportParams
 }
