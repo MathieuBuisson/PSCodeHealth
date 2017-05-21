@@ -1,6 +1,6 @@
 #Get public and private function definition files.
-    $Public  = @( Get-ChildItem -Path $PSScriptRoot\Public\*.ps1 -ErrorAction SilentlyContinue )
-    $Private = @( Get-ChildItem -Path $PSScriptRoot\Private\*.ps1 -ErrorAction SilentlyContinue )
+    $Public  = @( Get-ChildItem -Path "$PSScriptRoot\Public\*.ps1" -File -ErrorAction SilentlyContinue )
+    $Private = @( Get-ChildItem -Path "$PSScriptRoot\Private" -File -Filter '*.ps1' -Recurse -ErrorAction SilentlyContinue )
 
     Foreach ( $Import in @($Public + $Private) ) {
         Try {
