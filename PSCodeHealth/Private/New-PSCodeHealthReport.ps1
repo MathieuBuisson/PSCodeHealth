@@ -7,6 +7,14 @@ Function New-PSCodeHealthReport {
     This output object contains metrics for the code in all the PowerShell files specified via the Path parameter, uses the function health records specified via the FunctionHealthRecord parameter.
     The value of the TestsPath parameter specifies the location of the tests when calling Pester to generate test coverage information.
 
+.PARAMETER ReportTitle
+    To specify the title of the health report.  
+    This is mainly used when generating an HTML report.
+
+.PARAMETER AnalyzedPath
+    To specify the code path being analyzed.  
+    This corresponds to the original Path value of Invoke-PSCodeHealth.
+
 .PARAMETER Path
     To specify the path of one or more PowerShell file(s) to analyze.
 
@@ -27,7 +35,7 @@ Function New-PSCodeHealthReport {
       - CommandsMissedTotal  
 
 .EXAMPLE
-    PS C:\> New-PSCodeHealthReport -Path $MyPath -FunctionHealthRecord $FunctionHealthRecords -TestsPath "$MyPath\Tests"
+    PS C:\> New-PSCodeHealthReport -ReportTitle 'MyTitle' -AnalyzedPath 'C:\Folder' -Path $MyPath -FunctionHealthRecord $FunctionHealthRecords -TestsPath "$MyPath\Tests"
 
     Returns new custom object of the type PSCodeHealth.Overall.HealthReport, containing metrics for the code in all the PowerShell files in $MyPath, using the function health records in $FunctionHealthRecords and running all tests in "$MyPath\Tests" (and its subdirectories) to generate test coverage information.
 
