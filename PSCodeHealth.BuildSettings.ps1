@@ -12,7 +12,7 @@ $Settings = @{
 
     UnitTestParams = @{
         Script = '.\Tests\Unit'
-        CodeCoverage = '.\PSCodeHealth\P*\*'
+        CodeCoverage = (Get-ChildItem -Path '.\PSCodeHealth\' -File -Filter "*.ps1" -Recurse).FullName | Where-Object { $_ -Match "Public|Private" }
         OutputFile = "$PSScriptRoot\BuildOutput\UnitTestsResult.xml"
         PassThru = $True
     }
