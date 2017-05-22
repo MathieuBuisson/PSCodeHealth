@@ -9,19 +9,19 @@ Describe 'Test-PSCodeHealthCompliance' {
     Context 'Given code in coveralls module, it returns the expected compliance results' {
 
         $Result = $CoverallsHealthReport | Test-PSCodeHealthCompliance
-        $LinesOfCode = $Result | Where-Object MetricName -eq 'LinesOfCode'
-        $ScriptAnalyzerFindings = $Result | Where-Object MetricName -eq 'ScriptAnalyzerFindings'
-        $TestCoverage = $Result | Where-Object MetricName -eq 'TestCoverage'
-        $Complexity = $Result | Where-Object MetricName -eq 'Complexity'
-        $MaximumNestingDepth = $Result | Where-Object MetricName -eq 'MaximumNestingDepth'
-        $LinesOfCodeTotal = $Result | Where-Object MetricName -eq 'LinesOfCodeTotal'
-        $LinesOfCodeAverage = $Result | Where-Object MetricName -eq 'LinesOfCodeAverage'
-        $ScriptAnalyzerFindingsTotal = $Result | Where-Object MetricName -eq 'ScriptAnalyzerFindingsTotal'
-        $NumberOfFailedTests = $Result | Where-Object MetricName -eq 'NumberOfFailedTests'
-        $TestsPassRate = $Result | Where-Object MetricName -eq 'TestsPassRate'
-        $CommandsMissedTotal = $Result | Where-Object MetricName -eq 'CommandsMissedTotal'
-        $ComplexityAverage = $Result | Where-Object MetricName -eq 'ComplexityAverage'
-        $NestingDepthAverage = $Result | Where-Object MetricName -eq 'NestingDepthAverage'
+        $LinesOfCode = $Result.Where({$_.MetricName -eq 'LinesOfCode'})
+        $ScriptAnalyzerFindings = $Result.Where({$_.MetricName -eq 'ScriptAnalyzerFindings'})
+        $TestCoverage = $Result.Where({$_.MetricName -eq 'TestCoverage'})
+        $Complexity = $Result.Where({$_.MetricName -eq 'Complexity'})
+        $MaximumNestingDepth = $Result.Where({$_.MetricName -eq 'MaximumNestingDepth'})
+        $LinesOfCodeTotal = $Result.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
+        $LinesOfCodeAverage = $Result.Where({$_.MetricName -eq 'LinesOfCodeAverage'})
+        $ScriptAnalyzerFindingsTotal = $Result.Where({$_.MetricName -eq 'ScriptAnalyzerFindingsTotal'})
+        $NumberOfFailedTests = $Result.Where({$_.MetricName -eq 'NumberOfFailedTests'})
+        $TestsPassRate = $Result.Where({$_.MetricName -eq 'TestsPassRate'})
+        $CommandsMissedTotal = $Result.Where({$_.MetricName -eq 'CommandsMissedTotal'})
+        $ComplexityAverage = $Result.Where({$_.MetricName -eq 'ComplexityAverage'})
+        $NestingDepthAverage = $Result.Where({$_.MetricName -eq 'NestingDepthAverage'})
 
         It 'Should return correct value for the metric : LinesOfCode' {
             $LinesOfCode.Value | Should Be 39

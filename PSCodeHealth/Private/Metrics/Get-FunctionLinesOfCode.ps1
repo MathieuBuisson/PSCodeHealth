@@ -31,12 +31,12 @@ Function Get-FunctionLinesOfCode {
     Write-VerboseOutput -Message "Function name : $($FunctionDefinition.Name)"
 
     $AstTokens = [System.Management.Automation.PSParser]::Tokenize($FunctionText, [ref]$Null)
-    $NoCommentTokens = $AstTokens | Where-Object { $_.Type -ne 'Comment' }
+    $NoCommentTokens = $AstTokens.Where({ $_.Type -ne 'Comment' })
 
     # Substracting 1 from the number of lines if the last token is a NewLine
     [System.Int32]$NumberofLinesToSubstract = If ( $NoCommentTokens[-1].Type -eq 'NewLine' ) { 1 } Else { 0 }
     Write-VerboseOutput -Message "Number of lines to substract : $($NumberofLinesToSubstract)."
 
-    [System.Int32]$NumberOfLines = ($NoCommentTokens | Where-Object { $_.Type -eq 'NewLine' }).Count - $NumberofLinesToSubstract
+    [System.Int32]$NumberOfLines = ($NoCommentTokens.Where({ $_.Type -eq 'NewLine' })).Count - $NumberofLinesToSubstract
     return $NumberOfLines
 }

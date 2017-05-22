@@ -6,11 +6,11 @@ Describe 'Invoke-PSCodeHealth' {
 
     $Result = Invoke-PSCodeHealth -Path $CodePath
     $ExpectedFunctionNames = @('Add-CoverageInfo','Merge-CoverageResult','Get-CoverageArray','Format-FileCoverage','Get-CommandsForFile','Get-GitInfo','Format-Coverage','Publish-Coverage','Get-CoveragePercentage')
-    $AddCoverageInfo = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Add-CoverageInfo'
-    $GetCoverageArray = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Get-CoverageArray'
-    $FormatFileCoverage = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Format-FileCoverage'
-    $FormatCoverage = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Format-Coverage'
-    $GetCoveragePercentage = $Result.FunctionHealthRecords | Where-Object FunctionName -eq 'Get-CoveragePercentage'
+    $AddCoverageInfo = $Result.FunctionHealthRecords.Where({$_.FunctionName -eq 'Add-CoverageInfo'})
+    $GetCoverageArray = $Result.FunctionHealthRecords.Where({$_.FunctionName -eq 'Get-CoverageArray'})
+    $FormatFileCoverage = $Result.FunctionHealthRecords.Where({$_.FunctionName -eq 'Format-FileCoverage'})
+    $FormatCoverage = $Result.FunctionHealthRecords.Where({$_.FunctionName -eq 'Format-Coverage'})
+    $GetCoveragePercentage = $Result.FunctionHealthRecords.Where({$_.FunctionName -eq 'Get-CoveragePercentage'})
 
     Context 'Given code in coveralls module, it returns the expected FunctionHealthRecords' {
 

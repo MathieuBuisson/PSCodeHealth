@@ -16,7 +16,7 @@ Describe 'Test-FunctionHelpCoverage' {
             }
         }
         It 'Should return True if the specified function contains some help info' {
-            Foreach ( $FunctionDefinition in ($FunctionDefinitions | Where-Object { $_.Name -in $FunctionsWithHelp }) ) {
+            Foreach ( $FunctionDefinition in ($FunctionDefinitions.Where({$_.Name -in $FunctionsWithHelp})) ) {
                 Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition |
                 Should Be $True
             }

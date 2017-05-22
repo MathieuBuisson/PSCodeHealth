@@ -25,7 +25,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 }
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult = $Results.Where({$_.MetricName -eq 'TestsPassRate'})
                 $TestsPassRateResult.WarningThreshold | Should Be 99
                 $TestsPassRateResult.FailThreshold | Should Be 97
                 $TestsPassRateResult.HigherIsBetter | Should Be $True
@@ -33,7 +33,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestsPassRateResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeTotal"' {
-                $LinesOfCodeTotalResult = $Results | Where-Object MetricName -eq LinesOfCodeTotal
+                $LinesOfCodeTotalResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
                 $LinesOfCodeTotalResult.WarningThreshold | Should Be 1000
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 2000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
@@ -41,7 +41,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeTotalResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
-                $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
+                $LinesOfCodeAverageResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeAverage'})
                 $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
                 $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
@@ -49,7 +49,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeAverageResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerErrors"' {
-                $ScriptAnalyzerErrorsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerErrors
+                $ScriptAnalyzerErrorsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerErrors'})
                 $ScriptAnalyzerErrorsResult.WarningThreshold | Should Be 1
                 $ScriptAnalyzerErrorsResult.FailThreshold | Should Be 3
                 $ScriptAnalyzerErrorsResult.HigherIsBetter | Should Be $False
@@ -57,7 +57,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerErrorsResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerWarnings"' {
-                $ScriptAnalyzerWarningsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerWarnings
+                $ScriptAnalyzerWarningsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerWarnings'})
                 $ScriptAnalyzerWarningsResult.WarningThreshold | Should Be 10
                 $ScriptAnalyzerWarningsResult.FailThreshold | Should Be 20
                 $ScriptAnalyzerWarningsResult.HigherIsBetter | Should Be $False
@@ -78,7 +78,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 }
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult = $Results.Where({$_.MetricName -eq 'TestsPassRate'})
                 $TestsPassRateResult.WarningThreshold | Should Be 99
                 $TestsPassRateResult.FailThreshold | Should Be 97
                 $TestsPassRateResult.HigherIsBetter | Should Be $True
@@ -86,7 +86,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestsPassRateResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeTotal"' {
-                $LinesOfCodeTotalResult = $Results | Where-Object MetricName -eq LinesOfCodeTotal
+                $LinesOfCodeTotalResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
                 $LinesOfCodeTotalResult.WarningThreshold | Should Be 1000
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 2000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
@@ -94,7 +94,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeTotalResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
-                $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
+                $LinesOfCodeAverageResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeAverage'})
                 $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
                 $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
@@ -102,7 +102,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerErrors"' {
-                $ScriptAnalyzerErrorsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerErrors
+                $ScriptAnalyzerErrorsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerErrors'})
                 $ScriptAnalyzerErrorsResult.WarningThreshold | Should Be 1
                 $ScriptAnalyzerErrorsResult.FailThreshold | Should Be 3
                 $ScriptAnalyzerErrorsResult.HigherIsBetter | Should Be $False
@@ -110,7 +110,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerErrorsResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerWarnings"' {
-                $ScriptAnalyzerWarningsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerWarnings
+                $ScriptAnalyzerWarningsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerWarnings'})
                 $ScriptAnalyzerWarningsResult.WarningThreshold | Should Be 10
                 $ScriptAnalyzerWarningsResult.FailThreshold | Should Be 20
                 $ScriptAnalyzerWarningsResult.HigherIsBetter | Should Be $False
@@ -118,7 +118,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerWarningsResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "Complexity"' {
-                $ComplexityResult = $Results | Where-Object MetricName -eq Complexity
+                $ComplexityResult = $Results.Where({$_.MetricName -eq 'Complexity'})
                 $ComplexityResult.WarningThreshold | Should Be 15
                 $ComplexityResult.FailThreshold | Should Be 30
                 $ComplexityResult.HigherIsBetter | Should Be $False
@@ -126,7 +126,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ComplexityResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "MaximumNestingDepth"' {
-                $MaximumNestingDepthResult = $Results | Where-Object MetricName -eq MaximumNestingDepth
+                $MaximumNestingDepthResult = $Results.Where({$_.MetricName -eq 'MaximumNestingDepth'})
                 $MaximumNestingDepthResult.WarningThreshold | Should Be 4
                 $MaximumNestingDepthResult.FailThreshold | Should Be 8
                 $MaximumNestingDepthResult.HigherIsBetter | Should Be $False
@@ -147,7 +147,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 }
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult = $Results.Where({$_.MetricName -eq 'TestsPassRate'})
                 $TestsPassRateResult.WarningThreshold | Should Be 99
                 $TestsPassRateResult.FailThreshold | Should Be 97
                 $TestsPassRateResult.HigherIsBetter | Should Be $True
@@ -155,7 +155,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestsPassRateResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeTotal"' {
-                $LinesOfCodeTotalResult = $Results | Where-Object MetricName -eq LinesOfCodeTotal
+                $LinesOfCodeTotalResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
                 $LinesOfCodeTotalResult.WarningThreshold | Should Be 1000
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 2000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
@@ -163,7 +163,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeTotalResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
-                $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
+                $LinesOfCodeAverageResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeAverage'})
                 $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
                 $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
@@ -171,7 +171,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerErrors"' {
-                $ScriptAnalyzerErrorsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerErrors
+                $ScriptAnalyzerErrorsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerErrors'})
                 $ScriptAnalyzerErrorsResult.WarningThreshold | Should Be 1
                 $ScriptAnalyzerErrorsResult.FailThreshold | Should Be 3
                 $ScriptAnalyzerErrorsResult.HigherIsBetter | Should Be $False
@@ -179,7 +179,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerErrorsResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerWarnings"' {
-                $ScriptAnalyzerWarningsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerWarnings
+                $ScriptAnalyzerWarningsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerWarnings'})
                 $ScriptAnalyzerWarningsResult.WarningThreshold | Should Be 10
                 $ScriptAnalyzerWarningsResult.FailThreshold | Should Be 20
                 $ScriptAnalyzerWarningsResult.HigherIsBetter | Should Be $False
@@ -187,7 +187,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerWarningsResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "Complexity"' {
-                $ComplexityResult = $Results | Where-Object MetricName -eq Complexity
+                $ComplexityResult = $Results.Where({$_.MetricName -eq 'Complexity'})
                 $ComplexityResult.WarningThreshold | Should Be 15
                 $ComplexityResult.FailThreshold | Should Be 30
                 $ComplexityResult.HigherIsBetter | Should Be $False
@@ -195,7 +195,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ComplexityResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "MaximumNestingDepth"' {
-                $MaximumNestingDepthResult = $Results | Where-Object MetricName -eq MaximumNestingDepth
+                $MaximumNestingDepthResult = $Results.Where({$_.MetricName -eq 'MaximumNestingDepth'})
                 $MaximumNestingDepthResult.WarningThreshold | Should Be 4
                 $MaximumNestingDepthResult.FailThreshold | Should Be 8
                 $MaximumNestingDepthResult.HigherIsBetter | Should Be $False
@@ -203,7 +203,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $MaximumNestingDepthResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
-                $TestCoverageResult = $Results | Where-Object MetricName -eq TestCoverage | Where-Object { $_.SettingsGroup -eq 'PerFunctionMetrics'}
+                $TestCoverageResult = $Results.Where({$_.MetricName -eq 'TestCoverage'}) | Where-Object { $_.SettingsGroup -eq 'PerFunctionMetrics'}
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True
@@ -232,7 +232,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $Results.Count | Should Be 5
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult = $Results.Where({$_.MetricName -eq 'TestsPassRate'})
                 $TestsPassRateResult.WarningThreshold | Should Be 99
                 $TestsPassRateResult.FailThreshold | Should Be 97
                 $TestsPassRateResult.HigherIsBetter | Should Be $True
@@ -240,7 +240,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestsPassRateResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeTotal"' {
-                $LinesOfCodeTotalResult = $Results | Where-Object MetricName -eq LinesOfCodeTotal
+                $LinesOfCodeTotalResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
                 $LinesOfCodeTotalResult.WarningThreshold | Should Be 1000
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 2000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
@@ -248,7 +248,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeTotalResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
-                $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
+                $LinesOfCodeAverageResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeAverage'})
                 $LinesOfCodeAverageResult.WarningThreshold | Should Be 30
                 $LinesOfCodeAverageResult.FailThreshold | Should Be 60
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
@@ -256,7 +256,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerErrors"' {
-                $ScriptAnalyzerErrorsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerErrors
+                $ScriptAnalyzerErrorsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerErrors'})
                 $ScriptAnalyzerErrorsResult.WarningThreshold | Should Be 1
                 $ScriptAnalyzerErrorsResult.FailThreshold | Should Be 3
                 $ScriptAnalyzerErrorsResult.HigherIsBetter | Should Be $False
@@ -264,7 +264,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerErrorsResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "ScriptAnalyzerWarnings"' {
-                $ScriptAnalyzerWarningsResult = $Results | Where-Object MetricName -eq ScriptAnalyzerWarnings
+                $ScriptAnalyzerWarningsResult = $Results.Where({$_.MetricName -eq 'ScriptAnalyzerWarnings'})
                 $ScriptAnalyzerWarningsResult.WarningThreshold | Should Be 10
                 $ScriptAnalyzerWarningsResult.FailThreshold | Should Be 20
                 $ScriptAnalyzerWarningsResult.HigherIsBetter | Should Be $False
@@ -286,7 +286,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 }
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult = $Results.Where({$_.MetricName -eq 'TestsPassRate'})
                 $TestsPassRateResult.WarningThreshold | Should Be 99
                 $TestsPassRateResult.FailThreshold | Should Be 97
                 $TestsPassRateResult.HigherIsBetter | Should Be $True
@@ -294,7 +294,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestsPassRateResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeTotal"' {
-                $LinesOfCodeTotalResult = $Results | Where-Object MetricName -eq LinesOfCodeTotal
+                $LinesOfCodeTotalResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
                 $LinesOfCodeTotalResult.WarningThreshold | Should Be 1500
                 $LinesOfCodeTotalResult.FailThreshold | Should Be 3000
                 $LinesOfCodeTotalResult.HigherIsBetter | Should Be $False
@@ -302,7 +302,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeTotalResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCodeAverage"' {
-                $LinesOfCodeAverageResult = $Results | Where-Object MetricName -eq LinesOfCodeAverage
+                $LinesOfCodeAverageResult = $Results.Where({$_.MetricName -eq 'LinesOfCodeAverage'})
                 $LinesOfCodeAverageResult.WarningThreshold | Should Be 21
                 $LinesOfCodeAverageResult.FailThreshold | Should Be 42
                 $LinesOfCodeAverageResult.HigherIsBetter | Should Be $False
@@ -310,7 +310,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $LinesOfCodeAverageResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "Complexity"' {
-                $ComplexityResult = $Results | Where-Object MetricName -eq Complexity
+                $ComplexityResult = $Results.Where({$_.MetricName -eq 'Complexity'})
                 $ComplexityResult.WarningThreshold | Should Be 17
                 $ComplexityResult.FailThreshold | Should Be 33
                 $ComplexityResult.HigherIsBetter | Should Be $False
@@ -318,7 +318,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ComplexityResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "MaximumNestingDepth"' {
-                $MaximumNestingDepthResult = $Results | Where-Object MetricName -eq MaximumNestingDepth
+                $MaximumNestingDepthResult = $Results.Where({$_.MetricName -eq 'MaximumNestingDepth'})
                 $MaximumNestingDepthResult.WarningThreshold | Should Be 6
                 $MaximumNestingDepthResult.FailThreshold | Should Be 12
                 $MaximumNestingDepthResult.HigherIsBetter | Should Be $False
@@ -326,7 +326,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $MaximumNestingDepthResult.Result | Should Be 'Pass'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
-                $LinesOfCodeResult = $Results | Where-Object MetricName -eq LinesOfCode
+                $LinesOfCodeResult = $Results.Where({$_.MetricName -eq 'LinesOfCode'})
                 $LinesOfCodeResult.WarningThreshold | Should Be 30
                 $LinesOfCodeResult.FailThreshold | Should Be 60
                 $LinesOfCodeResult.HigherIsBetter | Should Be $False
@@ -348,7 +348,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 }
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestsPassRate"' {
-                $TestsPassRateResult = $Results | Where-Object MetricName -eq TestsPassRate
+                $TestsPassRateResult = $Results.Where({$_.MetricName -eq 'TestsPassRate'})
                 $TestsPassRateResult.WarningThreshold | Should Be 99
                 $TestsPassRateResult.FailThreshold | Should Be 97
                 $TestsPassRateResult.HigherIsBetter | Should Be $True
@@ -356,7 +356,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestsPassRateResult.Result | Should Be 'Fail'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
-                $TestCoverageResult = $Results | Where-Object MetricName -eq TestCoverage | Where-Object { $_.SettingsGroup -eq 'OverallMetrics'}
+                $TestCoverageResult = $Results.Where({$_.MetricName -eq 'TestCoverage'}) | Where-Object { $_.SettingsGroup -eq 'OverallMetrics'}
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True
@@ -364,7 +364,7 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $TestCoverageResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "TestCoverage"' {
-                $TestCoverageResult = $Results | Where-Object MetricName -eq TestCoverage | Where-Object { $_.SettingsGroup -eq 'PerFunctionMetrics'}
+                $TestCoverageResult = $Results.Where({$_.MetricName -eq 'TestCoverage'}) | Where-Object { $_.SettingsGroup -eq 'PerFunctionMetrics'}
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True

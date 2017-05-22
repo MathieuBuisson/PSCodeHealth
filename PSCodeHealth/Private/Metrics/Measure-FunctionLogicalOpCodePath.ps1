@@ -29,7 +29,7 @@ Function Measure-FunctionLogicalOpCodePath {
     $FunctionText = $FunctionDefinition.Extent.Text
     $Tokens = $Null
     $Null = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$Tokens, [ref]$Null)
-    $LogicalOperators = $Tokens | Where-Object { $_.Kind.ToString() -In 'And','Or','Xor' }
+    $LogicalOperators = $Tokens.Where({$_.Kind.ToString() -In 'And','Or','Xor'})
 
     If ( -not($LogicalOperators) ) {
         return [int]0

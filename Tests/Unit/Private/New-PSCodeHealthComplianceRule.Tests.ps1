@@ -4,9 +4,9 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'New-PSCodeHealthComplianceRule' {
     InModuleScope $ModuleName {
 
-    $MetricsRules = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\TestData\2SettingsGroups4Metrics.json" -Raw) | Where-Object { $_ }
-    $FunctionMetricMaximumNestingDepth = $MetricsRules.PerFunctionMetrics | Where-Object { $_.MaximumNestingDepth }
-    $OverallMetricLinesOfCodeTotal = $MetricsRules.OverallMetrics | Where-Object { $_.LinesOfCodeTotal }
+    $MetricsRules = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\TestData\2SettingsGroups4Metrics.json" -Raw) | Where-Object {$_}
+    $FunctionMetricMaximumNestingDepth = $MetricsRules.PerFunctionMetrics.Where({$_.MaximumNestingDepth })
+    $OverallMetricLinesOfCodeTotal = $MetricsRules.OverallMetrics.Where({$_.LinesOfCodeTotal })
 
         Context 'The specified SettingsGroup is PerFunctionMetrics' {
 

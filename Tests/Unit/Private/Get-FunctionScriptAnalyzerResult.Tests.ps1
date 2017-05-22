@@ -55,7 +55,7 @@ Describe 'Get-FunctionScriptAnalyzerResult' {
                 $Results.RuleName -contains 'PSAvoidGlobalVars' | Should Be $True
             }
             It 'Should return the expected PSScriptAnalyzer extents' {
-                ($Results.Extent | Where-Object Text -eq 'VeryBadFunction').Count |
+                ($Results.Extent.Where({$_.Text -eq 'VeryBadFunction'})).Count |
                 Should Be 2
             }
         }
