@@ -119,6 +119,7 @@ Function New-PSCodeHealthReport {
 
     $ObjectProperties = [ordered]@{
         'ReportTitle'                   = $ReportTitle
+        'ReportDate'                    = Get-Date -Format u
         'AnalyzedPath'                  = $AnalyzedPath
         'Files'                         = $Path.Count
         'Functions'                     = $FunctionHealthRecord.Count

@@ -50,6 +50,9 @@ Describe 'Invoke-PSCodeHealth' {
             It 'Should return an object with the expected property "ReportTitle"' {
                 $Result.ReportTitle | Should Be 'TestData'
             }
+            It 'Should return an object with the expected property "ReportDate"' {
+                $Result.ReportDate | Should Match '^\d{4}\-\d{2}\-\d{2}\s\d{2}'
+            }
             It 'Should return an object with the expected property "AnalyzedPath"' {
                 $Result.AnalyzedPath | Should BeLike '*\TestData'
             }

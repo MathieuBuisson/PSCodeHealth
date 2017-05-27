@@ -22,6 +22,9 @@ Describe 'Invoke-PSCodeHealth (again)' {
             It 'Should return an object with the expected property "ReportTitle"' {
                 $Result.ReportTitle | Should Be (Get-Item -Path $TestDrive).Name
             }
+            It 'Should return an object with the expected property "ReportDate"' {
+                $Result.ReportDate | Should Match '^\d{4}\-\d{2}\-\d{2}\s\d{2}'
+            }
             It 'Should return an object with the expected property "AnalyzedPath"' {
                 $Result.AnalyzedPath | Should Be $TestDrive.ToString()
             }
@@ -96,6 +99,9 @@ Describe 'Invoke-PSCodeHealth (again)' {
             }
             It 'Should return an object with the expected property "ReportTitle"' {
                 $Result.ReportTitle | Should Be '2PublicFunctions.psm1'
+            }
+            It 'Should return an object with the expected property "ReportDate"' {
+                $Result.ReportDate | Should Match '^\d{4}\-\d{2}\-\d{2}\s\d{2}'
             }
             It 'Should return an object with the expected property "AnalyzedPath"' {
                 $Result.AnalyzedPath | Should Be "$TestDrive\2PublicFunctions.psm1"
