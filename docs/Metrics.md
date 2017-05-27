@@ -168,6 +168,7 @@ Higher is better. Good tests provide confidence that the code behaves as expecte
 ### CommandsMissedTotal  
 The total number of commands which are not exercized by the tests.  
 This is the number of commands, not lines, because the code coverage feature of **Pester** uses breakpoints, which can only be triggered by commands ([Source](https://github.com/pester/Pester/wiki/Code-Coverage)).  
+
 Lower is better. Any command not exercized by tests is untested, which means any defect it may contain will not be detected. Or at best, it will only be detected at later stages of the code lifecycle (user acceptance testing, QA, or in production).  
 The later a defect is detected, the more expensive (in time and money) it is to fix.  
 
