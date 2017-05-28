@@ -35,7 +35,12 @@ Function Measure-FunctionSwitchCodePath {
     If ( -not($SwitchStatements) ) {
         return [int]0
     }
+    [int]$SwitchCodePaths = 0
+    Foreach ( $SwitchStatement in $SwitchStatements ) {
+        [int]$ClausesWithBreak = (@($SwitchStatement.Clauses).Where({ $_ -match 'Break' })).Count
+        [int]$ClausesWithoutBreak = (@($SwitchStatement.Clauses).Where({ $_ -notmatch 'Break' })).Count
+        $SwitchCodePaths += ($ClausesWithBreak + (Get-SwitchCombination -Integer $ClausesWithoutBreak))
+    }
     # Each clause is creating an additional path, except for the "catch-all" Default clause
-    Write-VerboseOutput 'This result is inaccurate if some clauses in the Switch statement do not have a Break statement'
-    return $SwitchStatements.Clauses.Count
+    return $SwitchCodePaths
 }

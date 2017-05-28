@@ -35,5 +35,19 @@ Describe 'Measure-FunctionSwitchCodePath' {
                 $Result | Should Be 3
             }
         }
+        Context 'There are Switch statements with clauses which do not contain a break statement' {
+
+            $FunctionText = ($Mocks.'Get-FunctionDefinition'.SwitchWithNoBreakStatements.Extent.Text | Out-String)
+            $ScriptBlock = [System.Management.Automation.Language.Parser]::ParseInput($FunctionText, [ref]$null, [ref]$null)
+            $FunctionDefinition = $ScriptBlock.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $False)
+            $Result = Measure-FunctionSwitchCodePath -FunctionDefinition $FunctionDefinition[0]
+
+            It 'Should return an object of the type [System.Int32]' {
+                $Result | Should BeOfType [System.Int32]
+            }
+            It 'Should return 4099' {
+                $Result | Should Be 4099
+            }
+        }
     }
 }

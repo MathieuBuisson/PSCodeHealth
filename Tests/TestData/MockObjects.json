@@ -142,6 +142,45 @@
             }
         },
         {
+            "SwitchWithNoBreakStatements": {
+                "Extent": {
+                    "Text": [
+                        "Function Test-SwitchWithoutBreak {",
+                        "    [CmdletBinding()]",
+                        "    Param(",
+                        "        [int]$Switch",
+                        "    )",
+                        "",
+                        "    Switch ($Switch)",
+                        "    {",
+                        "        10 { Write-Host 'IfElseif is 10' }",
+                        "        11 { Write-Host 'IfElseif is 11'; Break }",
+                        "        12 { Write-Host 'IfElseif is 12'; Break }",
+                        "        Default { Write-Host 'Switch is different' }",
+                        "    }",
+                        "    $Now = Get-Date",
+                        "",
+                        "    Switch ($Now.Month)",
+                        "    {",
+                        "        1 { $Month = 'January' }",
+                        "        2 { $Month = 'February' }",
+                        "        3 { $Month = 'March' }",
+                        "        4 { $Month = 'April' }",
+                        "        5 { $Month = 'May' }",
+                        "        6 { $Month = 'June' }",
+                        "        7 { $Month = 'July' }",
+                        "        8 { $Month = 'August' }",
+                        "        9 { $Month = 'September' }",
+                        "        10 { $Month = 'October' }",
+                        "        11 { $Month = 'November' }",
+                        "        12 { $Month = 'December' }",
+                        "    }",
+                        "}"
+                    ]
+                }
+            }
+        },
+        {
             "NoLogicalOp": {
                 "Extent": {
                     "Text": [
