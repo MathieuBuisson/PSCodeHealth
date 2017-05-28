@@ -96,7 +96,16 @@ Function New-PSCodeHealthReport {
         $TestsResult = $PSBoundParameters.TestsResult
     }
     Else {
-        $TestsResult = Invoke-Pester -Script $TestsPath -CodeCoverage $Path -Show None -PassThru -Verbose:$False -WarningAction SilentlyContinue
+        $OverallPesterParams = @{
+            Script = $TestsPath
+            CodeCoverage = $Path
+            Show = 'None'
+            PassThru = $True
+            Strict = $True
+            Verbose = $False
+            WarningAction = 'SilentlyContinue'
+        }
+        $TestsResult = Invoke-Pester @OverallPesterParams
     }
     If ( $TestsResult.CodeCoverage ) {
         $CodeCoverage = $TestsResult.CodeCoverage

@@ -135,7 +135,7 @@ The total number of tests found by Pester.
 Keep in mind that this metric is purely quantitative : it does not indicate anything about the **quality** or the **coverage** of the tests. This is why there is no compliance rule associated with this metric.
 
 ### NumberOfFailedTests  
-The total number of failed tests.  
+The total number of failed tests. This is using `Invoke-Pester` with the `Strict`parameter, this means that any test marked as skipped, pending, or inconclusive is considered as failed.  
 Lower is better, 0 is highly recommended because any failing test indicates that the code doesn't behave as intended (or at least, as intended when the test(s) were written).  
 This means there is most likely a defect either in the code or in the test(s). This type of problems should be prioritized over any other type of code quality issues.  
 
