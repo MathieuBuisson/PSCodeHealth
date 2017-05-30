@@ -1,9 +1,3 @@
----
-external help file: 
-online version: 
-schema: 2.0.0
----
-
 # Measure-FunctionTrapCatchCodePath
 
 ## SYNOPSIS
