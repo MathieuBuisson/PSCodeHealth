@@ -13,3 +13,25 @@ pages:
     - Invoke-PSCodeHealth: PublicFunctions/Invoke-PSCodeHealth.md
     - Test-PSCodeHealthCompliance: PublicFunctions/Test-PSCodeHealthCompliance.md
 
+  - Internal Functions:
+    - Get-PowerShellFile: InternalFunctions/Get-PowerShellFile.md
+    - Merge-PSCodeHealthSetting: InternalFunctions/Merge-PSCodeHealthSetting.md
+    - New-FunctionHealthRecord: InternalFunctions/New-FunctionHealthRecord.md
+    - New-PSCodeHealthComplianceResult: InternalFunctions/New-PSCodeHealthComplianceResult.md
+    - New-PSCodeHealthComplianceRule: InternalFunctions/New-PSCodeHealthComplianceRule.md
+    - New-PSCodeHealthReport: InternalFunctions/New-PSCodeHealthReport.md
+    - New-PSCodeHealthHtmlReport: InternalFunctions/New-PSCodeHealthHtmlReport.md
+    - Get-FunctionDefinition: InternalFunctions/Get-FunctionDefinition.md
+    - Get-FunctionLinesOfCode: InternalFunctions/Get-FunctionLinesOfCode.md
+    - Get-FunctionScriptAnalyzerResult: InternalFunctions/Get-FunctionScriptAnalyzerResult.md
+    - Get-FunctionTestCoverage: InternalFunctions/Get-FunctionTestCoverage.md
+    - Measure-FunctionComplexity: InternalFunctions/Measure-FunctionComplexity.md
+    - Measure-FunctionForCodePath: InternalFunctions/Measure-FunctionForCodePath.md
+    - Measure-FunctionIfCodePath: InternalFunctions/Measure-FunctionIfCodePath.md
+    - Measure-FunctionLogicalOpCodePath: InternalFunctions/Measure-FunctionLogicalOpCodePath.md
+    - Measure-FunctionMaxNestingDepth: InternalFunctions/Measure-FunctionMaxNestingDepth.md
+    - Measure-FunctionSwitchCodePath: InternalFunctions/Measure-FunctionSwitchCodePath.md
+    - Measure-FunctionTrapCatchCodePath: InternalFunctions/Measure-FunctionTrapCatchCodePath.md
+    - Measure-FunctionWhileCodePath: InternalFunctions/Measure-FunctionWhileCodePath.md
+    - Test-FunctionHelpCoverage: InternalFunctions/Test-FunctionHelpCoverage.md
+
