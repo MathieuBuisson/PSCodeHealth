@@ -165,7 +165,7 @@ Task Build_Documentation {
         $Null = New-Item -ItemType Directory -Path $Settings.PrivateFunctionDocsPath
     }
     Foreach ( $PrivateFunction in $PrivateFunctions ) {
-        $FunctionDefinition = "Function Script:{0} {{ {1} }}" -f $PrivateFunction.Name, $PrivateFunction.Definition
+        $FunctionDefinition = "Function Global:{0} {{ {1} }}" -f $PrivateFunction.Name, $PrivateFunction.Definition
         . ([scriptblock]::Create($FunctionDefinition))
         $InternalDocsSettings = $Settings.InternalDocsPlatyPSParams
         $NewMarkdownFile = New-MarkdownHelp @InternalDocsSettings -Command $PrivateFunction.Name
