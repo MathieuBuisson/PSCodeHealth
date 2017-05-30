@@ -46,9 +46,10 @@ $Settings = @{
     }
     PrivateFunctionDocsPath = "$PSScriptRoot\docs\InternalFunctions"
     InternalDocsPlatyPSParams =  @{
-        OutputFolder          = "$PSScriptRoot\docs\InternalFunctions"
-        WarningAction         = 'SilentlyContinue'
-        Force                 = $True
+        OutputFolder = "$PSScriptRoot\docs\InternalFunctions"
+        WarningAction = 'SilentlyContinue'
+        NoMetadata = $True
+        Force = $True
     }
     FunctionsToExclude = @('Write-VerboseOutput','Get-SwitchCombination')
 
