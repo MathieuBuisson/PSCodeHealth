@@ -9,7 +9,7 @@ pages:
   - Release Notes: Release.md
   - Metrics collected by PSCodeHealth: Metrics.md
   - Public Functions:
-    - Get-PSCodeHealthComplianceRule: Functions/Get-PSCodeHealthComplianceRule.md
-    - Invoke-PSCodeHealth: Functions/Invoke-PSCodeHealth.md
-    - Test-PSCodeHealthCompliance: Functions/Test-PSCodeHealthCompliance.md
+    - Get-PSCodeHealthComplianceRule: PublicFunctions/Get-PSCodeHealthComplianceRule.md
+    - Invoke-PSCodeHealth: PublicFunctions/Invoke-PSCodeHealth.md
+    - Test-PSCodeHealthCompliance: PublicFunctions/Test-PSCodeHealthCompliance.md
 

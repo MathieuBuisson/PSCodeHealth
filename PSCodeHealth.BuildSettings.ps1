@@ -37,13 +37,20 @@ $Settings = @{
     ModuleName = $env:APPVEYOR_PROJECT_NAME
     HeaderPath = "$PSScriptRoot\header-mkdocs.yml"
     MkdocsPath = "$PSScriptRoot\mkdocs.yml"
-    FunctionDocsPath = "$PSScriptRoot\docs\Functions"
+    PublicFunctionDocsPath = "$PSScriptRoot\docs\PublicFunctions"
     PlatyPSParams = @{
         Module = $env:APPVEYOR_PROJECT_NAME        
-        OutputFolder = "$PSScriptRoot\docs\Functions"
+        OutputFolder = "$PSScriptRoot\docs\PublicFunctions"
         NoMetadata = $True
         Force = $True
     }
+    PrivateFunctionDocsPath = "$PSScriptRoot\docs\InternalFunctions"
+    InternalDocsPlatyPSParams =  @{
+        OutputFolder          = "$PSScriptRoot\docs\InternalFunctions"
+        WarningAction         = 'SilentlyContinue'
+        Force                 = $True
+    }
+    FunctionsToExclude = @('Write-VerboseOutput','Get-SwitchCombination')
 
     GitHubKey = $env:GitHub_Key
     Email = 'MathieuBuisson@users.noreply.github.com'

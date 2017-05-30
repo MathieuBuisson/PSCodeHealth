@@ -7,6 +7,25 @@ Function Write-TaskBanner ( [string]$TaskName ) {
     "`n" + ('-' * 79) + "`n" + "`t`t`t $($TaskName.ToUpper()) `n" + ('-' * 79) + "`n"
 }
 
+Function Get-ModulePrivateFunction {
+    [CmdletBinding()]
+    [OutputType([System.Management.Automation.FunctionInfo])]
+    Param (
+        [Parameter(Mandatory)]
+        [string]$ModuleName
+    )
+    
+    $ModuleInfo = $Null
+    $ModuleInfo = Get-Module -Name $ModuleName -ErrorAction SilentlyContinue
+    If ( -not $ModuleInfo ) {
+        Write-Error "Module '$ModuleName' not found"
+    }
+    $ScriptBlock = { $ExecutionContext.InvokeCommand.GetCommands('*', 'Function', $true) }
+    $PublicFunctions = ($ModuleInfo.ExportedCommands.GetEnumerator() | Select-Object -ExpandProperty Value).Name
+
+    & $ModuleInfo $ScriptBlock | Where-Object { $_.Source -eq $ModuleName -and $_.Name -notin $PublicFunctions }
+}
+
 task Clean {
     Write-TaskBanner -TaskName $Task.Name
 
@@ -115,21 +134,42 @@ Task Build_Documentation {
     
     $HeaderContent = Get-Content -Path $Settings.HeaderPath -Raw
     $HeaderContent += "  - Public Functions:`n"
-
-    If (Test-Path -Path $Settings.FunctionDocsPath) {
-        Get-ChildItem $Settings.FunctionDocsPath | Remove-Item -Force -Recurse
+    If (Test-Path -Path $Settings.PublicFunctionDocsPath) {
+        Get-ChildItem $Settings.PublicFunctionDocsPath | Remove-Item -Force -Recurse
     }
     Else {
-        $Null = New-Item -ItemType Directory -Path $Settings.FunctionDocsPath
+        $Null = New-Item -ItemType Directory -Path $Settings.PublicFunctionDocsPath
     }
 
     $PlatyPSSettings = $Settings.PlatyPSParams
     New-MarkdownHelp @PlatyPSSettings | Foreach-Object {
-        $Part = '    - {0}: Functions/{1}' -f $_.BaseName, $_.Name
-        "Created markdown help file : $($_.FullName)"
+        $Part = '    - {0}: PublicFunctions/{1}' -f $_.BaseName, $_.Name
+        "Created markdown documentation file : $($_.FullName)"
         $HeaderContent += "{0}`n" -f $Part
     }
     $HeaderContent | Set-Content -Path $Settings.MkdocsPath -Force
+
+    # Building the docs for the private functions
+    $MkdocsContent = Get-Content -Path $Settings.MkdocsPath -Raw
+    $MkdocsContent += "  - Internal Functions:`n"
+    $PrivateFunctions = Get-ModulePrivateFunction -ModuleName $Settings.ModuleName | Where-Object Name -NotIn $Settings.FunctionsToExclude
+    If (Test-Path -Path $Settings.PrivateFunctionDocsPath) {
+        Get-ChildItem $Settings.PrivateFunctionDocsPath | Remove-Item -Force -Recurse
+    }
+    Else {
+        $Null = New-Item -ItemType Directory -Path $Settings.PrivateFunctionDocsPath
+    }
+    Foreach ( $PrivateFunction in $PrivateFunctions ) {
+        $FunctionDefinition = "Function {0} {{ {1} }}" -f $PrivateFunction.Name, $PrivateFunction.Definition
+        . ([scriptblock]::Create($FunctionDefinition))
+        $InternalDocsSettings = $Settings.InternalDocsPlatyPSParams
+        $NewMarkdownFile = New-MarkdownHelp @InternalDocsSettings -Command $PrivateFunction.Name
+        "Created markdown documentation file : $($NewMarkdownFile.FullName)"
+        $Part = '    - {0}: InternalFunctions/{1}' -f $NewMarkdownFile.BaseName, $NewMarkdownFile.Name
+        $MkdocsContent += "{0}`n" -f $Part
+    }
+    $MkdocsContent | Set-Content -Path $Settings.MkdocsPath -Force
+    Remove-Item "Function:\$($PrivateFunction.Name)" -ErrorAction SilentlyContinue
 }
 
 task Set_Module_Version {
