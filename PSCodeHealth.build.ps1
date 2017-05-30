@@ -3,11 +3,6 @@
 # Importing all build settings into the current scope
 . '.\PSCodeHealth.BuildSettings.ps1'
 
-# Importing the module's private functions into the current scope
-#Foreach ( $Import in @(Get-ChildItem -Path "$PSScriptRoot\$($Settings.ModuleName)\Private" -File -Filter '*.ps1' -Recurse) ) {
-#    . $Import.FullName
-#}
-
 Function Write-TaskBanner ( [string]$TaskName ) {
     "`n" + ('-' * 79) + "`n" + "`t`t`t $($TaskName.ToUpper()) `n" + ('-' * 79) + "`n"
 }
@@ -165,7 +160,7 @@ Task Build_Documentation {
         $Null = New-Item -ItemType Directory -Path $Settings.PrivateFunctionDocsPath
     }
     Foreach ( $PrivateFunction in $PrivateFunctions ) {
-        $FunctionDefinition = "Function Global:{0} {{ {1} }}" -f $PrivateFunction.Name, $PrivateFunction.Definition
+        $FunctionDefinition = 'Function Global:{0} {{ {1} }}' -f $PrivateFunction.Name, $PrivateFunction.Definition
         . ([scriptblock]::Create($FunctionDefinition))
         $InternalDocsSettings = $Settings.InternalDocsPlatyPSParams
         $NewMarkdownFile = New-MarkdownHelp @InternalDocsSettings -Command $PrivateFunction.Name
