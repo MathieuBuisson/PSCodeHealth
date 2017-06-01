@@ -17,7 +17,7 @@ PSCodeHealth allows you to measure the quality and maintainability of your Power
 
 It can allow you to ensure that your code is compliant with metrics goals (quality gates). You can use the default (built-in) compliance rules, and you can also customize some (or all) compliance rules to fit your goals.  
 
-These features can be leveraged from within you PowerShell release pipeline.  
+These features can be leveraged from within your PowerShell release pipeline.  
 
 Want to know more ? Head to the full documentation :  
 <http://pscodehealth.readthedocs.io/en/latest/>
