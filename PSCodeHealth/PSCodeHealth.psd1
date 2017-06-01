@@ -27,7 +27,7 @@ CompanyName = 'Unknown'
 Copyright = '(c) 2016 Mathieu Buisson. All rights reserved.'
 
 # Description of the functionality provided by this module
-Description = 'This module generates quality and maintainability metrics for PowerShell code contained in scripts, modules or directories.'
+Description = 'This module allows you to measure the quality and maintainability of your PowerShell code, based on a variety of metrics.'
 
 # Minimum version of the Windows PowerShell engine required by this module
 PowerShellVersion = '5.0'
