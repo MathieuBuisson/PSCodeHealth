@@ -1,4 +1,4 @@
-## Installation  
+# Installation  
 
 The easiest and preferred way to install PSCodeHealth is via the [PowerShell Gallery](https://www.powershellgallery.com/). For more information, see the [PowerShell Gallery Getting Started](https://msdn.microsoft.com/en-us/powershell/gallery/psgallery/psgallery_gettingstarted) page.  
 

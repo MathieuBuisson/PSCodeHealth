@@ -30,6 +30,7 @@ Function Get-FunctionDefinition {
         Foreach ( $PowerShellFile in $Path ) {
             Write-VerboseOutput -Message "Parsing file : $PowerShellFile"
 
+            $PowerShellFile = (Resolve-Path -Path $PowerShellFile).Path
             $FileAst = [System.Management.Automation.Language.Parser]::ParseFile($PowerShellFile, [ref]$Null, [ref]$Null)
             $FileFunctions = $FileAst.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $False)
             If ( $FileFunctions ) {

@@ -8,4 +8,5 @@ pages:
   - Home: index.md
   - Installation: Installation.md
   - Release Notes: Release.md
+  - Getting Started: GettingStarted.md
   - Metrics collected by PSCodeHealth: Metrics.md

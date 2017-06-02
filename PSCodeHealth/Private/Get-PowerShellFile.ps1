@@ -44,6 +44,8 @@ Function Get-PowerShellFile {
         [string[]]$Exclude
     )
 
-    $PowerShellFiles = Get-ChildItem @PSBoundParameters -Filter '*.ps*1' -File | Where-Object { $_.BaseName -notmatch "Test|xml$" }
+    $ChildItems = Get-ChildItem @PSBoundParameters
+    $PowerShellFiles = $ChildItems.Where({$_.PSIsContainer -eq $False -and $_.Name -like '*.ps*1' -and $_.BaseName -notmatch "Test"})
+    
     return $PowerShellFiles.FullName
 }
