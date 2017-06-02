@@ -32,7 +32,7 @@ Before using PSCodeHealth, you need :
 
 The easiest and preferred way to install PSCodeHealth is via the [PowerShell Gallery](https://www.powershellgallery.com/). For more information, see the [PowerShell Gallery Getting Started](https://msdn.microsoft.com/en-us/powershell/gallery/psgallery/psgallery_gettingstarted) page.  
 
-Run the following command to install PSCodeHealth and the 2 dependencies ([Pester](https://github.com/pester/Pester) and
+Run the following command to install PSCodeHealth and its 2 dependencies ([Pester](https://github.com/pester/Pester) and
 [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer)) :  
 
 ```powershell
