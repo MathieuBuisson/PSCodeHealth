@@ -50,7 +50,9 @@ TestsPassRate                 : 100
 TestCoverage                  : 21.43
 CommandsMissedTotal           : 77
 ComplexityAverage             : 2
+ComplexityHighest             : 5
 NestingDepthAverage           : 1.11
+NestingDepthHighest           : 3
 FunctionHealthRecords         : {@{FunctionName=Add-CoverageInfo;
                                 FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=14;
                                 ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=;

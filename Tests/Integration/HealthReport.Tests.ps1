@@ -139,8 +139,14 @@ Describe 'Invoke-PSCodeHealth' {
         It 'The health report should have the expected ComplexityAverage property' {
             $Result.ComplexityAverage | Should Be 2
         }
+        It 'Should return an object with the expected property "ComplexityHighest"' {
+            $Result.ComplexityHighest | Should Be 5
+        }
         It 'The health report should have the expected NestingDepthAverage property' {
             $Result.NestingDepthAverage | Should Be 1.11
+        }
+        It 'Should return an object with the expected property "NestingDepthHighest"' {
+            $Result.NestingDepthHighest | Should Be 3
         }
     }
 }

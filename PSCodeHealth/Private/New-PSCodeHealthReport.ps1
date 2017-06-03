@@ -146,7 +146,9 @@ Function New-PSCodeHealthReport {
         'TestCoverage'                  = $CodeCoveragePerCent
         'CommandsMissedTotal'           = $CommandsMissed
         'ComplexityAverage'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Average).Average, 2)
+        'ComplexityHighest'             = [math]::Round(($FunctionHealthRecord.Complexity | Measure-Object -Maximum).Maximum, 2)
         'NestingDepthAverage'           = [math]::Round(($FunctionHealthRecord.MaximumNestingDepth | Measure-Object -Average).Average, 2)
+        'NestingDepthHighest'           = [math]::Round(($FunctionHealthRecord.MaximumNestingDepth | Measure-Object -Maximum).Maximum, 2)
         'FunctionHealthRecords'         = $FunctionHealthRecord
     }
 

@@ -92,8 +92,14 @@ Describe 'Invoke-PSCodeHealth' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 1
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 1
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 1
+            }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 1
             }
             It 'Should return 2 objects in the property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords.Count | Should Be 2

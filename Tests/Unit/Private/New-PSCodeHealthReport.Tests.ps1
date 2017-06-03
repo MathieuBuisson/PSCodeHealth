@@ -79,8 +79,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 0
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 0
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 0
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should BeNullOrEmpty
@@ -162,8 +168,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 19
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 19
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 5
+            }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 5
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should Be $FunctionHealthRecord
@@ -240,8 +252,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 15.5
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 19
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 3.5
+            }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 5
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should Be $FunctionHealthRecord
@@ -320,8 +338,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 15.5
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 19
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 3.5
+            }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 5
             }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should Be $FunctionHealthRecord
@@ -396,6 +420,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 0
             }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 0
+            }
             It 'Should return an object with the expected property "FunctionHealthRecords"' {
                 $Result.FunctionHealthRecords | Should BeNullOrEmpty
             }
@@ -467,6 +494,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 0
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 0
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 0
             }
@@ -523,8 +553,14 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ComplexityAverage"' {
                 $Result.ComplexityAverage | Should Be 0
             }
+            It 'Should return an object with the expected property "ComplexityHighest"' {
+                $Result.ComplexityHighest | Should Be 0
+            }
             It 'Should return an object with the expected property "NestingDepthAverage"' {
                 $Result.NestingDepthAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "NestingDepthHighest"' {
+                $Result.NestingDepthHighest | Should Be 0
             }
             It 'Should not call Invoke-Pester' {
                 Assert-MockCalled Invoke-Pester -Scope Context -Times 0
