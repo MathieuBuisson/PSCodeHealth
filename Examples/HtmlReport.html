@@ -1,11 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
     <meta name="description" content="PowerShell Code Health Report">
     <meta name="author" content="PSCodeHealth">
 
@@ -13,10 +11,12 @@
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .page-header {
+        .left-header {
             margin-top: 18px;
         }
-
+        .right-header {
+            margin-top: 47px;
+        }
         .logo {
             margin-right: 32px;
             width: 80px;
@@ -51,6 +51,7 @@
         .nav-sidebar > li > a {
         padding-right: 20px;
         padding-left: 20px;
+        font-weight: 500;
         }
         .nav-sidebar > .active > a,
         .nav-sidebar > .active > a:hover,
@@ -67,7 +68,24 @@
 </head>
 
 <body>
-
+    <div class="container-fluid">
+        <header>
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-3 col-md-6 col-md-offset-1 left-header">
+                    <h1>
+                        <img class="logo" src= "https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png" alt="PSCodeHealth Logo"/>
+                        PSCodeHealth Report - coveralls
+                    </h1>
+                </div>
+                <div class="col-sm-4 col-md-5 right-header">
+                    <h4>
+                        Analyzed path :<small class="analyzed-path"> C:\GitHub\PSCodeHealth\Tests\TestData\coveralls</small><br>
+                        Analysis date :<small class="analyzed-path"> 2017-06-03 16:25:43Z</small>
+                    </h4>
+                </div>
+            </div>
+        </header>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-sm-3 col-md-1 sidebar">
@@ -78,19 +96,17 @@
                 <li><a href="#tests">Tests</a></li>
                 </ul>
             </div>
-            <div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
-                <h1 class="page-header">
-                    <img class="logo" src= "https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png" alt="PSCodeHealth Logo"/>
-                    PSCodeHealth Report - coveralls <small class="analyzed-path"> C:\GitHub\PSCodeHealth\Tests\TestData\coveralls</small>
-                </h1>
         </div>
 
         <section id="summary">
-
         </section>
-        <section id="functiondetails">
-
+        <section id="bestPractices">
         </section>
+        <section id="maintainability">
+        </section>
+        <section id="tests">
+        </section>
+
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
