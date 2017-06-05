@@ -7,19 +7,23 @@
     <meta name="description" content="PowerShell Code Health Report">
     <meta name="author" content="PSCodeHealth">
 
-    <title>PSCodeHealth Report - coveralls</title>
+    <title>PSCodeHealth Report - MyPSModule</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet">
     <style>
         header > .row {
-            margin-bottom: 20px;
+            margin-bottom: 22px;
         }
         .left-header {
             margin-top: 18px;
         }
         .right-header {
             margin-top: 47px;
+            text-align: left
+        }
+        .right-header-data {
+            color: #777;
         }
         .logo {
             margin-right: 32px;
@@ -38,30 +42,35 @@
             left: 0;
             z-index: 1000;
             display: block;
-            padding: 136px 20px 20px 20px;
+            padding: 158px 2px 2px 7px;
             overflow-x: hidden;
             overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-            background-color: #f5f5f5;
-            border-right: 1px solid #eee;
         }
         }
 
         /* Sidebar navigation */
         .nav-sidebar {
-        margin-right: -21px; /* 20px padding + 1px border */
-        margin-bottom: 20px;
-        margin-left: -20px;
+            margin-right: -21px; /* 20px padding + 1px border */
+            margin-bottom: 20px;
+            margin-left: -20px;
+        }
+        .nav-stacked > li + li {
+            margin-top: 0px
         }
         .nav-sidebar > li > a {
-        padding-right: 20px;
-        padding-left: 20px;
-        font-weight: 500;
+            padding: 13px 1px 13px 27px;
+            font-weight: 600;
+            border-bottom: 1px solid #bce8f1;
         }
-        .nav-sidebar > .active > a,
-        .nav-sidebar > .active > a:hover,
-        .nav-sidebar > .active > a:focus {
-        color: #fff;
-        background-color: #428bca;
+        .nav-sidebar > li > a:hover {
+            background-color: #bce8f1;
+        }
+        .nav-sidebar > li > a:active,
+        .nav-sidebar > li > a:focus {
+        background-color: #d9edf7;
+        }
+        .nav-sidebar > li:first-child {
+            border-top: 1px solid #bce8f1;
         }
 
         /* Panels */
@@ -104,303 +113,301 @@
 
 <body>
     <div class="container-fluid">
-        <header>
+        <header class="container-fluid">
             <div class="row">
-                <div class="col-sm-5 col-sm-offset-3 col-md-6 col-md-offset-1 left-header">
+                <div class="col-sm-5 col-sm-offset-3 col-md-6 col-md-offset-1 col-lg-6 col-lg-offset-2 left-header">
                     <h1>
                         <img class="logo" src= "https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png" alt="PSCodeHealth Logo"/>
-                        PSCodeHealth Report - coveralls
+                        Code Health Report - <small>MyPSModule</small>
                     </h1>
                 </div>
-                <div class="col-sm-4 col-md-5 right-header">
-                    <h4>
-                        Analyzed path :<small class="analyzed-path"> C:\GitHub\PSCodeHealth\Tests\TestData\coveralls</small><br>
-                        Analysis date :<small class="analyzed-path"> 2017-06-03 16:25:43Z</small>
-                    </h4>
+                <div class="col-sm-4 col-md-5 col-lg-4 right-header">
+                    <h5>
+                        Analyzed path :<span class="right-header-data"> C:\GitHub\MyPSModule\MyPSModule</span><br>
+                        Analysis date :<span class="right-header-data"> 2017-06-05 16:25:43Z</span>
+                    </h5>
                 </div>
             </div>
         </header>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-3 col-md-1 sidebar">
-                <ul class="nav nav-sidebar">
-                <li class="active"><a href="#summary">Summary</a></li>
-                <li><a href="#bestPractices">Style/ Best Practices</a></li>
-                <li><a href="#maintainability">Maintainability</a></li>
-                <li><a href="#tests">Tests</a></li>
-                </ul>
+        <div class="tab-content">
+            <div class="row">
+                <div class="col-sm-3 col-md-1 col-lg-2 sidebar" role="navigation">
+                    <ul class="nav nav-sidebar nav-stacked">
+                    <li><a href="#summary" data-toggle="tab">Summary</a></li>
+                    <li><a href="#bestPractices" data-toggle="tab">Style &amp; Best Practices</a></li>
+                    <li><a href="#maintainability" data-toggle="tab">Maintainability</a></li>
+                    <li><a href="#tests" data-toggle="tab">Tests</a></li>
+                    </ul>
+                </div>
             </div>
+            <section id="summary" class="tab-pane fade in active">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true">&nbsp;</i> Number of Files</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>3</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-code" aria-hidden="true">&nbsp;</i> Number of Functions</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>9</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>201</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings</h3>
+                            </div>
+                            <table class="table table-condensed">
+                                <tr class="text-success"><td>Errors</td><td>0</td></tr>
+                                <tr class="text-warning"><td>Warnings</td><td>11</td></tr>
+                                <tr class="text-success"><td>Information</td><td>0</td></tr>
+                                <tr class="text-success"><td>Total</td><td>11</td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="bestPractices" class="tab-pane fade">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Total</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>11</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-ban" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Errors</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Warnings</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>11</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Average</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>1.22</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Info</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-question-circle" aria-hidden="true">&nbsp;</i> Functions Without Help</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>9</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="maintainability" class="tab-pane fade">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>201</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Highest</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>5</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Highest</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>3</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Average</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>22.33</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Average</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>2</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Average</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>1.11</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section id="tests" class="tab-pane fade">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-list" aria-hidden="true">&nbsp;</i> Number of Tests</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>10</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Failed Tests</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-info">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Number of Passed Tests</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>10</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
+                    <div class="col-sm-3">
+                        <div class="panel panel-success">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>0</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>77</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
-
-        <section id="summary">
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-file-code-o" aria-hidden="true">&nbsp;</i> Number of Files</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>3</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-code" aria-hidden="true">&nbsp;</i> Number of Functions</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>9</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>201</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings</h3>
-                        </div>
-                        <table class="table table-condensed">
-                            <tr><td>Errors</td><td>0</td></tr>
-                            <tr><td>Warnings</td><td>0</td></tr>
-                            <tr><td>Information</td><td>0</td></tr>
-                            <tr class="text-success"><td>Total</td><td>0</td></tr>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="bestPractices">
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Total</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-ban" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Errors</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Warnings</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Average</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-warning">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Info</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-question-circle" aria-hidden="true">&nbsp;</i> Functions Without Help</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>9</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="maintainability">
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>201</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Highest</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>5</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Highest</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>3</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Average</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>22.33</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Average</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>2</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Average</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>1.11</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section id="tests">
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-list" aria-hidden="true">&nbsp;</i> Number of Tests</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>10</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Failed Tests</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-info">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Number of Passed Tests</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>10</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row col-sm-offset-3 col-md-offset-1">
-                <div class="col-sm-3">
-                    <div class="panel panel-success">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>0</h2>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="panel panel-danger">
-                        <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
-                        </div>
-                        <div class="panel-body">
-                            <h2>77</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
