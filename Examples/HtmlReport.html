@@ -102,7 +102,32 @@
         .text-fail {
             color: #a94442;
         }
+        .tablePanel {
+            margin-top: 32px;
+        }
+        .tablePanel .panel-title {
+            font-weight: 600;
+        }
+        .tablePanel tr:last-child {
+            font-weight: normal;
+        }
+        .tablePanel td:first-child {
+            font-weight: 600;
+        }
+        td.danger {
+            color: rgb(169, 68, 66);
+            background-color: rgb(242, 222, 222);
+        }
+        td.warning {
+            color: rgb(138, 109, 59);
+            background-color: rgb(252, 248, 227);
+        }
+        td.success {
+            color: rgb(60, 118, 61);
+            background-color: rgb(223, 240, 216);
+        }
 
+        
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -273,6 +298,81 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-8 col-md-10 col-lg-9">
+                    <div class="panel panel-info tablePanel">
+                        <div class="panel-heading">
+                            <h2 class="panel-title"> Per Function Details</h2>
+                        </div>
+                        <table class="table-responsive table-hover table-bordered table-condensed">
+                            <thead>
+                                <tr>
+                                    <th>Function Name</th>
+                                    <th>ScriptAnalyzer Findings</th>
+                                    <th>ScriptAnalyzer Findings Details</th>
+                                    <th>Contains Help</th>
+                                </tr>                            
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Add-CoverageInfo</td>
+                                    <td class="success">0</td>
+                                    <td></td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Merge-CoverageResult</td>
+                                    <td class="warning">3</td>
+                                    <td></td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Get-CoverageArray</td>
+                                    <td class="success">0</td>
+                                    <td></td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Format-FileCoverage</td>
+                                    <td class="warning">3</td>
+                                    <td>Function 'Format-FileCoverage' has verb that could change system state. Therefore, the function has to support 'ShouldProcess'.</td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Get-CommandsForFile</td>
+                                    <td class="success">0</td>
+                                    <td></td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Get-GitInfo</td>
+                                    <td class="danger">4</td>
+                                    <td>The cmdlet 'Get-GitInfo' returns an object of type 'System.Collections.Generic.IEnumerable`1[[System.Management.Automation.Language.Ast, 
+            System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]' but this type is not declared in the OutputType attribute.</td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Format-Coverage</td>
+                                    <td class="success">0</td>
+                                    <td></td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Publish-Coverage</td>
+                                    <td class="success">2</td>
+                                    <td>The cmdlet 'Publish-Coverage' returns an object of type 'System.Object[]' but this type is not declared in the OutputType attribute.</td>
+                                    <td class="danger">False</td>
+                                </tr>
+                                <tr>
+                                    <td>Get-CoveragePercentage</td>
+                                    <td class="success">0</td>
+                                    <td></td>
+                                    <td class="danger">False</td>
+                                </tr>
+                            </tbody>
+                        </table>            
+                    </div>
+
                 </div>
             </section>
             <section id="maintainability" class="tab-pane fade">
