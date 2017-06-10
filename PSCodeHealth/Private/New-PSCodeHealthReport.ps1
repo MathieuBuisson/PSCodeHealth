@@ -139,6 +139,7 @@ Function New-PSCodeHealthReport {
         'ScriptAnalyzerWarnings'        = ($ScriptAnalyzerWarnings | Measure-Object).Count
         'ScriptAnalyzerInformation'     = ($ScriptAnalyzerInformation | Measure-Object).Count
         'ScriptAnalyzerFindingsAverage' = [math]::Round(($FunctionHealthRecord.ScriptAnalyzerFindings | Measure-Object -Average).Average, 2)
+        'FunctionsWithoutHelp'          = ($FunctionHealthRecord | Where-Object { -not($_.ContainsHelp) } | Measure-Object).Count
         'NumberOfTests'                 = If ( $TestsResult ) { $TestsResult.TotalCount } Else { 0 }
         'NumberOfFailedTests'           = If ( $TestsResult ) { $TestsResult.FailedCount } Else { 0 }
         'NumberOfPassedTests'           = If ( $TestsResult ) { $TestsResult.PassedCount } Else { 0 }

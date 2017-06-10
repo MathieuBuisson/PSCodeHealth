@@ -594,7 +594,8 @@
                     {
                         "Severity": "Information"
                     }
-                ]
+                ],
+                "ContainsHelp": true
             }
         },
         {
@@ -605,17 +606,18 @@
                     "ScriptAnalyzerFindings": 3,
                     "Complexity": 19,
                     "MaximumNestingDepth": 5,
-                "ScriptAnalyzerResultDetails": [
-                    {
-                        "Severity": "Error"
-                    },
-                    {
-                        "Severity": "Warning"
-                    },
-                    {
-                        "Severity": "Information"
-                    }
-                ]
+                    "ScriptAnalyzerResultDetails": [
+                        {
+                            "Severity": "Error"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        }
+                    ],
+                    "ContainsHelp": true
                 },
                 {
                     "FunctionName": "Test-Function2",
@@ -623,26 +625,27 @@
                     "ScriptAnalyzerFindings": 6,
                     "Complexity": 12,
                     "MaximumNestingDepth": 2,
-                "ScriptAnalyzerResultDetails": [
-                    {
-                        "Severity": "Error"
-                    },
-                    {
-                        "Severity": "Warning"
-                    },
-                    {
-                        "Severity": "Information"
-                    },
-                    {
-                        "Severity": "Warning"
-                    },
-                    {
-                        "Severity": "Information"
-                    },
-                    {
-                        "Severity": "Warning"
-                    }
-                ]
+                    "ScriptAnalyzerResultDetails": [
+                        {
+                            "Severity": "Error"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        },
+                        {
+                            "Severity": "Warning"
+                        },
+                        {
+                            "Severity": "Information"
+                        },
+                        {
+                            "Severity": "Warning"
+                        }
+                    ],
+                    "ContainsHelp": false
                 }
             ]
         }

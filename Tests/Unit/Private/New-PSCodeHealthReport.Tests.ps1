@@ -58,6 +58,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0
             }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 0
+            }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
             }
@@ -147,6 +150,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 3
             }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 0
+            }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 51
             }
@@ -230,6 +236,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 4.5
+            }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 1
             }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
@@ -317,6 +326,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 4.5
             }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 1
+            }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
             }
@@ -395,6 +407,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 0
             }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 0
@@ -531,6 +546,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0
+            }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 0
             }
             It 'Should return an object with the expected property "NumberOfTests"' {
                 $Result.NumberOfTests | Should Be 51

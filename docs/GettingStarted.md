@@ -43,6 +43,7 @@ ScriptAnalyzerErrors          : 0
 ScriptAnalyzerWarnings        : 0
 ScriptAnalyzerInformation     : 0
 ScriptAnalyzerFindingsAverage : 0
+FunctionsWithoutHelp          : 9
 NumberOfTests                 : 10
 NumberOfFailedTests           : 0
 NumberOfPassedTests           : 10

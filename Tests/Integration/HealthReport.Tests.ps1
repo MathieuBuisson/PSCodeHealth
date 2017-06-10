@@ -118,6 +118,9 @@ Describe 'Invoke-PSCodeHealth' {
         It 'The health report should have the expected ScriptAnalyzerFindingsTotal property' {
             $Result.ScriptAnalyzerFindingsTotal | Should Be 0
         }
+        It 'The health report should have the expected FunctionsWithoutHelp property' {
+            $Result.FunctionsWithoutHelp | Should Be 9
+        }
         It 'The health report should have the expected NumberOfTests property' {
             $Result.NumberOfTests | Should Be 10
         }

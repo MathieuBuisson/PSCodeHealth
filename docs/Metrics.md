@@ -129,7 +129,14 @@ The average number of best practice violations found by [PSScriptAnalyzer](https
 #### Default thresholds :  
   - Warning : greater or equal to 7  
   - Fail : greater or equal to 12  
-           
+
+### FunctionsWithoutHelp  
+The total number of the function which do not contain any comment-based help.  
+
+It is an important best practice to have help information for each function, even private function (for contributors, or code reviewers).  
+At the very least, it should have a short statement describing the function's purpose. That is the **Synopsis**.  
+There is no compliance rule for this metric because it is highly dependent on the total number of functions, and arguably, on the number of public functions.  
+
 ### NumberOfTests  
 The total number of tests found by Pester.  
 Keep in mind that this metric is purely quantitative : it does not indicate anything about the **quality** or the **coverage** of the tests. This is why there is no compliance rule associated with this metric.

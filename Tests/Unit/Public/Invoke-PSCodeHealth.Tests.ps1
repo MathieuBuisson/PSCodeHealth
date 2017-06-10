@@ -83,6 +83,9 @@ Describe 'Invoke-PSCodeHealth' {
             It 'Should return an object with the expected property "ScriptAnalyzerFindingsAverage"' {
                 $Result.ScriptAnalyzerFindingsAverage | Should Be 0.5
             }
+            It 'Should return an object with the expected property "FunctionsWithoutHelp"' {
+                $Result.FunctionsWithoutHelp | Should Be 0
+            }
             It 'Should return an object with the expected property "TestCoverage"' {
                 $Result.TestCoverage | Should Be 0
             }
