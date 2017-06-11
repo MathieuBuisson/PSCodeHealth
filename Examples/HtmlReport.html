@@ -62,15 +62,18 @@
             font-weight: 600;
             border-bottom: 1px solid #bce8f1;
         }
+        .nav-sidebar > li:first-child {
+            border-top: 1px solid #bce8f1;
+        }
         .nav-sidebar > li > a:hover {
             background-color: #bce8f1;
         }
         .nav-sidebar > li > a:active,
         .nav-sidebar > li > a:focus {
-        background-color: #d9edf7;
+            background-color: #d9edf7;
         }
-        .nav-sidebar > li:first-child {
-            border-top: 1px solid #bce8f1;
+        .nav-sidebar > li.active {
+            background-color: #d9edf7;
         }
 
         /* Panels */
@@ -172,7 +175,7 @@
             <div class="row">
                 <div class="col-sm-3 col-md-1 col-lg-2 sidebar" role="navigation">
                     <ul class="nav nav-sidebar nav-stacked">
-                    <li><a href="#summary" data-toggle="tab">Summary</a></li>
+                    <li class="active"><a href="#summary" data-toggle="tab" aria-expanded="true">Summary</a></li>
                     <li><a href="#bestPractices" data-toggle="tab">Style &amp; Best Practices</a></li>
                     <li><a href="#maintainability" data-toggle="tab">Maintainability</a></li>
                     <li><a href="#tests" data-toggle="tab">Tests</a></li>
@@ -664,12 +667,10 @@
             </section>
         </div>
     </div>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
     <script src="./Assets/HealthReport.js"></script>
-
 </body>
 </html>
