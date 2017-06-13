@@ -6,7 +6,7 @@ Creates a new custom object and gives it the TypeName : 'PSCodeHealth.Function.H
 ## SYNTAX
 
 ```
-New-FunctionHealthRecord [-FunctionDefinition] <FunctionDefinitionAst> [-FunctionTestCoverage] <Double>
+New-FunctionHealthRecord [-FunctionDefinition] <FunctionDefinitionAst> [-FunctionTestCoverage] <PSObject>
 ```
 
 ## DESCRIPTION
@@ -42,13 +42,13 @@ Accept wildcard characters: False
 To specify the percentage of lines of code in the specified function that are tested by unit tests.
 
 ```yaml
-Type: Double
+Type: PSObject
 Parameter Sets: (All)
 Aliases: 
 
 Required: True
 Position: 2
-Default value: 0
+Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```

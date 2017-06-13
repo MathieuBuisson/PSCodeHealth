@@ -1,7 +1,7 @@
 # Get-FunctionTestCoverage
 
 ## SYNOPSIS
-Gets the percentage of lines of code in the specified function that are tested by unit tests.
+Gets test coverage information for the specified function.
 
 ## SYNTAX
 
@@ -10,7 +10,11 @@ Get-FunctionTestCoverage [-FunctionDefinition] <FunctionDefinitionAst> [[-TestsP
 ```
 
 ## DESCRIPTION
-Gets the percentage of lines of code in the specified function definition that are tested (executed) by unit tests.
+Gets test coverage information for the specified function.
+This includes 2 pieces of information :  
+  - Code coverage percentage (lines of code that are exercised by unit tests)  
+  - Missed Commands (lines of codes or commands not being exercised by unit tests)  
+
 It uses Pester with its CodeCoverage parameter.
 
 ## EXAMPLES
@@ -20,7 +24,7 @@ It uses Pester with its CodeCoverage parameter.
 Get-FunctionTestCoverage -FunctionDefinition $MyFunctionAst -TestsPath $MyModule.ModuleBase
 ```
 
-Gets the percentage of lines of code in the function $MyFunctionAst that are tested by all tests found in the module's parent directory.
+Gets test coverage information for the function $MyFunctionAst given the tests found in the module's parent directory.
 
 ## PARAMETERS
 
@@ -60,7 +64,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### System.Double
+### PSCodeHealth.Function.TestCoverageInfo
 
 ## NOTES
 
