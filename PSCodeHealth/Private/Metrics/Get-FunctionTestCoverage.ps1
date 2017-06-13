@@ -1,10 +1,13 @@
 Function Get-FunctionTestCoverage {
 <#
 .SYNOPSIS
-    Gets the percentage of lines of code in the specified function that are tested by unit tests.
+    Gets test coverage information for the specified function.
 
 .DESCRIPTION
-    Gets the percentage of lines of code in the specified function definition that are tested (executed) by unit tests.
+    Gets test coverage information for the specified function. This includes 2 pieces of information :  
+      - Code coverage percentage (lines of code that are exercised by unit tests)  
+      - Missed Commands (lines of codes or commands not being exercised by unit tests)  
+
     It uses Pester with its CodeCoverage parameter.
 
 .PARAMETER FunctionDefinition
@@ -18,16 +21,16 @@ Function Get-FunctionTestCoverage {
 .EXAMPLE
     PS C:\> Get-FunctionTestCoverage -FunctionDefinition $MyFunctionAst -TestsPath $MyModule.ModuleBase
 
-    Gets the percentage of lines of code in the function $MyFunctionAst that are tested by all tests found in the module's parent directory.
+    Gets test coverage information for the function $MyFunctionAst given the tests found in the module's parent directory.
 
 .OUTPUTS
-    System.Double
+    PSCodeHealth.Function.TestCoverageInfo
 
 .NOTES
     
 #>
     [CmdletBinding()]
-    [OutputType([System.Double])]
+    [OutputType([PSCustomObject])]
     Param (
         [Parameter(Position=0, Mandatory)]
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition,
@@ -61,6 +64,13 @@ Function Get-FunctionTestCoverage {
         Else {
             [System.Double]$CodeCoveragePerCent = 0
         }
-        return $CodeCoveragePerCent
+
+        $ObjectProperties = [ordered]@{
+            'CodeCoveragePerCent'         = $CodeCoveragePerCent
+            'CommandsMissed'              = $CodeCoverage.MissedCommands
+        }
+        $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties
+        $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Function.TestCoverageInfo')
+        return $CustomObject
     }
 }

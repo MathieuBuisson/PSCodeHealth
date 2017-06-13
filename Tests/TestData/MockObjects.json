@@ -545,7 +545,10 @@
             "1CommandAnalyzed": {
                 "CodeCoverage": {
                     "NumberOfCommandsAnalyzed": 1,
-                    "NumberOfCommandsExecuted": 0
+                    "NumberOfCommandsExecuted": 0,
+                    "NumberOfCommandsMissed": 1,
+                    "MissedCommands": "Mocked missed command"
+
                 }
             }
         },
@@ -553,7 +556,8 @@
             "0CommandAnalyzed": {
                 "CodeCoverage": {
                     "NumberOfCommandsAnalyzed": 0,
-                    "NumberOfCommandsExecuted": 1
+                    "NumberOfCommandsExecuted": 1,
+                    "NumberOfCommandsMissed": 0
                 }
             }
         },
@@ -728,6 +732,7 @@
                     "Complexity": 19,
                     "MaximumNestingDepth": 5,
                     "TestCoverage": 95,
+                    "CommandsMissed": 3,
                     "ScriptAnalyzerResultDetails": [
                         {
                             "Severity": "Error"
@@ -769,6 +774,7 @@
                     "Complexity": 19,
                     "MaximumNestingDepth": 5,
                     "TestCoverage": 79,
+                    "CommandsMissed": 12,
                     "ScriptAnalyzerResultDetails": [
                         {
                             "Severity": "Error"
@@ -788,6 +794,7 @@
                     "Complexity": 12,
                     "MaximumNestingDepth": 2,
                     "TestCoverage": 83,
+                    "CommandsMissed": 11,
                     "ScriptAnalyzerResultDetails": [
                         {
                             "Severity": "Error"

@@ -29,7 +29,9 @@ Function New-FunctionHealthRecord {
         [System.Management.Automation.Language.FunctionDefinitionAst]$FunctionDefinition,
 
         [Parameter(Position=1, Mandatory)]
-        [System.Double]$FunctionTestCoverage
+        [AllowNull()]
+        [PSTypeName('PSCodeHealth.Function.TestCoverageInfo')]
+        [PSCustomObject]$FunctionTestCoverage
     )
 
     $ScriptAnalyzerResultDetails = Get-FunctionScriptAnalyzerResult -FunctionDefinition $FunctionDefinition
@@ -41,7 +43,8 @@ Function New-FunctionHealthRecord {
         'ScriptAnalyzerFindings'      = $ScriptAnalyzerResultDetails.Count
         'ScriptAnalyzerResultDetails' = $ScriptAnalyzerResultDetails
         'ContainsHelp'                = Test-FunctionHelpCoverage -FunctionDefinition $FunctionDefinition
-        'TestCoverage'                = $FunctionTestCoverage
+        'TestCoverage'                = $FunctionTestCoverage.CodeCoveragePerCent
+        'CommandsMissed'              = ($FunctionTestCoverage.CommandsMissed | Measure-Object).Count
         'Complexity'                  = Measure-FunctionComplexity -FunctionDefinition $FunctionDefinition
         'MaximumNestingDepth'         = Measure-FunctionMaxNestingDepth -FunctionDefinition $FunctionDefinition
     }

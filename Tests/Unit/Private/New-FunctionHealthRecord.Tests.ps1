@@ -10,7 +10,8 @@ Describe 'New-FunctionHealthRecord' {
 
         Context '1 PSScriptAnalyzer result is specified for ScriptAnalyzerResultDetails' {
 
-            $Result = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage 91.54
+            $FunctionCodeCoverage = Get-FunctionTestCoverage -FunctionDefinition $Function -TestsPath "$PSScriptRoot\..\..\TestData"
+            $Result = New-FunctionHealthRecord -FunctionDefinition $Function -FunctionTestCoverage $FunctionCodeCoverage
 
             It 'Should return an object of the type [PSCodeHealth.Function.HealthRecord]' {
                 $Result | Should BeOfType [PSCustomObject]
@@ -36,8 +37,11 @@ Describe 'New-FunctionHealthRecord' {
                 $Result.ContainsHelp | Should Be $True
             }
             It 'Should return an object with the expected property "TestCoverage"' {
-                $Result.TestCoverage | Should Be 91.54
+                $Result.TestCoverage | Should Be 0
             }
+            It 'Should return an object with the expected property "CommandsMissed"' {
+                $Result.CommandsMissed | Should Be 1
+            }            
             It 'Should return an object with the expected property "Complexity"' {
                 $Result.Complexity | Should Be 1
             }
