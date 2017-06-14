@@ -31,6 +31,9 @@ Describe 'Invoke-PSCodeHealth' {
         It 'Should return correct TestCoverage metric for the function Add-CoverageInfo' {
             $AddCoverageInfo.TestCoverage | Should Be 0
         }
+        It 'Should return correct CommandsMissed metric for the function Add-CoverageInfo' {
+            $AddCoverageInfo.CommandsMissed | Should Be 3
+        }        
         It 'Should return correct Complexity metric for the function Add-CoverageInfo' {
             $AddCoverageInfo.Complexity | Should Be 1
         }
@@ -46,6 +49,9 @@ Describe 'Invoke-PSCodeHealth' {
         It 'Should return correct TestCoverage metric for the function Get-CoverageArray' {
             $GetCoverageArray.TestCoverage | Should Be 0
         }
+        It 'Should return correct CommandsMissed metric for the function Get-CoverageArray' {
+            $GetCoverageArray.CommandsMissed | Should Be 18
+        }        
         It 'Should return correct Complexity metric for the function Get-CoverageArray' {
             $GetCoverageArray.Complexity | Should Be 5
         }
@@ -60,6 +66,9 @@ Describe 'Invoke-PSCodeHealth' {
         }
         It 'Should return correct TestCoverage metric for the function Format-FileCoverage' {
             $FormatFileCoverage.TestCoverage | Should Be 100
+        }
+        It 'Should return correct CommandsMissed metric for the function Format-FileCoverage' {
+            $FormatFileCoverage.CommandsMissed | Should Be 0
         }
         It 'Should return correct Complexity metric for the function Format-FileCoverage' {
             $FormatFileCoverage.Complexity | Should Be 2
@@ -76,6 +85,9 @@ Describe 'Invoke-PSCodeHealth' {
         It 'Should return correct TestCoverage metric for the function Format-Coverage' {
             $FormatCoverage.TestCoverage | Should Be 0
         }
+        It 'Should return correct CommandsMissed metric for the function Format-Coverage' {
+            $FormatCoverage.CommandsMissed | Should Be 20
+        }
         It 'Should return correct Complexity metric for the function Format-Coverage' {
             $FormatCoverage.Complexity | Should Be 3
         }
@@ -90,6 +102,9 @@ Describe 'Invoke-PSCodeHealth' {
         }
         It 'Should return correct TestCoverage metric for the function Get-CoveragePercentage' {
             $GetCoveragePercentage.TestCoverage | Should Be 100
+        }
+        It 'Should return correct CommandsMissed metric for the function Get-CoveragePercentage' {
+            $GetCoveragePercentage.CommandsMissed | Should Be 0
         }
         It 'Should return correct Complexity metric for the function Get-CoveragePercentage' {
             $GetCoveragePercentage.Complexity | Should Be 2
