@@ -5,8 +5,8 @@ Function Get-FunctionTestCoverage {
 
 .DESCRIPTION
     Gets test coverage information for the specified function. This includes 2 pieces of information :  
-      - Code coverage percentage (lines of code that are exercised by unit tests)  
-      - Missed Commands (lines of codes or commands not being exercised by unit tests)  
+      - Code coverage percentage (lines of code that are exercized by unit tests)  
+      - Missed Commands (lines of codes or commands not being exercized by unit tests)  
 
     It uses Pester with its CodeCoverage parameter.
 
@@ -57,8 +57,8 @@ Function Get-FunctionTestCoverage {
 
         # To prevent any "Attempted to divide by zero" exceptions
         If ( $CommandsFound -ne 0 ) {
-            $CommandsExercised = $CodeCoverage.NumberOfCommandsExecuted
-            Write-VerboseOutput -Message "Number of commands exercised in the tests : $($CommandsExercised)"
+            $Commandsexercised = $CodeCoverage.NumberOfCommandsExecuted
+            Write-VerboseOutput -Message "Number of commands exercized in the tests : $($CommandsExercised)"
             [System.Double]$CodeCoveragePerCent = [math]::Round(($CommandsExercised / $CommandsFound) * 100, 2)
         }
         Else {

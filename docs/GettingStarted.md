@@ -54,23 +54,22 @@ ComplexityAverage             : 2
 ComplexityHighest             : 5
 NestingDepthAverage           : 1.11
 NestingDepthHighest           : 3
-FunctionHealthRecords         : {@{FunctionName=Add-CoverageInfo;
-                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=14;
-                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=;
-                                ContainsHelp=False; TestCoverage=0; Complexity=1;
-                                MaximumNestingDepth=1}, @{FunctionName=Merge-CoverageResult;
-                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=21;
-                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=;
-                                ContainsHelp=False; TestCoverage=0; Complexity=1;
-                                MaximumNestingDepth=0}, @{FunctionName=Get-CoverageArray;
-                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=30;
-                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=;
-                                ContainsHelp=False; TestCoverage=0; Complexity=5;
-                                MaximumNestingDepth=3}, @{FunctionName=Format-FileCoverage;
-                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=24;
-                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=;
-                                ContainsHelp=False; TestCoverage=100; Complexity=2;
-                                MaximumNestingDepth=1}...}
+FunctionHealthRecords         : {@{FunctionName=Add-CoverageInfo; FilePath=C:\coveralls\Coveralls.ps1; 
+                                LinesOfCode=14; ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=; 
+                                ContainsHelp=False; TestCoverage=0; CommandsMissed=3; Complexity=1; 
+                                MaximumNestingDepth=1}, @{FunctionName=Merge-CoverageResult; 
+                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=21; 
+                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=; 
+                                ContainsHelp=False; TestCoverage=0; CommandsMissed=6; Complexity=1; 
+                                MaximumNestingDepth=0}, @{FunctionName=Get-CoverageArray; 
+                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=30; 
+                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=; 
+                                ContainsHelp=False; TestCoverage=0; CommandsMissed=18; Complexity=5; 
+                                MaximumNestingDepth=3}, @{FunctionName=Format-FileCoverage; 
+                                FilePath=C:\coveralls\Coveralls.ps1; LinesOfCode=24; 
+                                ScriptAnalyzerFindings=0; ScriptAnalyzerResultDetails=; 
+                                ContainsHelp=False; TestCoverage=100; CommandsMissed=0; Complexity=2; 
+                                MaximumNestingDepth=1}...}  
 ```
 ## Viewing the per-function metrics  
 
