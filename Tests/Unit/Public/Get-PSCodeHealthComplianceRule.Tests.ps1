@@ -4,8 +4,6 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Get-PSCodeHealthComplianceRule' {
     InModuleScope $ModuleName {
 
-        $DefaultSettings = ConvertFrom-Json (Get-Content -Path "$PSScriptRoot\..\..\..\PSCodeHealth\PSCodeHealthSettings.json" -Raw)
-
         Context 'The file specified via the CustomSettingsPath parameter does not contain valid JSON' {
 
             $InvalidJsonPath = "$PSScriptRoot\..\..\TestData\InvalidSettings.json"
@@ -28,7 +26,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Should return 5 objects where the SettingsGroup property is equal to "PerFunctionMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
-                Should Be 5
+                Should Be 6
             }
             It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
@@ -45,6 +43,12 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True
+            }
+            It 'Resulting compliance rules are the same as the defaults for metric "CommandsMissed"' {
+                $CommandsMissedResult = $Results | Where-Object MetricName -eq CommandsMissed
+                $CommandsMissedResult.WarningThreshold | Should Be 6
+                $CommandsMissedResult.FailThreshold | Should Be 12
+                $CommandsMissedResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "Complexity"' {
                 $ComplexityResult = $Results | Where-Object MetricName -eq Complexity
@@ -81,7 +85,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Should return 5 objects where the SettingsGroup property is equal to "PerFunctionMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
-                Should Be 5
+                Should Be 6
             }
             It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
@@ -98,6 +102,12 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 $TestCoverageResult.WarningThreshold | Should Be 80
                 $TestCoverageResult.FailThreshold | Should Be 70
                 $TestCoverageResult.HigherIsBetter | Should Be $True
+            }
+            It 'Resulting compliance rules are the same as the defaults for metric "CommandsMissed"' {
+                $CommandsMissedResult = $Results | Where-Object MetricName -eq CommandsMissed
+                $CommandsMissedResult.WarningThreshold | Should Be 6
+                $CommandsMissedResult.FailThreshold | Should Be 12
+                $CommandsMissedResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules are the same as the defaults for metric "Complexity"' {
                 $ComplexityResult = $Results | Where-Object MetricName -eq Complexity
@@ -287,7 +297,7 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Should return 5 objects where the SettingsGroup property is equal to "PerFunctionMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
-                Should Be 5
+                Should Be 6
             }
             It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
@@ -325,8 +335,8 @@ Describe 'Get-PSCodeHealthComplianceRule' {
             }
             It 'Resulting compliance rules are the same as the defaults for metric "CommandsMissedTotal"' {
                 $CommandsMissedTotalResult = $Results | Where-Object MetricName -eq CommandsMissedTotal
-                $CommandsMissedTotalResult.WarningThreshold | Should Be 20
-                $CommandsMissedTotalResult.FailThreshold | Should Be 40
+                $CommandsMissedTotalResult.WarningThreshold | Should Be 200
+                $CommandsMissedTotalResult.FailThreshold | Should Be 400
                 $CommandsMissedTotalResult.HigherIsBetter | Should Be $False
             }
             It 'Resulting compliance rules override the defaults for metric "LinesOfCodeTotal"' {
@@ -346,6 +356,5 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 Should Be 2
             }
         }
-        Remove-Variable -Name 'DefaultSettings' -Force -ErrorAction SilentlyContinue
     }
 }

@@ -10,8 +10,8 @@ Lower is better, because lenghty functions tend to be difficult to read and main
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#NbLinesOfCode))  
 The thresholds are 50% higher than the recommendations in the above article because PowerShell advanced functions tend have more boilerplate code than C# methods (mainly due to the various parameter attributes being more widely used in PowerShell, for validation purposes, pipeline input, etc...).  
-  - Warning : greater or equal to 30  
-  - Fail : greater or equal to 60  
+  - Warning : greater than 30  
+  - Fail : greater than 60  
            
 ### ScriptAnalyzerFindings  
 It counts the total number of best practice violations found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) in the specified function definition, regardless of their severity.  
@@ -23,8 +23,8 @@ PSCodeHealth uses the default PSScriptAnalyzer rules.
 Lower is better, because high numbers of PSScriptAnlyzer findings generally reflects low code quality, maintainability or safety.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 7  
-  - Fail : greater or equal to 12  
+  - Warning : greater than 7  
+  - Fail : greater than 12  
   
 ### ContainsHelp  
 Tells whether or not the specified function definition contains comment-based help. Possible values are : True or False.  
@@ -49,6 +49,10 @@ This is the number of commands, not lines, because the code coverage feature of 
 Lower is better. Any command not exercized by tests is untested, which means any defect it may contain will not be detected. Or at best, it will only be detected at later stages of the code lifecycle (user acceptance testing, QA, or in production).  
 The later a defect is detected, the more expensive (in time and money) it is to fix.  
 
+#### Default thresholds :   
+  - Warning : greater than 6  
+  - Fail : greater than 12  
+
 ### Complexity  
 This is the cyclomatic complexity of a given function. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluation code complexity.  
 
@@ -60,8 +64,8 @@ Lower is better, because complex code tends to have the following properties :
   - More difficult and risky to change/refactor/maintain  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#CC))  
-  - Warning : greater or equal to 15  
-  - Fail : greater or equal to 30  
+  - Warning : greater than 15  
+  - Fail : greater than 30  
 
 For more details on how the cyclomatic complexity is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).
 
@@ -71,8 +75,8 @@ This is the depth of the most deeply nested code in a given piece of code (a fun
 Again, lower is better.  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#ILNestingDepth))  
-  - Warning : greater or equal to 4  
-  - Fail : greater or equal to 8  
+  - Warning : greater than 4  
+  - Fail : greater than 8  
 
 For more details on how the maximum nesting depth is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).
   
@@ -91,51 +95,51 @@ The overall number of function definitions found.
 The total number of lines of code across all files and functions.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 1000  
-  - Fail : greater or equal to 2000  
+  - Warning : greater than 1000  
+  - Fail : greater than 2000  
   
 ### LinesOfCodeAverage  
 The average number of lines of code per function.  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#NbLinesOfCode))  
 The thresholds are 50% higher than the recommendations in the above article because PowerShell advanced functions tend have more boilerplate code than C# methods (mainly due to the various parameter attributes being more widely used in PowerShell, for validation purposes, pipeline input, etc...).  
-  - Warning : greater or equal to 30  
-  - Fail : greater or equal to 60  
+  - Warning : greater than 30  
+  - Fail : greater than 60  
            
 ### ScriptAnalyzerFindingsTotal  
 The total number of best practice violations found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) across all files.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 30  
-  - Fail : greater or equal to 60  
+  - Warning : greater than 30  
+  - Fail : greater than 60  
            
 ### ScriptAnalyzerErrors  
 The total number of best practice violations of 'Error' severity found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) across all files.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 1  
-  - Fail : greater or equal to 3  
+  - Warning : greater than 1  
+  - Fail : greater than 3  
            
 ### ScriptAnalyzerWarnings  
 The total number of best practice violations of 'Warning' severity found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) across all files. 
 
 #### Default thresholds :  
-  - Warning : greater or equal to 10  
-  - Fail : greater or equal to 20  
+  - Warning : greater than 10  
+  - Fail : greater than 20  
            
 ### ScriptAnalyzerInformation  
 The total number of best practice violations of 'Information' severity found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) across all files.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 20  
-  - Fail : greater or equal to 40  
+  - Warning : greater than 20  
+  - Fail : greater than 40  
            
 ### ScriptAnalyzerFindingsAverage  
 The average number of best practice violations found by [PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer) per function.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 7  
-  - Fail : greater or equal to 12  
+  - Warning : greater than 7  
+  - Fail : greater than 12  
 
 ### FunctionsWithoutHelp  
 The total number of the function which do not contain any comment-based help.  
@@ -154,8 +158,8 @@ Lower is better, 0 is highly recommended because any failing test indicates that
 This means there is most likely a defect either in the code or in the test(s). This type of problems should be prioritized over any other type of code quality issues.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 1  
-  - Fail : greater or equal to 3  
+  - Warning : greater than 1  
+  - Fail : greater than 3  
            
 ### NumberOfPassedTests  
 The total number of passed tests.  
@@ -166,8 +170,8 @@ The overall percentage of passing tests.
 The higher the better, because it gives an indication of the quality of the code being tested. More specifically, it answers the question : **"To which extent the code behaves as intended ?"**, assuming the intent is properly reflected in the tests.  
 
 #### Default thresholds :  
-  - Warning : greater or equal to 99  
-  - Fail : greater or equal to 97  
+  - Warning : less than 99  
+  - Fail : less than 97  
 
 ### TestCoverage  
 The overall percentage of code which is exercised across all PowerShell files by the tests.  
@@ -187,8 +191,8 @@ Lower is better. Any command not exercized by tests is untested, which means any
 The later a defect is detected, the more expensive (in time and money) it is to fix.  
 
 #### Default thresholds :   
-  - Warning : less than 20  
-  - Fail : less than 40  
+  - Warning : greater than 200  
+  - Fail : greater than 400  
 
 ### ComplexityAverage  
 This is the average cyclomatic complexity per function. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluation code complexity.  
@@ -201,8 +205,8 @@ Lower is better, because complex code tends to have the following properties :
   - More difficult and risky to change/refactor/maintain  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#CC))  
-  - Warning : greater or equal to 15  
-  - Fail : greater or equal to 30  
+  - Warning : greater than 15  
+  - Fail : greater than 30  
 
 For more details on how the cyclomatic complexity is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).
 
@@ -213,7 +217,7 @@ MaximumNestingDepth is the depth of the most deeply nested code in a given funct
 Again, lower is better.  
 
 #### Default thresholds : ([Source](http://www.ndepend.com/docs/code-metrics#ILNestingDepth))  
-  - Warning : greater or equal to 4  
-  - Fail : greater or equal to 8  
+  - Warning : greater than 4  
+  - Fail : greater than 8  
 
 For more details on how the maximum nesting depth is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).  

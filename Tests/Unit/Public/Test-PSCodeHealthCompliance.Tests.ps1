@@ -4,7 +4,6 @@ Import-Module "$PSScriptRoot\..\..\..\$ModuleName\$($ModuleName).psd1" -Force
 Describe 'Test-PSCodeHealthCompliance' {
     InModuleScope $ModuleName {
 
-        $ScriptPath = $PSScriptRoot
         $Mocks = ConvertFrom-Json (Get-Content -Path "$($PSScriptRoot)\..\..\TestData\MockObjects.json" -Raw )
         
         Context 'The specified health report does not contain any FunctionHealthRecord' {
@@ -68,7 +67,7 @@ Describe 'Test-PSCodeHealthCompliance' {
         Context 'The specified health report contains 2 FunctionHealthRecords' {
             $HealthReport = $Mocks.'Invoke-PSCodeHealth'.'2FunctionHealthRecords' | Where-Object { $_ }
             $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
-            $MetricsToTest = @('TestsPassRate','LinesOfCodeTotal','LinesOfCodeAverage','ScriptAnalyzerErrors','ScriptAnalyzerWarnings','Complexity','MaximumNestingDepth','LinesOfCode')
+            $MetricsToTest = @('TestsPassRate','LinesOfCodeTotal','LinesOfCodeAverage','ScriptAnalyzerErrors','ScriptAnalyzerWarnings','CommandsMissed','Complexity','MaximumNestingDepth','LinesOfCode')
             $Results = Test-PSCodeHealthCompliance -HealthReport $HealthReport -MetricName $MetricsToTest
 
             It 'Should return objects of the type [PSCodeHealth.Compliance.Result]' {
@@ -116,6 +115,14 @@ Describe 'Test-PSCodeHealthCompliance' {
                 $ScriptAnalyzerWarningsResult.HigherIsBetter | Should Be $False
                 $ScriptAnalyzerWarningsResult.Value | Should Be 4
                 $ScriptAnalyzerWarningsResult.Result | Should Be 'Pass'
+            }
+            It 'Resulting compliance rules are the same as the defaults for metric "CommandsMissed"' {
+                $CommandsMissedResult = $Results.Where({$_.MetricName -eq 'CommandsMissed'})
+                $CommandsMissedResult.WarningThreshold | Should Be 6
+                $CommandsMissedResult.FailThreshold | Should Be 12
+                $CommandsMissedResult.HigherIsBetter | Should Be $False
+                $CommandsMissedResult.Value | Should Be 12
+                $CommandsMissedResult.Result | Should Be 'Warning'
             }
             It 'Resulting compliance rules are the same as the defaults for metric "Complexity"' {
                 $ComplexityResult = $Results.Where({$_.MetricName -eq 'Complexity'})

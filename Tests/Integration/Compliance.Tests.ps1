@@ -12,6 +12,7 @@ Describe 'Test-PSCodeHealthCompliance' {
         $LinesOfCode = $Result.Where({$_.MetricName -eq 'LinesOfCode'})
         $ScriptAnalyzerFindings = $Result.Where({$_.MetricName -eq 'ScriptAnalyzerFindings'})
         $TestCoverage = $Result.Where({$_.MetricName -eq 'TestCoverage'})
+        $CommandsMissed = $Result.Where({$_.MetricName -eq 'CommandsMissed'})
         $Complexity = $Result.Where({$_.MetricName -eq 'Complexity'})
         $MaximumNestingDepth = $Result.Where({$_.MetricName -eq 'MaximumNestingDepth'})
         $LinesOfCodeTotal = $Result.Where({$_.MetricName -eq 'LinesOfCodeTotal'})
@@ -42,6 +43,12 @@ Describe 'Test-PSCodeHealthCompliance' {
         It 'Should return correct compliance result for the metric : TestCoverage' {
             ($TestCoverage | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Result |
             Should Be 'Fail'
+        }
+        It 'Should return correct value for the metric : CommandsMissed' {
+            $CommandsMissed.Value | Should Be 20
+        }
+        It 'Should return correct compliance result for the metric : CommandsMissed' {
+            $CommandsMissed.Result | Should Be 'Fail'
         }
         It 'Should return correct value for the metric : Complexity' {
             $Complexity.Value | Should Be 5
@@ -97,7 +104,7 @@ Describe 'Test-PSCodeHealthCompliance' {
             $CommandsMissedTotal.Value | Should Be 77
         }
         It 'Should return correct compliance result for the metric : CommandsMissedTotal' {
-            $CommandsMissedTotal.Result | Should Be 'Fail'
+            $CommandsMissedTotal.Result | Should Be 'Pass'
         }
         It 'Should return correct value for the metric : ComplexityAverage' {
             $ComplexityAverage.Value | Should Be 2

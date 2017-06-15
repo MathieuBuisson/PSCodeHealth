@@ -89,7 +89,7 @@ Function Test-PSCodeHealthCompliance {
         [string]$SettingsGroup,
 
         [Parameter(Mandatory=$False,Position=3)]
-        [ValidateSet('LinesOfCode','ScriptAnalyzerFindings','TestCoverage','Complexity','MaximumNestingDepth','LinesOfCodeTotal',
+        [ValidateSet('LinesOfCode','ScriptAnalyzerFindings','TestCoverage','CommandsMissed','Complexity','MaximumNestingDepth','LinesOfCodeTotal',
         'LinesOfCodeAverage','ScriptAnalyzerFindingsTotal','ScriptAnalyzerErrors','ScriptAnalyzerWarnings',
         'ScriptAnalyzerInformation','ScriptAnalyzerFindingsAverage','NumberOfFailedTests','TestsPassRate',
         'CommandsMissedTotal','ComplexityAverage','NestingDepthAverage')]

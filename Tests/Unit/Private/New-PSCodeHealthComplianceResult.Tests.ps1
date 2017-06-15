@@ -5,7 +5,6 @@ Describe 'New-PSCodeHealthComplianceResult' {
     InModuleScope $ModuleName {
 
     $ComplianceRule = Get-PSCodeHealthComplianceRule -MetricName Complexity
-    $ComplianceResult = 'Pass'
 
         Context 'The specified Value is Null' {
 

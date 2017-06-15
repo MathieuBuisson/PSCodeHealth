@@ -65,8 +65,8 @@ Describe 'Merge-PSCodeHealthSetting' {
                 $Result.OverallMetrics.TestsPassRate.FailThreshold | Should Be 97
             }
             It 'Resulting settings are the same as the defaults for metric "CommandsMissedTotal"' {
-                $Result.OverallMetrics.CommandsMissedTotal.WarningThreshold | Should Be 20
-                $Result.OverallMetrics.CommandsMissedTotal.FailThreshold | Should Be 40
+                $Result.OverallMetrics.CommandsMissedTotal.WarningThreshold | Should Be 200
+                $Result.OverallMetrics.CommandsMissedTotal.FailThreshold | Should Be 400
             }
             It 'Resulting settings override the defaults for metric "LinesOfCodeTotal"' {
                 $Result.OverallMetrics.LinesOfCodeTotal.WarningThreshold | Should Be 1500
@@ -107,8 +107,8 @@ Describe 'Merge-PSCodeHealthSetting' {
                 $Result.OverallMetrics.TestsPassRate.FailThreshold | Should Be 97
             }
             It 'Resulting settings are the same as the defaults for metric "CommandsMissedTotal"' {
-                $Result.OverallMetrics.CommandsMissedTotal.WarningThreshold | Should Be 20
-                $Result.OverallMetrics.CommandsMissedTotal.FailThreshold | Should Be 40
+                $Result.OverallMetrics.CommandsMissedTotal.WarningThreshold | Should Be 200
+                $Result.OverallMetrics.CommandsMissedTotal.FailThreshold | Should Be 400
             }
             It 'Resulting settings are the same as the defaults for metric "LinesOfCodeTotal"' {
                 $Result.OverallMetrics.LinesOfCodeTotal.WarningThreshold | Should Be 1000
