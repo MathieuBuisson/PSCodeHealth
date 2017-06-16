@@ -28,6 +28,9 @@ Describe 'General Module behaviour' {
 			$ExportedFunctions -contains $FunctionName | Should Be $True
 		}
     }
+    It 'Exports the alias with a name "ipch" and a definition "Invoke-PSCodeHealth"' {
+        $ModuleInfo.ExportedAliases.ipch.Definition | Should Be 'Invoke-PSCodeHealth'
+    }
     It 'Links the type "PSCodeHealth.Function.HealthRecord" to the "PSCodeHealth.Function.HealthRecord" formatting view' {
         (Get-FormatData -TypeName PSCodeHealth.Function.HealthRecord).FormatViewDefinition.Name |
         Should Be 'PSCodeHealth.Function.HealthRecord'

@@ -75,7 +75,7 @@ FunctionsToExport = @('Invoke-PSCodeHealth','Get-PSCodeHealthComplianceRule','Te
 # VariablesToExport = '*'
 
 # Aliases to export from this module
-# AliasesToExport = '*'
+AliasesToExport = 'ipch'
 
 # DSC resources to export from this module
 # DscResourcesToExport = @()
