@@ -16,7 +16,7 @@
             margin-bottom: 22px;
         }
         .left-header {
-            margin-top: 18px;
+            margin-top: 9px;
         }
         .right-header {
             margin-top: 47px;
@@ -221,7 +221,7 @@
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings</h3>
                             </div>
-                            <table class="table table-condensed">
+                            <table class="table">
                                 <tr class="text-success"><td>Errors</td><td>0</td></tr>
                                 <tr class="text-warning"><td>Warnings</td><td>11</td></tr>
                                 <tr class="text-success"><td>Information</td><td>0</td></tr>
@@ -235,7 +235,7 @@
                                 <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>0</h2>
+                                <canvas id="TestPassRateSummary" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -245,7 +245,7 @@
                                 <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>0</h2>
+                                <canvas id="TestCoverageSummary" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -569,12 +569,22 @@
                 </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
+                        <div class="panel panel-danger">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
+                            </div>
+                            <div class="panel-body">
+                                <h2>77</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3 panelContainer">
                         <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>0</h2>
+                                <canvas id="TestPassRateTests" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -584,17 +594,7 @@
                                 <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>0</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
-                            </div>
-                            <div class="panel-body">
-                                <h2>77</h2>
+                                <canvas id="TestCoverageTests" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -670,7 +670,183 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script>
+        Chart.pluginService.register({
+            afterUpdate: function (chart) {
+                if (chart.config.options.elements.center) {
+                    var helpers = Chart.helpers;
+                    var centerConfig = chart.config.options.elements.center;
+                    var globalConfig = Chart.defaults.global;
+                    var ctx = chart.chart.ctx;
 
-    <script src="./Assets/HealthReport.js"></script>
+                    var fontStyle = helpers.getValueOrDefault(centerConfig.fontStyle, globalConfig.defaultFontStyle);
+                    var fontFamily = helpers.getValueOrDefault(centerConfig.fontFamily, globalConfig.defaultFontFamily);
+
+                    // Figure out the best font size, if one is not specified
+                    ctx.save();
+                    var fontSize = helpers.getValueOrDefault(centerConfig.minFontSize, 12);
+                    var maxFontSize = helpers.getValueOrDefault(centerConfig.maxFontSize, 55);
+                    var maxText = helpers.getValueOrDefault(centerConfig.maxText, centerConfig.text);
+
+                    do {
+                        ctx.font = helpers.fontString(fontSize, fontStyle, fontFamily);
+                        var textWidth = ctx.measureText(maxText).width;
+
+                        // Check if it fits, is within configured limits and that we are not simply toggling back and forth
+                        if (textWidth < chart.innerRadius * 2 && fontSize < maxFontSize)
+                            fontSize += 1;
+                        else {
+                            // Reverse last step
+                            fontSize -= 1;
+                            break;
+                        }
+                    } while (true)
+                    ctx.restore();
+
+                    // save properties
+                    chart.center = {
+                        font: helpers.fontString(fontSize, fontStyle, fontFamily),
+                        fillStyle: helpers.getValueOrDefault(centerConfig.fontColor, globalConfig.defaultFontColor)
+                    };
+                }
+            },
+            afterDraw: function (chart) {
+                if (chart.center) {
+                    var centerConfig = chart.config.options.elements.center;
+                    var ctx = chart.chart.ctx;
+
+                    ctx.save();
+                    ctx.font = chart.center.font;
+                    ctx.fillStyle = chart.center.fillStyle;
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    var centerX = (chart.chartArea.left + chart.chartArea.right) / 2;
+                    var centerY = (chart.chartArea.top + chart.chartArea.bottom) / 2;
+                    ctx.fillText(centerConfig.text, centerX, centerY);
+                    ctx.restore();
+                }
+            },
+        });
+    </script>
+
+    <script>
+    var ctx = $("#TestPassRateSummary");
+    var data = {
+        labels: ["Pass","Fail"],
+        datasets: [
+        {
+            data: [10,0],
+            backgroundColor: ["#a3d48d","#d59595"],
+            hoverBackgroundColor: ["#a3d48d","#d59595"]
+        }]
+    };
+    var TestPassRateSummary = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            cutoutPercentage: 64,
+            legend: { position: 'top' },
+            elements: {
+                center: {
+                    // This evaluates the max length of the text
+                    maxText: '99.99%',
+                    text: '100%',
+                    fontColor: '#a3d48d',
+                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                    fontStyle: 'normal'
+                }
+            }
+        }
+    });
+
+    var ctx = $("#TestCoverageSummary");
+    var data = {
+        labels: ["Covered","Missed"],
+        datasets: [
+        {
+            data: [21.43,78.57],
+            backgroundColor: ["#a3d48d","#d59595"],
+            hoverBackgroundColor: ["#a3d48d","#d59595"]
+        }]
+    };
+    var TestCoverageSummary = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            cutoutPercentage: 64,
+            legend: { position: 'top' },
+            elements: {
+                center: {
+                    // This evaluates the max length of the text
+                    maxText: '99.99%',
+                    text: '21.43%',
+                    fontColor: '#d59595',
+                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                    fontStyle: 'normal'
+                }
+            }
+        }
+    });
+
+    var ctx = $("#TestPassRateTests");
+    var data = {
+        labels: ["Pass","Fail"],
+        datasets: [
+        {
+            data: [10,0],
+            backgroundColor: ["#a3d48d","#d59595"],
+            hoverBackgroundColor: ["#a3d48d","#d59595"]
+        }]
+    };
+    var TestPassRateTests = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            cutoutPercentage: 64,
+            legend: { position: 'top' },
+            elements: {
+                center: {
+                    // This evaluates the max length of the text
+                    maxText: '99.99%',
+                    text: '100%',
+                    fontColor: '#a3d48d',
+                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                    fontStyle: 'normal',
+                    minFontSize: 12,
+                    maxFontSize: 256,
+                }
+            }
+        }
+    });
+
+    var ctx = $("#TestCoverageTests");
+    var data = {
+        labels: ["Covered","Missed"],
+        datasets: [
+        {
+            data: [21.43,78.57],
+            backgroundColor: ["#a3d48d","#d59595"],
+            hoverBackgroundColor: ["#a3d48d","#d59595"]
+        }]
+    };
+    var TestCoverageTests = new Chart(ctx, {
+        type: 'doughnut',
+        data: data,
+        options: {
+            cutoutPercentage: 64,
+            legend: { position: 'top' },
+            elements: {
+                center: {
+                    // This evaluates the max length of the text
+                    maxText: '99.99%',
+                    text: '21.43%',
+                    fontColor: '#d59595',
+                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                    fontStyle: 'normal'
+                }
+            }
+        }
+    });
+    </Script>
 </body>
 </html>
