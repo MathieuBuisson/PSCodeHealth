@@ -235,7 +235,7 @@
                                 <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <canvas id="TestPassRateSummary" height="197"></canvas>
+                                <canvas class="testPassRateChart" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -245,7 +245,7 @@
                                 <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <canvas id="TestCoverageSummary" height="197"></canvas>
+                                <canvas class="testCoverageChart" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -584,7 +584,7 @@
                                 <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <canvas id="TestPassRateTests" height="197"></canvas>
+                                <canvas class="testPassRateChart" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -594,7 +594,7 @@
                                 <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
                             </div>
                             <div class="panel-body">
-                                <canvas id="TestCoverageTests" height="197"></canvas>
+                                <canvas class="testCoverageChart" height="197"></canvas>
                             </div>
                         </div>
                     </div>
@@ -609,7 +609,7 @@
                                 <thead>
                                     <tr>
                                         <th>Function Name</th>
-                                        <th>Test Coverage</th>
+                                        <th>Test Coverage  &nbsp;(%)</th>
                                         <th>Missed Commands</th>
                                     </tr>                            
                                 </thead>
@@ -727,126 +727,74 @@
                 }
             },
         });
-    </script>
 
-    <script>
-    var ctx = $("#TestPassRateSummary");
-    var data = {
-        labels: ["Pass","Fail"],
-        datasets: [
-        {
-            data: [10,0],
-            backgroundColor: ["#a3d48d","#d59595"],
-            hoverBackgroundColor: ["#a3d48d","#d59595"]
-        }]
-    };
-    var TestPassRateSummary = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: {
-            cutoutPercentage: 64,
-            legend: { position: 'top' },
-            elements: {
-                center: {
-                    // This evaluates the max length of the text
-                    maxText: '99.99%',
-                    text: '100%',
-                    fontColor: '#a3d48d',
-                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                    fontStyle: 'normal'
+        function createTestPassRateChart(ctx) {
+            var data = {
+                labels: ["Pass","Fail"],
+                datasets: [
+                {
+                    data: [10,0],
+                    backgroundColor: ["#a3d48d","#d59595"],
+                    hoverBackgroundColor: ["#a3d48d","#d59595"]
+                }]
+            };
+            var newTestPassRateChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    cutoutPercentage: 64,
+                    legend: { position: 'top' },
+                    elements: {
+                        center: {
+                            // This evaluates the max length of the text
+                            maxText: '99.99%',
+                            text: '100%',
+                            fontColor: '#a3d48d',
+                            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                            fontStyle: 'normal'
+                        }
+                    }
                 }
-            }
+            });
         }
-    });
+        var testPassRateCharts = $(".testPassRateChart");
+        for (var i = 0; i < testPassRateCharts.length; i++) {
+            createTestPassRateChart(testPassRateCharts[i]);
+        }
 
-    var ctx = $("#TestCoverageSummary");
-    var data = {
-        labels: ["Covered","Missed"],
-        datasets: [
-        {
-            data: [21.43,78.57],
-            backgroundColor: ["#a3d48d","#d59595"],
-            hoverBackgroundColor: ["#a3d48d","#d59595"]
-        }]
-    };
-    var TestCoverageSummary = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: {
-            cutoutPercentage: 64,
-            legend: { position: 'top' },
-            elements: {
-                center: {
-                    // This evaluates the max length of the text
-                    maxText: '99.99%',
-                    text: '21.43%',
-                    fontColor: '#d59595',
-                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                    fontStyle: 'normal'
+        function createTestCoverageChart(ctx) {
+            var data = {
+                labels: ["Covered","Missed"],
+                datasets: [
+                {
+                    data: [21.43,78.57],
+                    backgroundColor: ["#a3d48d","#d59595"],
+                    hoverBackgroundColor: ["#a3d48d","#d59595"]
+                }]
+            };
+            var newTestCoverageChart = new Chart(ctx, {
+                type: 'doughnut',
+                data: data,
+                options: {
+                    cutoutPercentage: 64,
+                    legend: { position: 'top' },
+                    elements: {
+                        center: {
+                            // This evaluates the max length of the text
+                            maxText: '99.99%',
+                            text: '21.43%',
+                            fontColor: '#d59595',
+                            fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
+                            fontStyle: 'normal'
+                        }
+                    }
                 }
-            }
+            });
         }
-    });
-
-    var ctx = $("#TestPassRateTests");
-    var data = {
-        labels: ["Pass","Fail"],
-        datasets: [
-        {
-            data: [10,0],
-            backgroundColor: ["#a3d48d","#d59595"],
-            hoverBackgroundColor: ["#a3d48d","#d59595"]
-        }]
-    };
-    var TestPassRateTests = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: {
-            cutoutPercentage: 64,
-            legend: { position: 'top' },
-            elements: {
-                center: {
-                    // This evaluates the max length of the text
-                    maxText: '99.99%',
-                    text: '100%',
-                    fontColor: '#a3d48d',
-                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                    fontStyle: 'normal',
-                    minFontSize: 12,
-                    maxFontSize: 256,
-                }
-            }
+        var testCoverageCharts = $(".testCoverageChart");
+        for (var i = 0; i < testCoverageCharts.length; i++) {
+            createTestCoverageChart(testCoverageCharts[i]);
         }
-    });
-
-    var ctx = $("#TestCoverageTests");
-    var data = {
-        labels: ["Covered","Missed"],
-        datasets: [
-        {
-            data: [21.43,78.57],
-            backgroundColor: ["#a3d48d","#d59595"],
-            hoverBackgroundColor: ["#a3d48d","#d59595"]
-        }]
-    };
-    var TestCoverageTests = new Chart(ctx, {
-        type: 'doughnut',
-        data: data,
-        options: {
-            cutoutPercentage: 64,
-            legend: { position: 'top' },
-            elements: {
-                center: {
-                    // This evaluates the max length of the text
-                    maxText: '99.99%',
-                    text: '21.43%',
-                    fontColor: '#d59595',
-                    fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
-                    fontStyle: 'normal'
-                }
-            }
-        }
-    });
     </Script>
 </body>
 </html>
