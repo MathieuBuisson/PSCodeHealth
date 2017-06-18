@@ -110,6 +110,7 @@ Accept wildcard characters: False
 To use an existing Pester tests result object for generating the following metrics :  
   - NumberOfTests  
   - NumberOfFailedTests  
+  - FailedTestsDetails  
   - NumberOfPassedTests  
   - TestsPassRate (%)  
   - TestCoverage (%)  

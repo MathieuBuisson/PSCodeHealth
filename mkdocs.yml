@@ -18,6 +18,7 @@ pages:
   - Internal Functions:
     - Get-PowerShellFile: InternalFunctions/Get-PowerShellFile.md
     - Merge-PSCodeHealthSetting: InternalFunctions/Merge-PSCodeHealthSetting.md
+    - New-FailedTestsInfo: InternalFunctions/New-FailedTestsInfo.md
     - New-FunctionHealthRecord: InternalFunctions/New-FunctionHealthRecord.md
     - New-PSCodeHealthComplianceResult: InternalFunctions/New-PSCodeHealthComplianceResult.md
     - New-PSCodeHealthComplianceRule: InternalFunctions/New-PSCodeHealthComplianceRule.md
