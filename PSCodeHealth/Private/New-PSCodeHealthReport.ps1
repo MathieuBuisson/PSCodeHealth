@@ -29,6 +29,7 @@ Function New-PSCodeHealthReport {
     To use an existing Pester tests result object for generating the following metrics :  
       - NumberOfTests  
       - NumberOfFailedTests  
+      - FailedTestsDetails  
       - NumberOfPassedTests  
       - TestsPassRate (%)  
       - TestCoverage (%)  
@@ -126,6 +127,8 @@ Function New-PSCodeHealthReport {
         }
     }
 
+    $FailedTestsDetails = If ($TestsResult.FailedCount -gt 0) { New-FailedTestsInfo -TestsResult $TestsResult } Else { $Null }
+
     $ObjectProperties = [ordered]@{
         'ReportTitle'                   = $ReportTitle
         'ReportDate'                    = Get-Date -Format u
@@ -142,6 +145,7 @@ Function New-PSCodeHealthReport {
         'FunctionsWithoutHelp'          = ($FunctionHealthRecord | Where-Object { -not($_.ContainsHelp) } | Measure-Object).Count
         'NumberOfTests'                 = If ( $TestsResult ) { $TestsResult.TotalCount } Else { 0 }
         'NumberOfFailedTests'           = If ( $TestsResult ) { $TestsResult.FailedCount } Else { 0 }
+        'FailedTestsDetails'            = $FailedTestsDetails
         'NumberOfPassedTests'           = If ( $TestsResult ) { $TestsResult.PassedCount } Else { 0 }
         'TestsPassRate'                 = If ($TestsResult.TotalCount) { [math]::Round(($TestsResult.PassedCount / $TestsResult.TotalCount) * 100, 2) } Else { 0 }
         'TestCoverage'                  = $CodeCoveragePerCent

@@ -47,10 +47,10 @@ Describe 'Invoke-PSCodeHealth' {
             $GetCoverageArray.ScriptAnalyzerFindings | Should Be 0
         }
         It 'Should return correct TestCoverage metric for the function Get-CoverageArray' {
-            $GetCoverageArray.TestCoverage | Should Be 0
+            $GetCoverageArray.TestCoverage | Should Be 94.44
         }
         It 'Should return correct CommandsMissed metric for the function Get-CoverageArray' {
-            $GetCoverageArray.CommandsMissed | Should Be 18
+            $GetCoverageArray.CommandsMissed | Should Be 1
         }        
         It 'Should return correct Complexity metric for the function Get-CoverageArray' {
             $GetCoverageArray.Complexity | Should Be 5
@@ -137,22 +137,50 @@ Describe 'Invoke-PSCodeHealth' {
             $Result.FunctionsWithoutHelp | Should Be 9
         }
         It 'The health report should have the expected NumberOfTests property' {
-            $Result.NumberOfTests | Should Be 10
+            $Result.NumberOfTests | Should Be 13
         }
         It 'The health report should have the expected NumberOfFailedTests property' {
-            $Result.NumberOfFailedTests | Should Be 0
+            $Result.NumberOfFailedTests | Should Be 2
+        }
+        It 'The health report should have 2 objects in its "FailedTestsDetails" property' {
+            $Result.FailedTestsDetails.Count | Should Be 2
+        }
+        It 'Should return an object with the expected property "File"' {
+            Foreach ( $Result in $Result.FailedTestsDetails ) {
+                $Result.File | Should Be 'Coveralls.Tests.ps1'
+            }
+        }
+        It 'Should return an object with the expected property "Line"' {
+            Foreach ( $Result in $Result.FailedTestsDetails ) {
+                $Result.Line | Should BeIn @('97','100')
+            }
+        }
+        It 'Should return an object with the expected property "Describe"' {
+            Foreach ( $Result in $Result.FailedTestsDetails ) {
+                $Result.Describe | Should Be 'Get-CoverageArray'
+            }
+        }
+        It 'Should return an object with the expected property "TestName"' {
+            Foreach ( $Result in $Result.FailedTestsDetails ) {
+                $Result.TestName | Should BeIn @('Should return 2 objects with the value 1','Should return 0 objects with the value 0')
+            }
+        }
+        It 'Should return an object with the expected property "ErrorMessage"' {
+            Foreach ( $Result in $Result.FailedTestsDetails ) {
+                $Result.ErrorMessage | Should BeLike 'Expected: * was*'
+            }
         }
         It 'The health report should have the expected NumberOfPassedTests property' {
-            $Result.NumberOfPassedTests | Should Be 10
+            $Result.NumberOfPassedTests | Should Be 11
         }
         It 'The health report should have the expected TestsPassRate property' {
-            $Result.TestsPassRate | Should Be 100
+            $Result.TestsPassRate | Should Be 84.62
         }
         It 'The health report should have the expected TestCoverage property' {
-            $Result.TestCoverage | Should Be 21.43
+            $Result.TestCoverage | Should Be 38.78
         }
         It 'The health report should have the expected CommandsMissedTotal property' {
-            $Result.CommandsMissedTotal | Should Be 77
+            $Result.CommandsMissedTotal | Should Be 60
         }
         It 'The health report should have the expected ComplexityAverage property' {
             $Result.ComplexityAverage | Should Be 2

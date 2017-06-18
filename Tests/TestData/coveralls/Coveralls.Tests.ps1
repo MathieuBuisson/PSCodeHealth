@@ -82,6 +82,25 @@ Describe "Get-CommandsForFile" {
     }
 }
 
+Describe 'Get-CoverageArray' {
+    Context 'There are 3 lines matching a coverage array line number' {
+
+        $LinesInFile = @('This is the first line','This is the second line', 'This is the third line')
+        Mock Get-Content { $LinesInFile }
+        $CoverageArray = @( @{Line = 1; CoverageResult = 1},@{Line = 2; CoverageResult = 1},@{Line = 3; CoverageResult = 0} )
+        $Result = Get-CoverageArray -CoverageResultArray $CoverageArray -File 'Any'
+
+        It 'Should return 3 objects' {
+            $Result.Count | Should Be 3
+        }
+        It 'Should return 2 objects with the value 1' {
+            ($Result | Where-Object { $_ -eq 1 }).Count | Should Be 2
+        }
+        It 'Should return 0 objects with the value 0' {
+            ($Result | Where-Object { $_ -eq 0 }).Count | Should BeNullOrEmpty
+        }        
+    }
+}
 Describe "Format-FileCoverage" {
     Context "Receiving proper input" {
         It "outputs the expected information" {

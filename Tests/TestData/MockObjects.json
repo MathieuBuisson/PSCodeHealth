@@ -578,6 +578,30 @@
                 "FailureMessage": "MockFailureMessage",
                 "StackTrace": "MockStackTrace"
             }
+        },
+        {
+            "2FailedTests": [
+                {
+                    "TestResult": {
+                        "Passed": false,
+                        "Describe": "MockDescribe",
+                        "Name": "MockTestName",
+                        "StackTrace": [", C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.Tests.ps1: line 97",
+                            "97:             ($Result | Where-Object { $_ -eq 1 }).Count | Should Be 2"],
+                        "FailureMessage": "MockFailureMessage"
+                    }
+                },
+                {
+                    "TestResult": {
+                        "Passed": false,
+                        "Describe": "MockDescribe2",
+                        "Name": "MockTestName2",
+                        "StackTrace": [", C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.Tests.ps1: line 101",
+                            "101:             ($Result | Where-Object { $_ -eq 0 }).Count | Should BeNullOrEmpty"],
+                        "FailureMessage": "MockFailureMessage2"
+                    }
+                }
+            ]
         }
     ],
     "New-FunctionHealthRecord": [

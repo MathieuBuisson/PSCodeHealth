@@ -67,6 +67,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NumberOfFailedTests"' {
                 $Result.NumberOfFailedTests | Should Be 0
             }
+            It 'Should return an object with the expected property "FailedTestsDetails"' {
+                $Result.FailedTestsDetails | Should BeNullOrEmpty
+            }
             It 'Should return an object with the expected property "NumberOfPassedTests"' {
                 $Result.NumberOfPassedTests | Should Be 0
             }
@@ -246,6 +249,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NumberOfFailedTests"' {
                 $Result.NumberOfFailedTests | Should Be 0
             }
+            It 'Should return an object with the expected property "FailedTestsDetails"' {
+                $Result.FailedTestsDetails | Should BeNullOrEmpty
+            }
             It 'Should return an object with the expected property "NumberOfPassedTests"' {
                 $Result.NumberOfPassedTests | Should Be 0
             }
@@ -335,6 +341,9 @@ Describe 'New-PSCodeHealthReport' {
             It 'Should return an object with the expected property "NumberOfFailedTests"' {
                 $Result.NumberOfFailedTests | Should Be 0
             }
+            It 'Should return an object with the expected property "FailedTestsDetails"' {
+                $Result.FailedTestsDetails | Should BeNullOrEmpty
+            }
             It 'Should return an object with the expected property "NumberOfPassedTests"' {
                 $Result.NumberOfPassedTests | Should Be 0
             }
@@ -416,6 +425,9 @@ Describe 'New-PSCodeHealthReport' {
             }
             It 'Should return an object with the expected property "NumberOfFailedTests"' {
                 $Result.NumberOfFailedTests | Should Be 0
+            }
+            It 'Should return an object with the expected property "FailedTestsDetails"' {
+                $Result.FailedTestsDetails | Should BeNullOrEmpty
             }
             It 'Should return an object with the expected property "NumberOfPassedTests"' {
                 $Result.NumberOfPassedTests | Should Be 0

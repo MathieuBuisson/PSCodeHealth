@@ -81,27 +81,27 @@ Describe 'Test-PSCodeHealthCompliance' {
             $ScriptAnalyzerFindingsTotal.Result | Should Be 'Pass'
         }
         It 'Should return correct value for the metric : NumberOfFailedTests' {
-            $NumberOfFailedTests.Value | Should Be 0
+            $NumberOfFailedTests.Value | Should Be 2
         }
         It 'Should return correct compliance result for the metric : NumberOfFailedTests' {
-            $NumberOfFailedTests.Result | Should Be 'Pass'
+            $NumberOfFailedTests.Result | Should Be 'Warning'
         }
         It 'Should return correct value for the metric : TestsPassRate' {
-            $TestsPassRate.Value | Should Be 100
+            $TestsPassRate.Value | Should Be 84.62
         }
         It 'Should return correct compliance result for the metric : TestsPassRate' {
-            $TestsPassRate.Result | Should Be 'Pass'
+            $TestsPassRate.Result | Should Be 'Fail'
         }
         It 'Should return correct value for the metric : TestCoverage' {
             ($TestCoverage | Where-Object SettingsGroup -eq 'OverallMetrics').Value |
-            Should Be 21.43
+            Should Be 38.78
         }
         It 'Should return correct compliance result for the metric : TestCoverage' {
             ($TestCoverage | Where-Object SettingsGroup -eq 'OverallMetrics').Result |
             Should Be 'Fail'
         }
         It 'Should return correct value for the metric : CommandsMissedTotal' {
-            $CommandsMissedTotal.Value | Should Be 77
+            $CommandsMissedTotal.Value | Should Be 60
         }
         It 'Should return correct compliance result for the metric : CommandsMissedTotal' {
             $CommandsMissedTotal.Result | Should Be 'Pass'
