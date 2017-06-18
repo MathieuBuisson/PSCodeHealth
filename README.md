@@ -48,23 +48,24 @@ To evaluate the code quality of a single script, simply use the **`Invoke-PSCode
 Specify the relative or full path of the script file via the `Path` parameter and specify the location of the tests via the `TestsPath` parameter, like so :  
 
 ```powershell
-C:\> Invoke-PSCodeHealth -Path '.\coveralls\Coveralls.ps1' -TestsPath '.\coveralls'
+PS C:\> Invoke-PSCodeHealth -Path '.\coveralls\Coveralls.ps1' -TestsPath '.\coveralls'
 
-Files    Functions      LOC (Average) Findings      Findings      Complexity    Test Coverage
-                                      (Total)       (Average)     (Average)
------    ---------      ------------- ------------- ------------- ------------- -------------  
-1        9              22.33         0             0             2             21.88 %
+Files    Functions      LOC (Average)  Findings       Findings       Complexity    Test Coverage
+                                       (Total)        (Average)      (Average)                  
+-----    ---------      -------------  -------------- -------------- ------------- -------------
+1        9              22.33          0              0              2             39.58 %      
+
 ```  
 
 To evaluate the code quality of all the PowerShell code in a directory, specify the relative or full path of the directory via the `Path` parameter, like so :  
 
 ```powershell
-C:\> Invoke-PSCodeHealth -Path '.\coveralls' -TestsPath '.\coveralls'
+PS C:\> Invoke-PSCodeHealth -Path '.\coveralls' -TestsPath '.\coveralls'
 
-Files    Functions      LOC (Average) Findings      Findings      Complexity    Test Coverage
-                                      (Total)       (Average)     (Average)
------    ---------      ------------- ------------- ------------- ------------- -------------  
-3        9              22.33         0             0             2             21.43 %
+Files    Functions      LOC (Average)  Findings       Findings       Complexity    Test Coverage
+                                       (Total)        (Average)      (Average)                  
+-----    ---------      -------------  -------------- -------------- ------------- -------------
+3        9              22.33          0              0              2             38.78 %      
 
 ```  
 
@@ -74,18 +75,18 @@ To view the per-function information, access the `FunctionHealthRecords` propert
 C:\> $HealthReport = Invoke-PSCodeHealth -Path '.\coveralls' -TestsPath '.\coveralls'
 C:\> $HealthReport.FunctionHealthRecords
 
-Function Name               Lines of Code  Complexity     Contains Help Test Coverage ScriptAnalyzer
-                                                                                         Findings
--------------               -------------  ----------     ------------- ------------- -------------  
-Add-CoverageInfo            14             1              False         0 %                 0
-Merge-CoverageResult        21             1              False         0 %                 0
-Get-CoverageArray           30             5              False         0 %                 0
-Format-FileCoverage         24             2              False         100 %               0
-Get-CommandsForFile         16             1              False         100 %               0
-Get-GitInfo                 23             2              False         0 %                 0
-Format-Coverage             39             3              False         0 %                 0
-Publish-Coverage            18             1              False         0 %                 0
-Get-CoveragePercentage      16             2              False         100 %               0
+Function Name               Lines of Code   Complexity     Contains Help  Test Coverage  ScriptAnalyzer
+                                                                                            Findings   
+-------------               -------------   ----------     -------------  -------------  --------------
+Add-CoverageInfo            14              1              False          0 %                  0       
+Merge-CoverageResult        21              1              False          0 %                  0       
+Get-CoverageArray           30              5              False          94.44 %              0       
+Format-FileCoverage         24              2              False          100 %                0       
+Get-CommandsForFile         16              1              False          100 %                0       
+Get-GitInfo                 23              2              False          0 %                  0       
+Format-Coverage             39              3              False          0 %                  0       
+Publish-Coverage            18              1              False          0 %                  0       
+Get-CoveragePercentage      16              2              False          100 %                0       
 
 ```
 

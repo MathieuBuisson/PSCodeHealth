@@ -1,3 +1,3 @@
-# 2017-05-20  
+# 2017-06-18  
 
-  - Added integration tests for PSCodeHealth report object  
+  - Add a 'FailedTestsDetails' property to health reports  
