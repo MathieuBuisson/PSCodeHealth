@@ -25,7 +25,7 @@
         }
         .right-header {
             margin-top: 47px;
-            text-align: left
+            text-align: left;
         }
         .right-header-data {
             color: #777;
@@ -116,7 +116,7 @@
             color: #a94442;
         }
         .tablePanel {
-            margin-top: 32px;
+            margin-top: 18px;
         }
         .tablePanel .panel-title {
             font-weight: 600;
@@ -329,7 +329,7 @@
                             <h2 class="panel-title"> Per Function Information</h2>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-condensed text-center">
+                            <table class="table table-hover table-condensed text-center">
                                 <thead>
                                     <tr>
                                         <th>Function Name</th>
@@ -465,13 +465,13 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-7 col-md-9 col-lg-8">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-6 col-md-8 col-lg-7">
                     <div class="panel panel-default tablePanel">
                         <div class="panel-heading">
                             <h2 class="panel-title"> Per Function Information</h2>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-condensed text-center">
+                            <table class="table table-hover table-condensed text-center">
                                 <thead>
                                     <tr>
                                         <th>Function Name</th>
@@ -606,13 +606,50 @@
                         </div>
                     </div>
                 </div>
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-7 col-md-9 col-lg-8">
+                    <div class="panel panel-default tablePanel">
+                        <div class="panel-heading">
+                            <h2 class="panel-title"> Failed Tests Details</h2>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover table-condensed">
+                                <thead>
+                                    <tr>
+                                        <th>File</th>
+                                        <th>Line</th>
+                                        <th>Describe</th>
+                                        <th>Test Name</th>
+                                        <th>Error Message</th>
+                                    </tr>                            
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Coveralls.Tests.ps1</td>
+                                        <td>97</td>
+                                        <td>Get-CoverageArray</td>
+                                        <td>Should return 2 objects with the value 1</td>
+                                        <td>Expected: {2}
+But was:  {12435679865326149789}</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Coveralls.Tests.ps1</td>
+                                        <td>100</td>
+                                        <td>Get-CoverageArray</td>
+                                        <td>Should return 0 objects with the value 0</td>
+                                        <td>Expected: value to be empty but it was {12435679865326149789}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-6">
                     <div class="panel panel-default tablePanel">
                         <div class="panel-heading">
                             <h2 class="panel-title"> Per Function Information</h2>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-hover table-bordered table-condensed text-center">
+                            <table class="table table-hover table-condensed text-center">
                                 <thead>
                                     <tr>
                                         <th>Function Name</th>
@@ -802,6 +839,6 @@
         for (var i = 0; i < testCoverageCharts.length; i++) {
             createTestCoverageChart(testCoverageCharts[i]);
         }
-    </Script>
+    </script>
 </body>
 </html>
