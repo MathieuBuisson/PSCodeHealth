@@ -158,6 +158,12 @@
             border-top: 1px solid;
             border-collapse: collapse;
         }
+        th.widecolumn {
+            width: 37%;
+        }
+        th.narrowColum {
+            width: 21%;
+        }
         
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -517,7 +523,7 @@ Message    : Function 'Publish-Coverage' has verb that could change system state
                         </div>
                     </div>
                 </div>
-                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-6 col-md-8 col-lg-7">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-6">
                     <div class="panel panel-default tablePanel">
                         <div class="panel-heading">
                             <h2 class="panel-title"> Per Function Information</h2>
@@ -526,10 +532,10 @@ Message    : Function 'Publish-Coverage' has verb that could change system state
                             <table class="table table-hover table-condensed text-center">
                                 <thead>
                                     <tr>
-                                        <th>Function Name</th>
-                                        <th>Lines of Code</th>
-                                        <th>Complexity</th>
-                                        <th>Maximum Nesting Depth</th>
+                                        <th class="wideColumn">Function Name</th>
+                                        <th class="narrowColum">Lines of Code</th>
+                                        <th class="narrowColum">Complexity</th>
+                                        <th class="narrowColum">Maximum Nesting Depth</th>
                                     </tr>                            
                                 </thead>
                                 <tbody>
@@ -667,12 +673,12 @@ Message    : Function 'Publish-Coverage' has verb that could change system state
                             <table class="table table-hover table-condensed">
                                 <thead>
                                     <tr>
-                                        <th>File</th>
-                                        <th>Line</th>
-                                        <th>Describe</th>
-                                        <th>Test Name</th>
-                                        <th>Error Message</th>
-                                    </tr>                            
+                                        <th class="col-xs-2">File</th>
+                                        <th class="col-xs-1">Line</th>
+                                        <th class="col-xs-2">Describe</th>
+                                        <th class="col-xs-3">Test Name</th>
+                                        <th class="col-xs-4">Error Message</th>
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
@@ -707,7 +713,7 @@ But was:  {12435679865326149789}</td>
                                         <th>Function Name</th>
                                         <th>Test Coverage  &nbsp;(%)</th>
                                         <th>Missed Commands</th>
-                                    </tr>                            
+                                    </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
