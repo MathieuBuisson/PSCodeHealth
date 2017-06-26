@@ -49,13 +49,13 @@
             display: block;
             padding: 158px 2px 2px 7px;
             overflow-x: hidden;
-            overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+            overflow-y: auto; /* Scrollable content */
         }
         }
 
         /* Sidebar navigation */
         .nav-sidebar {
-            margin-right: -21px; /* 20px padding + 1px border */
+            margin-right: -21px;
             margin-bottom: 20px;
             margin-left: -20px;
         }
@@ -148,7 +148,16 @@
             color: rgb(60, 118, 61);
             background-color: rgb(223, 240, 216);
         }
-
+        td > button.btn {
+            margin-bottom: 3px;
+        }
+        td.cell-largeContent {
+            font-weight: normal !important;
+            padding: 9px 0px;
+            border-bottom: 1px solid;
+            border-top: 1px solid;
+            border-collapse: collapse;
+        }
         
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -323,7 +332,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-7 col-md-9 col-lg-8">
+                <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2 col-sm-6 col-md-8 col-lg-7">
                     <div class="panel panel-default tablePanel">
                         <div class="panel-heading">
                             <h2 class="panel-title"> Per Function Information</h2>
@@ -332,10 +341,10 @@
                             <table class="table table-hover table-condensed text-center">
                                 <thead>
                                     <tr>
-                                        <th>Function Name</th>
-                                        <th>ScriptAnalyzer Findings</th>
-                                        <th>ScriptAnalyzer Findings Details</th>
-                                        <th>Contains Help</th>
+                                        <th class="col-xs-3">Function Name</th>
+                                        <th class="col-xs-2">ScriptAnalyzer Findings</th>
+                                        <th class="col-xs-5">ScriptAnalyzer Findings Details</th>
+                                        <th class="col-xs-2">Contains Help</th>
                                     </tr>                            
                                 </thead>
                                 <tbody>
@@ -360,7 +369,19 @@
                                     <tr>
                                         <td>Format-FileCoverage</td>
                                         <td class="warning">3</td>
-                                        <td>Function 'Format-FileCoverage' has verb that could change system state. Therefore, the function has to support 'ShouldProcess'.</td>
+                                        <td class="info">
+                                            <button type="button" class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#findingsDetailsFormat-FileCoverage"> Click to Expand</button>
+                                            <table class="collapse" id="findingsDetailsFormat-FileCoverage">
+                                                <tr>
+                                                    <td class="info cell-largeContent">ScriptName : Format-FileCoverage.ps1<br>
+Line       : 81<br>
+Severity   : Information<br>
+RuleName   : PSUseOutputTypeCorrectly<br>
+Message    : The cmdlet 'Format-FileCoverage' returns an object of type 'System.Object[]' but this type is not declared in the OutputType attribute.
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
@@ -372,8 +393,27 @@
                                     <tr>
                                         <td>Get-GitInfo</td>
                                         <td class="danger">4</td>
-                                        <td>The cmdlet 'Get-GitInfo' returns an object of type 'System.Collections.Generic.IEnumerable`1[[System.Management.Automation.Language.Ast, 
-                System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35]]' but this type is not declared in the OutputType attribute.</td>
+                                        <td class="warning">
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#findingsGet-GitInfo"> Click to Expand</button>
+                                            <table class="collapse" id="findingsGet-GitInfo">
+                                                <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Get-GitInfo.ps1<br>
+Line       : 29<br>
+Severity   : Warning<br>
+RuleName   : PSShouldProcess<br>
+Message    : 'Get-GitInfo' calls ShouldProcess/ShouldContinue but does not have the ShouldProcess attribute.
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Get-GitInfo.ps1<br>
+Line       : 38<br>
+Severity   : Warning<br>
+RuleName   : PSAvoidUsingCmdletAliases<br>
+Message    : 'Select' is an alias of 'Select-Object'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
@@ -385,7 +425,19 @@
                                     <tr>
                                         <td>Publish-Coverage</td>
                                         <td class="success">2</td>
-                                        <td>The cmdlet 'Publish-Coverage' returns an object of type 'System.Object[]' but this type is not declared in the OutputType attribute.</td>
+                                        <td class="warning">
+                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#findingsPublish-Coverage"> Click to Expand</button>
+                                            <table class="collapse" id="findingsPublish-Coverage">
+                                                <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Publish-Coverage.ps1<br>
+Line       : 34<br>
+Severity   : Warning<br>
+RuleName   : PSUseShouldProcessForStateChangingFunctions<br>
+Message    : Function 'Publish-Coverage' has verb that could change system state. Therefore, the function has to support 'ShouldProcess'.
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
