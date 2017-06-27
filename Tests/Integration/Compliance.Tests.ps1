@@ -31,7 +31,7 @@ Describe 'Test-PSCodeHealthCompliance' {
             $LinesOfCode.Result | Should Be 'Warning'
         }
         It 'Should return correct value for the metric : ScriptAnalyzerFindings' {
-            $ScriptAnalyzerFindings.Value | Should Be 0
+            $ScriptAnalyzerFindings.Value | Should Be 2
         }
         It 'Should return correct compliance result for the metric : ScriptAnalyzerFindings' {
             $ScriptAnalyzerFindings.Result | Should Be 'Pass'
@@ -63,19 +63,19 @@ Describe 'Test-PSCodeHealthCompliance' {
             $MaximumNestingDepth.Result | Should Be 'Pass'
         }
         It 'Should return correct value for the metric : LinesOfCodeTotal' {
-            $LinesOfCodeTotal.Value | Should Be 201
+            $LinesOfCodeTotal.Value | Should Be 204
         }
         It 'Should return correct compliance result for the metric : LinesOfCodeTotal' {
             $LinesOfCodeTotal.Result | Should Be 'Pass'
         }
         It 'Should return correct value for the metric : LinesOfCodeAverage' {
-            $LinesOfCodeAverage.Value | Should Be 22.33
+            $LinesOfCodeAverage.Value | Should Be 22.67
         }
         It 'Should return correct compliance result for the metric : LinesOfCodeAverage' {
             $LinesOfCodeAverage.Result | Should Be 'Pass'
         }
         It 'Should return correct value for the metric : ScriptAnalyzerFindingsTotal' {
-            $ScriptAnalyzerFindingsTotal.Value | Should Be 0
+            $ScriptAnalyzerFindingsTotal.Value | Should Be 4
         }
         It 'Should return correct compliance result for the metric : ScriptAnalyzerFindingsTotal' {
             $ScriptAnalyzerFindingsTotal.Result | Should Be 'Pass'
@@ -94,14 +94,14 @@ Describe 'Test-PSCodeHealthCompliance' {
         }
         It 'Should return correct value for the metric : TestCoverage' {
             ($TestCoverage | Where-Object SettingsGroup -eq 'OverallMetrics').Value |
-            Should Be 38.78
+            Should Be 39.6
         }
         It 'Should return correct compliance result for the metric : TestCoverage' {
             ($TestCoverage | Where-Object SettingsGroup -eq 'OverallMetrics').Result |
             Should Be 'Fail'
         }
         It 'Should return correct value for the metric : CommandsMissedTotal' {
-            $CommandsMissedTotal.Value | Should Be 60
+            $CommandsMissedTotal.Value | Should Be 61
         }
         It 'Should return correct compliance result for the metric : CommandsMissedTotal' {
             $CommandsMissedTotal.Result | Should Be 'Pass'

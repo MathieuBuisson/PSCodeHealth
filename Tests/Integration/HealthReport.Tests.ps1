@@ -41,13 +41,13 @@ Describe 'Invoke-PSCodeHealth' {
             $AddCoverageInfo.MaximumNestingDepth | Should Be 1
         }
         It 'Should return correct LinesOfCode metric for the function Get-CoverageArray' {
-            $GetCoverageArray.LinesOfCode | Should Be 30
+            $GetCoverageArray.LinesOfCode | Should Be 31
         }
         It 'Should return correct ScriptAnalyzerFindings metric for the function Get-CoverageArray' {
-            $GetCoverageArray.ScriptAnalyzerFindings | Should Be 0
+            $GetCoverageArray.ScriptAnalyzerFindings | Should Be 2
         }
         It 'Should return correct TestCoverage metric for the function Get-CoverageArray' {
-            $GetCoverageArray.TestCoverage | Should Be 94.44
+            $GetCoverageArray.TestCoverage | Should Be 94.74
         }
         It 'Should return correct CommandsMissed metric for the function Get-CoverageArray' {
             $GetCoverageArray.CommandsMissed | Should Be 1
@@ -95,10 +95,10 @@ Describe 'Invoke-PSCodeHealth' {
             $FormatCoverage.MaximumNestingDepth | Should Be 1
         }
         It 'Should return correct LinesOfCode metric for the function Get-CoveragePercentage' {
-            $GetCoveragePercentage.LinesOfCode | Should Be 16
+            $GetCoveragePercentage.LinesOfCode | Should Be 17
         }
         It 'Should return correct ScriptAnalyzerFindings metric for the function Get-CoveragePercentage' {
-            $GetCoveragePercentage.ScriptAnalyzerFindings | Should Be 0
+            $GetCoveragePercentage.ScriptAnalyzerFindings | Should Be 1
         }
         It 'Should return correct TestCoverage metric for the function Get-CoveragePercentage' {
             $GetCoveragePercentage.TestCoverage | Should Be 100
@@ -122,16 +122,13 @@ Describe 'Invoke-PSCodeHealth' {
             $Result.Functions | Should Be 9
         }
         It 'The health report should have the expected LinesOfCodeTotal property' {
-            $Result.LinesOfCodeTotal | Should Be 201
+            $Result.LinesOfCodeTotal | Should Be 204
         }
         It 'The health report should have the expected LinesOfCodeAverage property' {
-            $Result.LinesOfCodeAverage | Should Be 22.33
-        }
-        It 'The health report should have the expected LinesOfCodeAverage property' {
-            $Result.LinesOfCodeAverage | Should Be 22.33
+            $Result.LinesOfCodeAverage | Should Be 22.67
         }
         It 'The health report should have the expected ScriptAnalyzerFindingsTotal property' {
-            $Result.ScriptAnalyzerFindingsTotal | Should Be 0
+            $Result.ScriptAnalyzerFindingsTotal | Should Be 4
         }
         It 'The health report should have the expected FunctionsWithoutHelp property' {
             $Result.FunctionsWithoutHelp | Should Be 9
@@ -177,10 +174,10 @@ Describe 'Invoke-PSCodeHealth' {
             $Result.TestsPassRate | Should Be 84.62
         }
         It 'The health report should have the expected TestCoverage property' {
-            $Result.TestCoverage | Should Be 38.78
+            $Result.TestCoverage | Should Be 39.6
         }
         It 'The health report should have the expected CommandsMissedTotal property' {
-            $Result.CommandsMissedTotal | Should Be 60
+            $Result.CommandsMissedTotal | Should Be 61
         }
         It 'The health report should have the expected ComplexityAverage property' {
             $Result.ComplexityAverage | Should Be 2

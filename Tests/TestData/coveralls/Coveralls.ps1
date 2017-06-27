@@ -47,6 +47,7 @@ function Get-CoverageArray {
         [parameter(Mandatory = $true,Position=2)]
         $File
     )
+    $SecurePassword = ConvertTo-SecureString 'Passw0rdForTesting' -AsPlainText -Force
 
     # count the lines
     $lineCount = (Get-Content $File).Count
@@ -120,6 +121,7 @@ function Get-GitInfo {
         [string]
         $BranchName
     )
+    cd .
 
     if (!$BranchName) {
         $BranchName = (git rev-parse --abbrev-ref HEAD)
@@ -207,6 +209,7 @@ function Get-CoveragePercentage {
         [parameter(Mandatory = $true,Position=1)]
         $RepositoryLink
     )
+    cd .
 
     try { 
         $response = Invoke-WebRequest -UseBasicParsing "$RepositoryLink.json"
