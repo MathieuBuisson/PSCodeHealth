@@ -100,13 +100,16 @@ Function New-PSCodeHealthReport {
         $OverallPesterParams = @{
             Script = $TestsPath
             CodeCoverage = $Path
-            Show = 'None'
             PassThru = $True
             Strict = $True
             Verbose = $False
             WarningAction = 'SilentlyContinue'
         }
-        $TestsResult = Invoke-Pester @OverallPesterParams
+
+        # Invoke-Pester didn't have the "Show" parameter prior to version 4.x
+        $SuppressOutput = If ((Get-Module -Name Pester).Version.Major -lt 4) { @{Quiet = $True} } Else { @{Show = 'None'} }
+
+        $TestsResult = Invoke-Pester @OverallPesterParams @SuppressOutput
     }
     If ( $TestsResult.CodeCoverage ) {
         $CodeCoverage = $TestsResult.CodeCoverage

@@ -25,7 +25,7 @@ Want to know more ? Head to the full documentation :
 
 Before using PSCodeHealth, you need :  
   - PowerShell 5.x  
-  - The **[Pester](https://github.com/pester/Pester)** PowerShell module (version 4.0.x or later)  
+  - The **[Pester](https://github.com/pester/Pester)** PowerShell module (version 3.4.0 or later)  
   - The **[PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer)** PowerShell module  
 
 ## Installation  
