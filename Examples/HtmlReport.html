@@ -158,6 +158,9 @@
             border-top: 1px solid;
             border-collapse: collapse;
         }
+        td > table {
+            display: block;
+        }
         th.widecolumn {
             width: 37%;
         }
@@ -370,8 +373,8 @@
                                         <td>Get-CoverageArray</td>
                                         <td class="success">2</td>
                                         <td class="danger">
-                                            <button type="button" class="btn btn-danger btn-sm" data-toggle="collapse" data-target="#findingsGet-CoverageArray"> Click to Expand</button>
-                                            <table class="collapse" id="findingsGet-CoverageArray">
+                                            <button type="button" class="btn btn-danger btn-sm cell-expand-collapse"> Expand</button>
+                                            <table>
                                                 <tr>
                                                     <td class="danger cell-largeContent">ScriptName : Coveralls.ps1<br>
 Line       : 50<br>
@@ -408,8 +411,8 @@ Message    : The variable 'SecurePassword' is assigned but never used.
                                         <td>Get-GitInfo</td>
                                         <td class="success">1</td>
                                         <td class="warning">
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#findingsGet-GitInfo"> Click to Expand</button>
-                                            <table class="collapse" id="findingsGet-GitInfo">
+                                            <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
+                                            <table>
                                                 <tr>
                                                     <td class="warning cell-largeContent">ScriptName : Get-GitInfo.ps1<br>
 Line       : 124<br>
@@ -438,8 +441,8 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                         <td>Get-CoveragePercentage</td>
                                         <td class="success">1</td>
                                         <td class="warning">
-                                            <button type="button" class="btn btn-warning btn-sm" data-toggle="collapse" data-target="#findingsGet-CoveragePercentage"> Click to Expand</button>
-                                            <table class="collapse" id="findingsGet-CoveragePercentage">
+                                            <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
+                                            <table>
                                                 <tr>
                                                     <td class="warning cell-largeContent">ScriptName : Get-CoveragePercentage.ps1<br>
 Line       : 212<br>
@@ -897,6 +900,16 @@ But was:  {12435679865326149789}</td>
         for (var i = 0; i < testCoverageCharts.length; i++) {
             createTestCoverageChart(testCoverageCharts[i]);
         }
+
+        $(document).ready(function(){
+            $("td > table").hide();
+            var expandCollapseButtons = $(".cell-expand-collapse");
+            expandCollapseButtons.click(function(){
+                var elementToToggle = $(this).siblings("table");
+                elementToToggle.slideToggle("fast");
+                $(this).text($(this).text() == ' Expand' ? ' Collapse' : ' Expand');
+            });
+        });
     </script>
 </body>
 </html>
