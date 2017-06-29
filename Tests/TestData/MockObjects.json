@@ -843,5 +843,15 @@
             ]
         }
         }
+    ],
+    "Get-Content":
+    [
+        "<title>PSCodeHealth Report - {REPORT_TITLE}</title>",
+        "</head>",
+        "<body>",
+        "    <h1>",
+        "        <img id=\"logo\" src= \"https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png\" alt=\"PSCodeHealth Logo\"/>",
+        "        PSCodeHealth Report - {REPORT_TITLE} <small class=\"analyzed-path\"> {ANALYZED_PATH} - {DATE}</small>",
+        "    </h1>"
     ]
 }
