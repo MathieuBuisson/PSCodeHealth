@@ -902,11 +902,14 @@ But was:  {0}</td>
         $(document).ready(function(){
             $("td > table").hide();
             var expandCollapseButtons = $(".cell-expand-collapse");
-            expandCollapseButtons.click(function(){
-                var elementToToggle = $(this).siblings("table");
-                elementToToggle.slideToggle("fast");
-                $(this).text($(this).text() == ' Expand' ? ' Collapse' : ' Expand');
-            });
+
+            if (expandCollapseButtons.length) {
+                expandCollapseButtons.click(function(){
+                    var elementToToggle = $(this).siblings("table");
+                    elementToToggle.slideToggle("fast");
+                    $(this).text($(this).text() == ' Expand' ? ' Collapse' : ' Expand');
+                });
+            }
         });
     </script>
 </body>
