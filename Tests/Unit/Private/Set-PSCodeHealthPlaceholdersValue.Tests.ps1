@@ -26,7 +26,7 @@ Describe 'Set-PSCodeHealthPlaceholdersValue' {
             $PlaceholdersData = @{
                 REPORT_TITLE = 'StringValue1'
                 ANALYZED_PATH = 'StringValue2'
-                DATE = Get-Date -Format u
+                DATE = '2017-07-01 21:50:52Z'
             }
             $Result = Set-PSCodeHealthPlaceholdersValue -TemplatePath $MockedFile.FullName -PlaceholdersData $PlaceholdersData
 
@@ -39,6 +39,10 @@ Describe 'Set-PSCodeHealthPlaceholdersValue' {
             It 'Does not modify lines which do not contain any placeholder' {
                 $Result[1] | Should Be '</head>'
                 $Result[2] | Should Be '<body>'
+            }
+            It 'Replaces properly 3 placeholders in a line' {
+                $Result[5] |
+                Should Be '        PSCodeHealth Report - StringValue1 <small class="analyzed-path"> StringValue2 - 2017-07-01 21:50:52Z</small>'
             }
         }
     }

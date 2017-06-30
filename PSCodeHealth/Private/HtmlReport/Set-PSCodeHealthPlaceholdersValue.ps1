@@ -40,7 +40,8 @@ Function Set-PSCodeHealthPlaceholdersValue {
     $TemplateContent = Get-Content -Path $TemplatePath
 
     Foreach ( $Placeholder in $PlaceholdersData.GetEnumerator() ) {
-        $TemplateContent = $TemplateContent.ForEach('Replace',"{$($Placeholder.Key)}",$Placeholder.Value)
+        $PlaceholderPattern = '{{{0}}}' -f $Placeholder.Key
+        $TemplateContent = $TemplateContent.ForEach('Replace', $PlaceholderPattern, $Placeholder.Value)
     }
     $TemplateContent
 }
