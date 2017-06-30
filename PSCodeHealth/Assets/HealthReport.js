@@ -27,7 +27,7 @@
                             fontSize -= 1;
                             break;
                         }
-                    } while (true)
+                    } while (true);
                     ctx.restore();
 
                     // save properties
