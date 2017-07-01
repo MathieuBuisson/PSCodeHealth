@@ -45,5 +45,22 @@ Describe 'Set-PSCodeHealthPlaceholdersValue' {
                 Should Be '        PSCodeHealth Report - StringValue1 <small class="analyzed-path"> StringValue2 - 2017-07-01 21:50:52Z</small>'
             }
         }
+        Context 'The PlaceholderData has placeholders values containing collections' {
+
+            $TestReportTitle = @('Line1','Line2','Line3','Line4')
+            $TestDate = @(1,2,3)
+            $PlaceholdersData = @{
+                REPORT_TITLE = $TestReportTitle
+                DATE = $TestDate
+            }
+            $Result = Set-PSCodeHealthPlaceholdersValue -TemplatePath $MockedFile.FullName -PlaceholdersData $PlaceholdersData
+
+            It 'Should add lines to the content for each multi-string placeholder value' {
+                ($Result -split "`n").Count | Should Be (7 + ($TestReportTitle.Count * 2 + $TestDate.Count))
+            }
+            It 'Replaces properly a multi-string placeholder value in a line' {
+                $Result[0] | Should BeLike '<title>PSCodeHealth Report - Line1*Line2*Line3*Line4*</title>'
+            }
+        }
     }
 }

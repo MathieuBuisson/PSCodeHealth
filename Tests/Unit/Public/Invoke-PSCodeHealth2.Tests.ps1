@@ -276,5 +276,62 @@ Describe 'Invoke-PSCodeHealth (again)' {
                 $Result.FunctionHealthRecords.Count | Should Be 2
             }
         }
+        Context 'The HtmlReportPath parameter is specified but not PassThru' {
+
+            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
+            $HealthReportParams = @{
+                Path = "$TestDrive\2PublicFunctions.psm1"
+                TestsResult = $PesterResult
+                HtmlReportPath = "$TestDrive\Report.html"
+            }
+            $Result = Invoke-PSCodeHealth @HealthReportParams
+
+            It 'Should output nothing to the pipeline' {
+                $Result | Should BeNullOrEmpty
+            }
+            It 'Should create the HTML file at the path specified via the HtmlReportPath parameter' {
+                Test-Path -Path "$TestDrive\Report.html" -PathType Leaf | Should Be $True
+            }
+            It 'Should create a HTML file bigger than the HTML template' {
+                (Get-Item -Path "$TestDrive\Report.html").Length | Should BeGreaterThan 23495
+            }
+        }
+        Context 'The HtmlReportPath and PassThru parameters are both specified' {
+
+            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
+            $HealthReportParams = @{
+                Path = "$TestDrive\2PublicFunctions.psm1"
+                TestsResult = $PesterResult
+                HtmlReportPath = "$TestDrive\Report2.html"
+                PassThru = $True
+            }
+            $Result = Invoke-PSCodeHealth @HealthReportParams
+
+            It 'Should return an object of the type [PSCodeHealth.Overall.HealthReport]' {
+                $Result | Should BeOfType [PSCustomObject]
+                ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Overall.HealthReport'
+            }
+            It 'Should create the HTML file at the path specified via the HtmlReportPath parameter' {
+                Test-Path -Path "$TestDrive\Report2.html" -PathType Leaf | Should Be $True
+            }
+            It 'Should create a HTML file bigger than the HTML template' {
+                (Get-Item -Path "$TestDrive\Report2.html").Length | Should BeGreaterThan 23495
+            }
+        }
+        Context 'The PassThru parameter is specified but not HtmlReportPath' {
+
+            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
+            $HealthReportParams = @{
+                Path = "$TestDrive\2PublicFunctions.psm1"
+                TestsResult = $PesterResult
+                HtmlReportPath = $Null
+                PassThru = $True
+            }
+
+            It 'Should throw a "ParameterArgumentValidationError" exception' {
+                { Invoke-PSCodeHealth @HealthReportParams } |
+                Should Throw "Cannot validate argument on parameter 'HtmlReportPath'."
+            }
+        }
     }
 }

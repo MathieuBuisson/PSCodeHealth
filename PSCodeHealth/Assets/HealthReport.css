@@ -1,4 +1,4 @@
-        header > .row {
+header > .row {
             margin-bottom: 22px;
         }
         .left-header {
@@ -151,4 +151,4 @@
         }
         th.narrowColum {
             width: 21%;
-        }        
+        }

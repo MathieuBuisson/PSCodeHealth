@@ -37,6 +37,14 @@ Function Invoke-PSCodeHealth {
     The value of this parameter qualifies the Path parameter.  
     Enter a path element or pattern, such as *example*. Wildcards are permitted.
 
+.PARAMETER HtmlReportPath
+    To instruct Invoke-PSCodeHealth to generate an HTML report, and specify the path where the HTML file should be saved.  
+    The path must include the folder path (which has to exist) and the file name.  
+
+.PARAMETER PassThru
+    When the parameter HtmlReportPath is used, by default, Invoke-PSCodeHealth doesn't output a [PSCodeHealth.Overall.HealthReport] object to the pipeline.  
+    The PassThru parameter allows to instruct Invoke-PSCodeHealth to output both an HTML report file and a [PSCodeHealth.Overall.HealthReport] object.  
+
 .EXAMPLE
     PS C:\> Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -Recurse -TestsPath 'C:\GitRepos\MyModule\Tests\Unit'
 
@@ -49,13 +57,19 @@ Function Invoke-PSCodeHealth {
     Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories, except for files containing "example" in their name.  
     This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\, and any subdirectories.
 
+.EXAMPLE
+    PS C:\> Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -HtmlReportPath .\Report.html -PassThru
+
+    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\.  
+    This command will create an HTML report (Report.html) in the current directory and a PSCodeHealth.Overall.HealthReport object to the pipeline.  
+
 .OUTPUTS
     PSCodeHealth.Overall.HealthReport
 
 .NOTES
     
 #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'Default')]
     [OutputType([PSCustomObject])]
     Param (
         [Parameter(Position=0, Mandatory=$False, ValueFromPipeline=$True)]
@@ -73,7 +87,15 @@ Function Invoke-PSCodeHealth {
         [switch]$Recurse,
 
         [Parameter(Mandatory=$False)]
-        [string[]]$Exclude
+        [string[]]$Exclude,
+
+        [Parameter(Mandatory, ParameterSetName='HtmlReport')]
+        [ValidateScript({ Test-Path -Path (Split-Path $_ -Parent) -PathType Container })]
+        [string]$HtmlReportPath,
+
+        [Parameter(Mandatory=$False, ParameterSetName='HtmlReport')]
+        [switch]$PassThru
+
     )
     If ( -not($PSBoundParameters.ContainsKey('Path')) ) {
 
@@ -142,9 +164,60 @@ Function Invoke-PSCodeHealth {
         TestsPath = $TestsPath
     }
     If ( ($PSBoundParameters.ContainsKey('TestsResult')) ) {
-        New-PSCodeHealthReport @PSCodeHealthReportParams -TestsResult $PSBoundParameters.TestsResult
+        $HealthReport = New-PSCodeHealthReport @PSCodeHealthReportParams -TestsResult $PSBoundParameters.TestsResult
     }
     Else {
-        New-PSCodeHealthReport @PSCodeHealthReportParams
+        $HealthReport = New-PSCodeHealthReport @PSCodeHealthReportParams
+    }
+
+    If ( $PSCmdlet.ParameterSetName -ne 'HtmlReport' ) {
+        return $HealthReport
+    }
+    Else {
+        $JsPlaceholders = @{
+            NUMBER_OF_PASSED_TESTS = $HealthReport.NumberOfPassedTests
+            NUMBER_OF_FAILED_TESTS = $HealthReport.NumberOfFailedTests
+            TESTS_PASS_RATE = $HealthReport.TestsPassRate
+            TEST_COVERAGE = $HealthReport.TestCoverage
+            CODE_NOT_COVERED = 100 - $HealthReport.TestCoverage
+        }
+        $JsContent = Set-PSCodeHealthPlaceholdersValue -TemplatePath "$PSScriptRoot\..\Assets\HealthReport.js" -PlaceholdersData $JsPlaceholders
+
+        $HtmlPlaceholders = @{
+            REPORT_TITLE = $HealthReport.ReportTitle
+            CSS_CONTENT = Get-Content -Path "$PSScriptRoot\..\Assets\HealthReport.css"
+            ANALYZED_PATH = $HealthReport.AnalyzedPath
+            REPORT_DATE = $HealthReport.ReportDate
+            NUMBER_OF_FILES = $HealthReport.Files
+            NUMBER_OF_FUNCTIONS = $HealthReport.Functions
+            LINES_OF_CODE_TOTAL = $HealthReport.LinesOfCodeTotal
+            SCRIPTANALYZER_ERRORS = $HealthReport.ScriptAnalyzerErrors
+            SCRIPTANALYZER_WARNINGS = $HealthReport.ScriptAnalyzerWarnings
+            SCRIPTANALYZER_INFO = $HealthReport.ScriptAnalyzerInformation
+            SCRIPTANALYZER_TOTAL = $HealthReport.ScriptAnalyzerFindingsTotal
+            SCRIPTANALYZER_AVERAGE = $HealthReport.ScriptAnalyzerFindingsAverage
+            FUNCTIONS_WITHOUT_HELP = $HealthReport.FunctionsWithoutHelp
+            BEST_PRACTICES_TABLE_ROWS = ''
+            COMPLEXITY_HIGHEST = $HealthReport.ComplexityHighest
+            NESTING_DEPTH_HIGHEST = $HealthReport.NestingDepthHighest
+            LINES_OF_CODE_AVERAGE = $HealthReport.LinesOfCodeAverage
+            COMPLEXITY_AVERAGE = $HealthReport.ComplexityAverage
+            NESTING_DEPTH_AVERAGE = $HealthReport.NestingDepthAverage
+            MAINTAINABILITY_TABLE_ROWS = ''
+            NUMBER_OF_TESTS = $HealthReport.NumberOfTests
+            NUMBER_OF_FAILED_TESTS = $HealthReport.NumberOfFailedTests
+            NUMBER_OF_PASSED_TESTS = $HealthReport.NumberOfPassedTests
+            COMMANDS_MISSED = $HealthReport.CommandsMissedTotal
+            FAILED_TESTS_TABLE_ROWS = ''
+            COVERAGE_TABLE_ROWS = ''
+            JS_CONTENT = $JsContent
+        }
+        $HtmlContent = Set-PSCodeHealthPlaceholdersValue -TemplatePath "$PSScriptRoot\..\Assets\HealthReport.html" -PlaceholdersData $HtmlPlaceholders
+
+        $Null = New-Item -Path $HtmlReportPath -ItemType File -Force
+        Set-Content -Path $HtmlReportPath -Value $HtmlContent -Encoding UTF8
+        If ( $PassThru ) {
+            return $HealthReport
+        }
     }
 }

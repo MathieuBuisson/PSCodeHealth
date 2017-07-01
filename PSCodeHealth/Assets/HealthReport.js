@@ -1,4 +1,4 @@
-        Chart.pluginService.register({
+Chart.pluginService.register({
             afterUpdate: function (chart) {
                 if (chart.config.options.elements.center) {
                     var helpers = Chart.helpers;
