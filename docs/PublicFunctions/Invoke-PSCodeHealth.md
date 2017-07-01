@@ -5,9 +5,16 @@ Gets quality and maintainability metrics for PowerShell code contained in script
 
 ## SYNTAX
 
+### Default (Default)
 ```
 Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <PSObject>] [-Recurse]
  [-Exclude <String[]>]
+```
+
+### HtmlReport
+```
+Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <PSObject>] [-Recurse]
+ [-Exclude <String[]>] -HtmlReportPath <String> [-PassThru]
 ```
 
 ## DESCRIPTION
@@ -38,6 +45,15 @@ Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModul
 Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories, except for files containing "example" in their name.
  
 This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\, and any subdirectories.
+
+### -------------------------- EXAMPLE 3 --------------------------
+```
+Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -HtmlReportPath .\Report.html -PassThru
+```
+
+Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\.
+ 
+This command will create an HTML report (Report.html) in the current directory and a PSCodeHealth.Overall.HealthReport object to the pipeline.
 
 ## PARAMETERS
 
@@ -127,6 +143,40 @@ Aliases:
 Required: False
 Position: Named
 Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -HtmlReportPath
+To instruct Invoke-PSCodeHealth to generate an HTML report, and specify the path where the HTML file should be saved.
+ 
+The path must include the folder path (which has to exist) and the file name.
+
+```yaml
+Type: String
+Parameter Sets: HtmlReport
+Aliases: 
+
+Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -PassThru
+When the parameter HtmlReportPath is used, by default, Invoke-PSCodeHealth doesn't output a \[PSCodeHealth.Overall.HealthReport\] object to the pipeline.
+ 
+The PassThru parameter allows to instruct Invoke-PSCodeHealth to output both an HTML report file and a \[PSCodeHealth.Overall.HealthReport\] object.
+
+```yaml
+Type: SwitchParameter
+Parameter Sets: HtmlReport
+Aliases: 
+
+Required: False
+Position: Named
+Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
