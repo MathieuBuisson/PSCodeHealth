@@ -183,6 +183,8 @@ Function Invoke-PSCodeHealth {
         }
         $JsContent = Set-PSCodeHealthPlaceholdersValue -TemplatePath "$PSScriptRoot\..\Assets\HealthReport.js" -PlaceholdersData $JsPlaceholders
 
+        $TableData = New-PSCodeHealthTableData -HealthReport $HealthReport
+
         $HtmlPlaceholders = @{
             REPORT_TITLE = $HealthReport.ReportTitle
             CSS_CONTENT = Get-Content -Path "$PSScriptRoot\..\Assets\HealthReport.css"
@@ -197,25 +199,25 @@ Function Invoke-PSCodeHealth {
             SCRIPTANALYZER_TOTAL = $HealthReport.ScriptAnalyzerFindingsTotal
             SCRIPTANALYZER_AVERAGE = $HealthReport.ScriptAnalyzerFindingsAverage
             FUNCTIONS_WITHOUT_HELP = $HealthReport.FunctionsWithoutHelp
-            BEST_PRACTICES_TABLE_ROWS = ''
+            BEST_PRACTICES_TABLE_ROWS = $TableData.BestPracticesRows
             COMPLEXITY_HIGHEST = $HealthReport.ComplexityHighest
             NESTING_DEPTH_HIGHEST = $HealthReport.NestingDepthHighest
             LINES_OF_CODE_AVERAGE = $HealthReport.LinesOfCodeAverage
             COMPLEXITY_AVERAGE = $HealthReport.ComplexityAverage
             NESTING_DEPTH_AVERAGE = $HealthReport.NestingDepthAverage
-            MAINTAINABILITY_TABLE_ROWS = ''
+            MAINTAINABILITY_TABLE_ROWS = $TableData.MaintainabilityRows
             NUMBER_OF_TESTS = $HealthReport.NumberOfTests
             NUMBER_OF_FAILED_TESTS = $HealthReport.NumberOfFailedTests
             NUMBER_OF_PASSED_TESTS = $HealthReport.NumberOfPassedTests
             COMMANDS_MISSED = $HealthReport.CommandsMissedTotal
-            FAILED_TESTS_TABLE_ROWS = ''
-            COVERAGE_TABLE_ROWS = ''
+            FAILED_TESTS_TABLE_ROWS = $TableData.FailedTestsRows
+            COVERAGE_TABLE_ROWS = $TableData.CoverageRows
             JS_CONTENT = $JsContent
         }
         $HtmlContent = Set-PSCodeHealthPlaceholdersValue -TemplatePath "$PSScriptRoot\..\Assets\HealthReport.html" -PlaceholdersData $HtmlPlaceholders
 
         $Null = New-Item -Path $HtmlReportPath -ItemType File -Force
-        Set-Content -Path $HtmlReportPath -Value $HtmlContent -Encoding UTF8
+        Set-Content -Path $HtmlReportPath -Value $HtmlContent
         If ( $PassThru ) {
             return $HealthReport
         }

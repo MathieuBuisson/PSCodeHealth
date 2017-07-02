@@ -278,10 +278,8 @@ Describe 'Invoke-PSCodeHealth (again)' {
         }
         Context 'The HtmlReportPath parameter is specified but not PassThru' {
 
-            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
             $HealthReportParams = @{
                 Path = "$TestDrive\2PublicFunctions.psm1"
-                TestsResult = $PesterResult
                 HtmlReportPath = "$TestDrive\Report.html"
             }
             $Result = Invoke-PSCodeHealth @HealthReportParams
@@ -298,10 +296,8 @@ Describe 'Invoke-PSCodeHealth (again)' {
         }
         Context 'The HtmlReportPath and PassThru parameters are both specified' {
 
-            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
             $HealthReportParams = @{
                 Path = "$TestDrive\2PublicFunctions.psm1"
-                TestsResult = $PesterResult
                 HtmlReportPath = "$TestDrive\Report2.html"
                 PassThru = $True
             }
@@ -320,10 +316,8 @@ Describe 'Invoke-PSCodeHealth (again)' {
         }
         Context 'The PassThru parameter is specified but not HtmlReportPath' {
 
-            $PesterResult = $Mocks.'Invoke-Pester'.'NumberOfTests' | Where-Object { $_ }
             $HealthReportParams = @{
                 Path = "$TestDrive\2PublicFunctions.psm1"
-                TestsResult = $PesterResult
                 HtmlReportPath = $Null
                 PassThru = $True
             }
