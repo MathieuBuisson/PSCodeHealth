@@ -24,6 +24,7 @@ pages:
     - New-PSCodeHealthComplianceRule: InternalFunctions/New-PSCodeHealthComplianceRule.md
     - New-PSCodeHealthReport: InternalFunctions/New-PSCodeHealthReport.md
     - New-PSCodeHealthHtmlReport: InternalFunctions/New-PSCodeHealthHtmlReport.md
+    - New-PSCodeHealthTableData: InternalFunctions/New-PSCodeHealthTableData.md
     - Set-PSCodeHealthPlaceholdersValue: InternalFunctions/Set-PSCodeHealthPlaceholdersValue.md
     - Get-FunctionDefinition: InternalFunctions/Get-FunctionDefinition.md
     - Get-FunctionLinesOfCode: InternalFunctions/Get-FunctionLinesOfCode.md
