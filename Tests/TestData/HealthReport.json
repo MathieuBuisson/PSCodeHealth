@@ -1,0 +1,344 @@
+{
+    "ReportTitle":  "Coveralls.ps1",
+    "ReportDate":  "2017-07-02 21:29:27Z",
+    "AnalyzedPath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+    "Files":  1,
+    "Functions":  9,
+    "LinesOfCodeTotal":  204,
+    "LinesOfCodeAverage":  22.67,
+    "ScriptAnalyzerFindingsTotal":  4,
+    "ScriptAnalyzerErrors":  1,
+    "ScriptAnalyzerWarnings":  3,
+    "ScriptAnalyzerInformation":  0,
+    "ScriptAnalyzerFindingsAverage":  0.44,
+    "FunctionsWithoutHelp":  9,
+    "NumberOfTests":  13,
+    "NumberOfFailedTests":  2,
+    "FailedTestsDetails":  [
+                               {
+                                   "File":  "Coveralls.Tests.ps1",
+                                   "Line":  "97",
+                                   "Describe":  "Get-CoverageArray",
+                                   "TestName":  "Should return 2 objects with the value 1",
+                                   "ErrorMessage":  "Expected: {2}\nBut was:  {0}"
+                               },
+                               {
+                                   "File":  "Coveralls.Tests.ps1",
+                                   "Line":  "100",
+                                   "Describe":  "Get-CoverageArray",
+                                   "TestName":  "Should return 0 objects with the value 0",
+                                   "ErrorMessage":  "Expected: value to be empty but it was {1}"
+                               }
+                           ],
+    "NumberOfPassedTests":  11,
+    "TestsPassRate":  84.62,
+    "TestCoverage":  40.4,
+    "CommandsMissedTotal":  59,
+    "ComplexityAverage":  2,
+    "ComplexityHighest":  5,
+    "NestingDepthAverage":  1.11,
+    "NestingDepthHighest":  3,
+    "FunctionHealthRecords":  [
+                                  {
+                                      "FunctionName":  "Add-CoverageInfo",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  14,
+                                      "ScriptAnalyzerFindings":  0,
+                                      "ScriptAnalyzerResultDetails":  {
+
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  0,
+                                      "CommandsMissed":  3,
+                                      "Complexity":  1,
+                                      "MaximumNestingDepth":  1
+                                  },
+                                  {
+                                      "FunctionName":  "Merge-CoverageResult",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  21,
+                                      "ScriptAnalyzerFindings":  0,
+                                      "ScriptAnalyzerResultDetails":  {
+
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  0,
+                                      "CommandsMissed":  6,
+                                      "Complexity":  1,
+                                      "MaximumNestingDepth":  0
+                                  },
+                                  {
+                                      "FunctionName":  "Get-CoverageArray",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  31,
+                                      "ScriptAnalyzerFindings":  2,
+                                      "ScriptAnalyzerResultDetails":  [
+                                                                          {
+                                                                              "Message":  "Script definition uses ConvertTo-SecureString with plaintext. This will expose secure information. Encrypted standard strings should be used instead.",
+                                                                              "Extent":  {
+                                                                                             "File":  null,
+                                                                                             "StartScriptPosition":  {
+                                                                                                                         "File":  null,
+                                                                                                                         "LineNumber":  11,
+                                                                                                                         "ColumnNumber":  23,
+                                                                                                                         "Line":  "    $SecurePassword = ConvertTo-SecureString \u0027Passw0rdForTesting\u0027 -AsPlainText -Force\r\n",
+                                                                                                                         "Offset":  250
+                                                                                                                     },
+                                                                                             "EndScriptPosition":  {
+                                                                                                                       "File":  null,
+                                                                                                                       "LineNumber":  11,
+                                                                                                                       "ColumnNumber":  86,
+                                                                                                                       "Line":  "    $SecurePassword = ConvertTo-SecureString \u0027Passw0rdForTesting\u0027 -AsPlainText -Force\r\n",
+                                                                                                                       "Offset":  313
+                                                                                                                   },
+                                                                                             "StartLineNumber":  11,
+                                                                                             "StartColumnNumber":  23,
+                                                                                             "EndLineNumber":  11,
+                                                                                             "EndColumnNumber":  86,
+                                                                                             "Text":  "ConvertTo-SecureString \u0027Passw0rdForTesting\u0027 -AsPlainText -Force",
+                                                                                             "StartOffset":  250,
+                                                                                             "EndOffset":  313
+                                                                                         },
+                                                                              "RuleName":  "PSAvoidUsingConvertToSecureStringWithPlainText",
+                                                                              "Severity":  2,
+                                                                              "ScriptName":  "",
+                                                                              "ScriptPath":  "",
+                                                                              "RuleSuppressionID":  "ConvertTo-SecureString",
+                                                                              "SuggestedCorrections":  null,
+                                                                              "Line":  11,
+                                                                              "Column":  23
+                                                                          },
+                                                                          {
+                                                                              "Message":  "The variable \u0027SecurePassword\u0027 is assigned but never used.",
+                                                                              "Extent":  {
+                                                                                             "File":  null,
+                                                                                             "StartScriptPosition":  {
+                                                                                                                         "File":  null,
+                                                                                                                         "LineNumber":  11,
+                                                                                                                         "ColumnNumber":  5,
+                                                                                                                         "Line":  "    $SecurePassword = ConvertTo-SecureString \u0027Passw0rdForTesting\u0027 -AsPlainText -Force\r\n",
+                                                                                                                         "Offset":  232
+                                                                                                                     },
+                                                                                             "EndScriptPosition":  {
+                                                                                                                       "File":  null,
+                                                                                                                       "LineNumber":  11,
+                                                                                                                       "ColumnNumber":  20,
+                                                                                                                       "Line":  "    $SecurePassword = ConvertTo-SecureString \u0027Passw0rdForTesting\u0027 -AsPlainText -Force\r\n",
+                                                                                                                       "Offset":  247
+                                                                                                                   },
+                                                                                             "StartLineNumber":  11,
+                                                                                             "StartColumnNumber":  5,
+                                                                                             "EndLineNumber":  11,
+                                                                                             "EndColumnNumber":  20,
+                                                                                             "Text":  "$SecurePassword",
+                                                                                             "StartOffset":  232,
+                                                                                             "EndOffset":  247
+                                                                                         },
+                                                                              "RuleName":  "PSUseDeclaredVarsMoreThanAssignments",
+                                                                              "Severity":  1,
+                                                                              "ScriptName":  "",
+                                                                              "ScriptPath":  "",
+                                                                              "RuleSuppressionID":  "SecurePassword",
+                                                                              "SuggestedCorrections":  null,
+                                                                              "Line":  11,
+                                                                              "Column":  5
+                                                                          }
+                                                                      ],
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  94.74,
+                                      "CommandsMissed":  1,
+                                      "Complexity":  5,
+                                      "MaximumNestingDepth":  3
+                                  },
+                                  {
+                                      "FunctionName":  "Format-FileCoverage",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  24,
+                                      "ScriptAnalyzerFindings":  0,
+                                      "ScriptAnalyzerResultDetails":  {
+
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  100,
+                                      "CommandsMissed":  0,
+                                      "Complexity":  2,
+                                      "MaximumNestingDepth":  1
+                                  },
+                                  {
+                                      "FunctionName":  "Get-CommandsForFile",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  16,
+                                      "ScriptAnalyzerFindings":  0,
+                                      "ScriptAnalyzerResultDetails":  {
+
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  100,
+                                      "CommandsMissed":  0,
+                                      "Complexity":  1,
+                                      "MaximumNestingDepth":  1
+                                  },
+                                  {
+                                      "FunctionName":  "Get-GitInfo",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  24,
+                                      "ScriptAnalyzerFindings":  1,
+                                      "ScriptAnalyzerResultDetails":  {
+                                                                          "Message":  "\u0027cd\u0027 is an alias of \u0027Set-Location\u0027. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.",
+                                                                          "Extent":  {
+                                                                                         "File":  null,
+                                                                                         "StartScriptPosition":  {
+                                                                                                                     "File":  null,
+                                                                                                                     "LineNumber":  8,
+                                                                                                                     "ColumnNumber":  5,
+                                                                                                                     "Line":  "    cd .\r\n",
+                                                                                                                     "Offset":  111
+                                                                                                                 },
+                                                                                         "EndScriptPosition":  {
+                                                                                                                   "File":  null,
+                                                                                                                   "LineNumber":  8,
+                                                                                                                   "ColumnNumber":  7,
+                                                                                                                   "Line":  "    cd .\r\n",
+                                                                                                                   "Offset":  113
+                                                                                                               },
+                                                                                         "StartLineNumber":  8,
+                                                                                         "StartColumnNumber":  5,
+                                                                                         "EndLineNumber":  8,
+                                                                                         "EndColumnNumber":  7,
+                                                                                         "Text":  "cd",
+                                                                                         "StartOffset":  111,
+                                                                                         "EndOffset":  113
+                                                                                     },
+                                                                          "RuleName":  "PSAvoidUsingCmdletAliases",
+                                                                          "Severity":  1,
+                                                                          "ScriptName":  "",
+                                                                          "ScriptPath":  "",
+                                                                          "RuleSuppressionID":  "cd",
+                                                                          "SuggestedCorrections":  [
+                                                                                                       {
+                                                                                                           "File":  null,
+                                                                                                           "Description":  "Replace cd with Set-Location",
+                                                                                                           "StartLineNumber":  8,
+                                                                                                           "StartColumnNumber":  5,
+                                                                                                           "EndLineNumber":  8,
+                                                                                                           "EndColumnNumber":  7,
+                                                                                                           "Text":  "Set-Location",
+                                                                                                           "Lines":  [
+                                                                                                                         "Set-Location"
+                                                                                                                     ],
+                                                                                                           "Start":  {
+                                                                                                                         "Line":  8,
+                                                                                                                         "Column":  5
+                                                                                                                     },
+                                                                                                           "End":  {
+                                                                                                                       "Line":  8,
+                                                                                                                       "Column":  7
+                                                                                                                   }
+                                                                                                       }
+                                                                                                   ],
+                                                                          "Line":  8,
+                                                                          "Column":  5
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  0,
+                                      "CommandsMissed":  19,
+                                      "Complexity":  2,
+                                      "MaximumNestingDepth":  2
+                                  },
+                                  {
+                                      "FunctionName":  "Format-Coverage",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  39,
+                                      "ScriptAnalyzerFindings":  0,
+                                      "ScriptAnalyzerResultDetails":  {
+
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  0,
+                                      "CommandsMissed":  20,
+                                      "Complexity":  3,
+                                      "MaximumNestingDepth":  1
+                                  },
+                                  {
+                                      "FunctionName":  "Publish-Coverage",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  18,
+                                      "ScriptAnalyzerFindings":  0,
+                                      "ScriptAnalyzerResultDetails":  {
+
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  0,
+                                      "CommandsMissed":  10,
+                                      "Complexity":  1,
+                                      "MaximumNestingDepth":  0
+                                  },
+                                  {
+                                      "FunctionName":  "Get-CoveragePercentage",
+                                      "FilePath":  "C:\\GitHub\\PSCodeHealth\\Tests\\TestData\\coveralls\\Coveralls.ps1",
+                                      "LinesOfCode":  17,
+                                      "ScriptAnalyzerFindings":  1,
+                                      "ScriptAnalyzerResultDetails":  {
+                                                                          "Message":  "\u0027cd\u0027 is an alias of \u0027Set-Location\u0027. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.",
+                                                                          "Extent":  {
+                                                                                         "File":  null,
+                                                                                         "StartScriptPosition":  {
+                                                                                                                     "File":  null,
+                                                                                                                     "LineNumber":  9,
+                                                                                                                     "ColumnNumber":  5,
+                                                                                                                     "Line":  "    cd .\r\n",
+                                                                                                                     "Offset":  165
+                                                                                                                 },
+                                                                                         "EndScriptPosition":  {
+                                                                                                                   "File":  null,
+                                                                                                                   "LineNumber":  9,
+                                                                                                                   "ColumnNumber":  7,
+                                                                                                                   "Line":  "    cd .\r\n",
+                                                                                                                   "Offset":  167
+                                                                                                               },
+                                                                                         "StartLineNumber":  9,
+                                                                                         "StartColumnNumber":  5,
+                                                                                         "EndLineNumber":  9,
+                                                                                         "EndColumnNumber":  7,
+                                                                                         "Text":  "cd",
+                                                                                         "StartOffset":  165,
+                                                                                         "EndOffset":  167
+                                                                                     },
+                                                                          "RuleName":  "PSAvoidUsingCmdletAliases",
+                                                                          "Severity":  1,
+                                                                          "ScriptName":  "",
+                                                                          "ScriptPath":  "",
+                                                                          "RuleSuppressionID":  "cd",
+                                                                          "SuggestedCorrections":  [
+                                                                                                       {
+                                                                                                           "File":  null,
+                                                                                                           "Description":  "Replace cd with Set-Location",
+                                                                                                           "StartLineNumber":  9,
+                                                                                                           "StartColumnNumber":  5,
+                                                                                                           "EndLineNumber":  9,
+                                                                                                           "EndColumnNumber":  7,
+                                                                                                           "Text":  "Set-Location",
+                                                                                                           "Lines":  [
+                                                                                                                         "Set-Location"
+                                                                                                                     ],
+                                                                                                           "Start":  {
+                                                                                                                         "Line":  9,
+                                                                                                                         "Column":  5
+                                                                                                                     },
+                                                                                                           "End":  {
+                                                                                                                       "Line":  9,
+                                                                                                                       "Column":  7
+                                                                                                                   }
+                                                                                                       }
+                                                                                                   ],
+                                                                          "Line":  9,
+                                                                          "Column":  5
+                                                                      },
+                                      "ContainsHelp":  false,
+                                      "TestCoverage":  100,
+                                      "CommandsMissed":  0,
+                                      "Complexity":  2,
+                                      "MaximumNestingDepth":  1
+                                  }
+                              ]
+}
