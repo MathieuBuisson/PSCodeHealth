@@ -34,6 +34,10 @@ Function Test-PSCodeHealthCompliance {
     There is a large number of metrics, so for convenience, all the possible values are available via tab completion.
     If not specified, compliance is evaluated for all metrics.
 
+.PARAMETER Function
+    To get compliance results for a specific function.  
+    This is a dynamic parameter which is available when the specified HealthReport contains at least 1 FunctionHealthRecords.  
+
 .PARAMETER Summary
     To output a single overall compliance result based on all the evaluated metrics.  
     This retains the worst compliance level, meaning :  
@@ -62,6 +66,12 @@ Function Test-PSCodeHealthCompliance {
 
     Evaluates the compliance results only for the TestCoverage, Complexity and MaximumNestingDepth metrics.  
     In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this evaluates the compliance result for the TestCoverage metric from both groups.  
+
+.EXAMPLE
+    PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -Function 'Get-Something'
+
+    Evaluates the compliance results specifically for the function Get-Something. Because this is the compliance of a specific function, only the per function metrics are evaluated.  
+    If the value of the Function parameter doesn't match any function name in the HealthReport the parameter validation will fail and state the set of possible values.  
 
 .EXAMPLE
     PS C:\> Invoke-PSCodeHealth | Test-PSCodeHealthCompliance -Summary
@@ -99,84 +109,117 @@ Function Test-PSCodeHealthCompliance {
         [switch]$Summary
     )
 
-    # First, we get the compliance rules for the specified metrics group and/or metric name(s) we are interested in
-    $Null = $PSBoundParameters.Remove('HealthReport')
-    If ( $PSBoundParameters.ContainsKey('Summary') ) {
-        $Null = $PSBoundParameters.Remove('Summary')
+    DynamicParam {
+        # The Function parameter is dynamic because the set of possible values depends on the FunctionHealthRecords contained in the specified HealthReport.
+        If ( $HealthReport.FunctionHealthRecords.Count -gt 0 ) {
+            
+            $ParameterName = 'Function'            
+            # Creating a parameter dictionary 
+            $RuntimeParameterDictionary = New-Object -TypeName System.Management.Automation.RuntimeDefinedParameterDictionary
+
+            $AttributeCollection = New-Object -TypeName System.Collections.ObjectModel.Collection[System.Attribute]            
+            $ValidationScriptAttribute = New-Object -TypeName System.Management.Automation.ParameterAttribute
+            $ValidationScriptAttribute.Mandatory = $False
+            $AttributeCollection.Add($ValidationScriptAttribute)
+            # Generating dynamic values for a ValidateSet
+            $SetValues = $HealthReport.FunctionHealthRecords.FunctionName
+            $ValidateSetAttribute = New-Object -TypeName System.Management.Automation.ValidateSetAttribute($SetValues)
+            # Adding the ValidateSet to the attributes collection
+            $AttributeCollection.Add($ValidateSetAttribute)
+            $RuntimeParameter = New-Object -TypeName System.Management.Automation.RuntimeDefinedParameter($ParameterName, [string], $AttributeCollection)
+            $RuntimeParameterDictionary.Add($ParameterName, $RuntimeParameter)
+            return $RuntimeParameterDictionary
+        }
     }
-    [System.Collections.ArrayList]$ComplianceResults = @()
-    $ComplianceRules = Get-PSCodeHealthComplianceRule @PSBoundParameters
-    Write-VerboseOutput "Evaluating the specified health report against $($ComplianceRules.Count) compliance rules."
+    
+    Begin {
+        If ( $RuntimeParameterDictionary ) { $Function = $RuntimeParameterDictionary[$ParameterName].Value }
+        $Null = $PSBoundParameters.Remove('HealthReport')
+        If ( $PSBoundParameters.ContainsKey('Summary') ) {
+            $Null = $PSBoundParameters.Remove('Summary')
+        }
+        If ( $PSBoundParameters.ContainsKey('Function') ) {
+            $Null = $PSBoundParameters.Remove('Function')
+        }        
+        [System.Collections.ArrayList]$ComplianceResults = @()
+        $ComplianceRules = Get-PSCodeHealthComplianceRule @PSBoundParameters
+        Write-VerboseOutput "Evaluating the specified health report against $($ComplianceRules.Count) compliance rules."
+    }
 
-    # Now, we evaluate the values from the PSCodeHealth report against our compliance rules
-    Foreach ( $ComplianceRule in $ComplianceRules ) {
-        If ( $ComplianceRule.SettingsGroup -eq 'PerFunctionMetrics' ) {
+    Process {
+        $FunctionHealthRecords = If ($Function) {$HealthReport.FunctionHealthRecords | Where-Object FunctionName -eq $Function} Else {$HealthReport.FunctionHealthRecords}
 
-            $MetricsFromReport = $HealthReport.FunctionHealthRecords.$($ComplianceRule.MetricName)
-            If ( $MetricsFromReport ) {
-                If ( $ComplianceRule.HigherIsBetter ) {
-                    # We always retain the worst value of all the analyzed functions
-                    $RetainedValue = ($MetricsFromReport | Measure-Object -Minimum).Minimum
-                    Write-VerboseOutput "Retained value for $($ComplianceRule.MetricName) : $($RetainedValue)"
+        Foreach ( $ComplianceRule in $ComplianceRules ) {
+            If ( $ComplianceRule.SettingsGroup -eq 'PerFunctionMetrics' ) {
 
-                    Switch ($RetainedValue) {
-                        { $_ -lt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
-                        { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
-                        Default { $ComplianceResult = 'Pass' }
+                $MetricsFromReport = $FunctionHealthRecords.$($ComplianceRule.MetricName)
+                If ( $MetricsFromReport -ne $Null ) {
+                    If ( $ComplianceRule.HigherIsBetter ) {
+                        # We always retain the worst value of all the analyzed functions
+                        $RetainedValue = ($MetricsFromReport | Measure-Object -Minimum).Minimum
+                        Write-VerboseOutput "Retained value for $($ComplianceRule.MetricName) : $($RetainedValue)"
+
+                        Switch ($RetainedValue) {
+                            { $_ -lt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                            { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                            Default { $ComplianceResult = 'Pass' }
+                        }
+                        $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                        $Null = $ComplianceResults.Add($ComplianceResultObj)
                     }
-                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
-                    $Null = $ComplianceResults.Add($ComplianceResultObj)
+                    Else {
+                        # We always retain the worst value of all the analyzed functions
+                        $RetainedValue = ($MetricsFromReport | Measure-Object -Maximum).Maximum
+                        Write-VerboseOutput "Retained value for $($ComplianceRule.MetricName) : $($RetainedValue)"
+
+                        Switch ($RetainedValue) {
+                            { $_ -gt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                            { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                            Default { $ComplianceResult = 'Pass' }
+                        }
+                        $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+                        $Null = $ComplianceResults.Add($ComplianceResultObj)
+                    }
                 }
-                Else {
-                    # We always retain the worst value of all the analyzed functions
-                    $RetainedValue = ($MetricsFromReport | Measure-Object -Maximum).Maximum
-                    Write-VerboseOutput "Retained value for $($ComplianceRule.MetricName) : $($RetainedValue)"
+            }
+            ElseIf ( $ComplianceRule.SettingsGroup -eq 'OverallMetrics' -and -not($Function) ) {
+                $MetricFromReport = $HealthReport.$($ComplianceRule.MetricName)
+                If ( $MetricFromReport -or $MetricFromReport -eq 0 ) {
+                    If ( $ComplianceRule.HigherIsBetter ) {
 
-                    Switch ($RetainedValue) {
-                        { $_ -gt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
-                        { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
-                        Default { $ComplianceResult = 'Pass' }
+                        Switch ($MetricFromReport) {
+                            { $_ -lt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                            { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                            Default { $ComplianceResult = 'Pass' }
+                        }
+                        $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                        $Null = $ComplianceResults.Add($ComplianceResultObj)
                     }
-                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
-                    $Null = $ComplianceResults.Add($ComplianceResultObj)
+                    Else {
+
+                        Switch ($MetricFromReport) {
+                            { $_ -gt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
+                            { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
+                            Default { $ComplianceResult = 'Pass' }
+                        }
+                        $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
+                        $Null = $ComplianceResults.Add($ComplianceResultObj)
+                    }
                 }
             }
         }
-        Else { # If the compliance rule is for an overall metric
+    }
 
-            $MetricFromReport = $HealthReport.$($ComplianceRule.MetricName)
-            If ( $MetricFromReport -or $MetricFromReport -eq 0 ) {
-                If ( $ComplianceRule.HigherIsBetter ) {
-
-                    Switch ($MetricFromReport) {
-                        { $_ -lt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
-                        { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
-                        Default { $ComplianceResult = 'Pass' }
-                    }
-                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
-                    $Null = $ComplianceResults.Add($ComplianceResultObj)
-                }
-                Else {
-
-                    Switch ($MetricFromReport) {
-                        { $_ -gt $ComplianceRule.FailThreshold } { $ComplianceResult = 'Fail'; break}
-                        { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
-                        Default { $ComplianceResult = 'Pass' }
-                    }
-                    $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $MetricFromReport -Result $ComplianceResult
-                    $Null = $ComplianceResults.Add($ComplianceResultObj)
-                }
+    End {
+        If ( $Summary ) {
+            If ( $ComplianceResults.Result -contains 'Fail') {
+                return 'Fail'
             }
+            If ( $ComplianceResults.Result -contains 'Warning') {
+                return 'Warning'
+            }
+            return 'Pass'
         }
+        return $ComplianceResults
     }
-    If ( $Summary ) {
-        If ( $ComplianceResults.Result -contains 'Fail') {
-            return 'Fail'
-        }
-        If ( $ComplianceResults.Result -contains 'Warning') {
-            return 'Warning'
-        }
-        return 'Pass'
-    }
-    return $ComplianceResults
 }
