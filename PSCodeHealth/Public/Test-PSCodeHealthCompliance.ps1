@@ -153,7 +153,7 @@ Function Test-PSCodeHealthCompliance {
             If ( $ComplianceRule.SettingsGroup -eq 'PerFunctionMetrics' ) {
 
                 $MetricsFromReport = $FunctionHealthRecords.$($ComplianceRule.MetricName)
-                If ( $MetricsFromReport -ne $Null ) {
+                If ( $Null -ne $MetricsFromReport ) {
                     If ( $ComplianceRule.HigherIsBetter ) {
                         # We always retain the worst value of all the analyzed functions
                         $RetainedValue = ($MetricsFromReport | Measure-Object -Minimum).Minimum
