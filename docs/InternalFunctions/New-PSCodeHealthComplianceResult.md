@@ -7,6 +7,7 @@ Creates a new custom object and gives it the TypeName : 'PSCodeHealth.Compliance
 
 ```
 New-PSCodeHealthComplianceResult [-ComplianceRule] <PSObject> [-Value] <PSObject> [-Result] <String>
+ [[-FunctionName] <String>]
 ```
 
 ## DESCRIPTION
@@ -20,6 +21,13 @@ New-PSCodeHealthComplianceResult -ComplianceRule $Rule -Value 81.26 -Result Warn
 ```
 
 Returns new custom object of the type PSCodeHealth.Compliance.Result.
+
+### -------------------------- EXAMPLE 2 --------------------------
+```
+New-PSCodeHealthComplianceResult -ComplianceRule $Rule -Value 81.26 -Result Warning -FunctionName 'Get-Something'
+```
+
+Returns new custom object of the type PSCodeHealth.Compliance.FunctionResult for the function 'Get-Something'.
 
 ## PARAMETERS
 
@@ -68,11 +76,28 @@ Accept pipeline input: False
 Accept wildcard characters: False
 ```
 
+### -FunctionName
+To get compliance results for a specific function.
+ 
+If this parameter is specified, this creates a PSCodeHealth.Compliance.FunctionResult object, instead of PSCodeHealth.Compliance.Result.
+
+```yaml
+Type: String
+Parameter Sets: (All)
+Aliases: 
+
+Required: False
+Position: 4
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
 ## INPUTS
 
 ## OUTPUTS
 
-### PSCodeHealth.Compliance.Result
+### PSCodeHealth.Compliance.Result, PSCodeHealth.Compliance.FunctionResult
 
 ## NOTES
 

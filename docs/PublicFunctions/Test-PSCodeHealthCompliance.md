@@ -62,13 +62,13 @@ In the case of TestCoverage, this metric exists in both PerFunctionMetrics and O
 
 ### -------------------------- EXAMPLE 5 --------------------------
 ```
-Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -Function 'Get-Something'
+Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -FunctionName 'Get-Something'
 ```
 
 Evaluates the compliance results specifically for the function Get-Something.
 Because this is the compliance of a specific function, only the per function metrics are evaluated.
  
-If the value of the Function parameter doesn't match any function name in the HealthReport the parameter validation will fail and state the set of possible values.
+If the value of the FunctionName parameter doesn't match any function name in the HealthReport the parameter validation will fail and state the set of possible values.
 
 ### -------------------------- EXAMPLE 6 --------------------------
 ```
@@ -177,7 +177,7 @@ Accept wildcard characters: False
 
 ## OUTPUTS
 
-### PSCodeHealth.Compliance.Result, System.String
+### PSCodeHealth.Compliance.Result, PSCodeHealth.Compliance.FunctionResult, System.String
 
 ## NOTES
 
