@@ -34,7 +34,7 @@ Function Test-PSCodeHealthCompliance {
     There is a large number of metrics, so for convenience, all the possible values are available via tab completion.
     If not specified, compliance is evaluated for all metrics.
 
-.PARAMETER Function
+.PARAMETER FunctionName
     To get compliance results for a specific function.  
     This is a dynamic parameter which is available when the specified HealthReport contains at least 1 FunctionHealthRecords.  
 
@@ -68,10 +68,10 @@ Function Test-PSCodeHealthCompliance {
     In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this evaluates the compliance result for the TestCoverage metric from both groups.  
 
 .EXAMPLE
-    PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -Function 'Get-Something'
+    PS C:\> Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -FunctionName 'Get-Something'
 
     Evaluates the compliance results specifically for the function Get-Something. Because this is the compliance of a specific function, only the per function metrics are evaluated.  
-    If the value of the Function parameter doesn't match any function name in the HealthReport the parameter validation will fail and state the set of possible values.  
+    If the value of the FunctionName parameter doesn't match any function name in the HealthReport the parameter validation will fail and state the set of possible values.  
 
 .EXAMPLE
     PS C:\> Invoke-PSCodeHealth | Test-PSCodeHealthCompliance -Summary
@@ -81,7 +81,7 @@ Function Test-PSCodeHealthCompliance {
 
 
 .OUTPUTS
-    PSCodeHealth.Compliance.Result, System.String
+    PSCodeHealth.Compliance.Result, PSCodeHealth.Compliance.FunctionResult, System.String
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject[]], [string])]
@@ -110,10 +110,10 @@ Function Test-PSCodeHealthCompliance {
     )
 
     DynamicParam {
-        # The Function parameter is dynamic because the set of possible values depends on the FunctionHealthRecords contained in the specified HealthReport.
+        # The FunctionName parameter is dynamic because the set of possible values depends on the FunctionHealthRecords contained in the specified HealthReport.
         If ( $HealthReport.FunctionHealthRecords.Count -gt 0 ) {
             
-            $ParameterName = 'Function'            
+            $ParameterName = 'FunctionName'            
             # Creating a parameter dictionary 
             $RuntimeParameterDictionary = New-Object -TypeName System.Management.Automation.RuntimeDefinedParameterDictionary
 
@@ -133,13 +133,13 @@ Function Test-PSCodeHealthCompliance {
     }
     
     Begin {
-        If ( $RuntimeParameterDictionary ) { $Function = $RuntimeParameterDictionary[$ParameterName].Value }
+        If ( $RuntimeParameterDictionary ) { $FunctionName = $RuntimeParameterDictionary[$ParameterName].Value }
         $Null = $PSBoundParameters.Remove('HealthReport')
         If ( $PSBoundParameters.ContainsKey('Summary') ) {
             $Null = $PSBoundParameters.Remove('Summary')
         }
-        If ( $PSBoundParameters.ContainsKey('Function') ) {
-            $Null = $PSBoundParameters.Remove('Function')
+        If ( $PSBoundParameters.ContainsKey('FunctionName') ) {
+            $Null = $PSBoundParameters.Remove('FunctionName')
         }        
         [System.Collections.ArrayList]$ComplianceResults = @()
         $ComplianceRules = Get-PSCodeHealthComplianceRule @PSBoundParameters
@@ -147,7 +147,7 @@ Function Test-PSCodeHealthCompliance {
     }
 
     Process {
-        $FunctionHealthRecords = If ($Function) {$HealthReport.FunctionHealthRecords | Where-Object FunctionName -eq $Function} Else {$HealthReport.FunctionHealthRecords}
+        $FunctionHealthRecords = If ($FunctionName) {$HealthReport.FunctionHealthRecords | Where-Object FunctionName -eq $FunctionName} Else {$HealthReport.FunctionHealthRecords}
 
         Foreach ( $ComplianceRule in $ComplianceRules ) {
             If ( $ComplianceRule.SettingsGroup -eq 'PerFunctionMetrics' ) {
@@ -164,7 +164,18 @@ Function Test-PSCodeHealthCompliance {
                             { $_ -lt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
                             Default { $ComplianceResult = 'Pass' }
                         }
-                        $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+
+                        $ResultParams = @{
+                            ComplianceRule = $ComplianceRule
+                            Value = $RetainedValue
+                            Result = $ComplianceResult
+                        }
+                        If ( $FunctionName ) {
+                            $ComplianceResultObj = New-PSCodeHealthComplianceResult @ResultParams -FunctionName $FunctionName
+                        }
+                        Else {
+                            $ComplianceResultObj = New-PSCodeHealthComplianceResult @ResultParams
+                        }
                         $Null = $ComplianceResults.Add($ComplianceResultObj)
                     }
                     Else {
@@ -177,12 +188,23 @@ Function Test-PSCodeHealthCompliance {
                             { $_ -gt $ComplianceRule.WarningThreshold } { $ComplianceResult = 'Warning'; break}
                             Default { $ComplianceResult = 'Pass' }
                         }
-                        $ComplianceResultObj = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value $RetainedValue -Result $ComplianceResult
+
+                        $ResultParams = @{
+                            ComplianceRule = $ComplianceRule
+                            Value = $RetainedValue
+                            Result = $ComplianceResult
+                        }
+                        If ( $FunctionName ) {
+                            $ComplianceResultObj = New-PSCodeHealthComplianceResult @ResultParams -FunctionName $FunctionName
+                        }
+                        Else {
+                            $ComplianceResultObj = New-PSCodeHealthComplianceResult @ResultParams
+                        }
                         $Null = $ComplianceResults.Add($ComplianceResultObj)
                     }
                 }
             }
-            ElseIf ( $ComplianceRule.SettingsGroup -eq 'OverallMetrics' -and -not($Function) ) {
+            ElseIf ( $ComplianceRule.SettingsGroup -eq 'OverallMetrics' -and -not($FunctionName) ) {
                 $MetricFromReport = $HealthReport.$($ComplianceRule.MetricName)
                 If ( $MetricFromReport -or $MetricFromReport -eq 0 ) {
                     If ( $ComplianceRule.HigherIsBetter ) {

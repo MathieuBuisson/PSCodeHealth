@@ -43,6 +43,39 @@ Describe 'New-PSCodeHealthComplianceResult' {
                 $Result.Result | Should Be 'Pass'
             }
         }
+        Context 'The specified value is an [int32] and the FunctionName parameter is specified' {
+
+            $Result = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value (10 -as [int32]) -Result 'Pass' -FunctionName 'Any'
+
+            It 'Should return an object of the type [PSCodeHealth.Compliance.FunctionResult]' {
+                $Result | Should BeOfType [PSCustomObject]
+                ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.FunctionResult'
+            }
+            It 'Should return an object with the expected property "FunctionName"' {
+                $Result.FunctionName | Should Be 'any'
+            }
+            It 'Should return an object with the expected property "SettingsGroup"' {
+                $Result.SettingsGroup | Should Be 'PerFunctionMetrics'
+            }
+            It 'Should return an object with the expected property "MetricName"' {
+                $Result.MetricName | Should Be 'Complexity'
+            }
+            It 'Should return an object with the expected property "WarningThreshold"' {
+                $Result.WarningThreshold | Should Be 15
+            }
+            It 'Should return an object with the expected property "FailThreshold"' {
+                $Result.FailThreshold | Should Be 30
+            }
+            It 'Should return an object with the expected property "HigherIsBetter"' {
+                $Result.HigherIsBetter | Should Be $False
+            }
+            It 'Should return an object with the expected property "Value"' {
+                $Result.Value | Should Be 10
+            }
+            It 'Should return an object with the expected property "Result"' {
+                $Result.Result | Should Be 'Pass'
+            }
+        }
         Context 'The specified value is an [double]' {
 
             $Result = New-PSCodeHealthComplianceResult -ComplianceRule $ComplianceRule -Value (89.17 -as [double]) -Result 'Fail'

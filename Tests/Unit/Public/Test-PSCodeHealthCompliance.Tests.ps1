@@ -154,14 +154,19 @@ Describe 'Test-PSCodeHealthCompliance' {
             $HealthReport.psobject.TypeNames.Insert(0, 'PSCodeHealth.Overall.HealthReport')
             $Results = Test-PSCodeHealthCompliance -HealthReport $HealthReport -Function 'Add-CoverageInfo'
 
-            It 'Should return object of the type [PSCodeHealth.Compliance.Result]' {
+            It 'Should return object of the type [PSCodeHealth.Compliance.FunctionResult]' {
                 Foreach ( $Result in $Results ) {
                     $Result | Should BeOfType [PSCustomObject]
-                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Result'
+                    ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.FunctionResult'
                 }
             }
             It 'Should return 1 object per metric in group "PerFunctionMetrics"' {
                 $Results.Count | Should Be 6
+            }
+            It 'Should return objects with the property FunctionName "Add-CoverageInfo"' {
+                Foreach ( $Result in $Results ) {
+                    $Result.FunctionName | Should Be 'Add-CoverageInfo'
+                }
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results.Where({$_.MetricName -eq 'LinesOfCode'})

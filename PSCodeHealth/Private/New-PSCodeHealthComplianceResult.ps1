@@ -15,13 +15,22 @@ Function New-PSCodeHealthComplianceResult {
 .PARAMETER Result
     The compliance result, based on the compliance rule and the actual value from the health report.
 
+.PARAMETER FunctionName
+    To get compliance results for a specific function.  
+    If this parameter is specified, this creates a PSCodeHealth.Compliance.FunctionResult object, instead of PSCodeHealth.Compliance.Result.
+
 .EXAMPLE
     PS C:\> New-PSCodeHealthComplianceResult -ComplianceRule $Rule -Value 81.26 -Result Warning
 
     Returns new custom object of the type PSCodeHealth.Compliance.Result.
 
+.EXAMPLE
+    PS C:\> New-PSCodeHealthComplianceResult -ComplianceRule $Rule -Value 81.26 -Result Warning -FunctionName 'Get-Something'
+
+    Returns new custom object of the type PSCodeHealth.Compliance.FunctionResult for the function 'Get-Something'.
+
 .OUTPUTS
-    PSCodeHealth.Compliance.Result
+    PSCodeHealth.Compliance.Result, PSCodeHealth.Compliance.FunctionResult
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
@@ -35,10 +44,13 @@ Function New-PSCodeHealthComplianceResult {
 
         [Parameter(Mandatory, Position=2)]
         [ValidateSet('Fail','Warning','Pass')]
-        [string]$Result
+        [string]$Result,
+
+        [Parameter(Mandatory=$False, Position=3)]
+        [string]$FunctionName
     )
 
-    $ObjectProperties = [ordered]@{
+    $PropsDictionary = [ordered]@{
         'SettingsGroup'    = $ComplianceRule.SettingsGroup
         'MetricName'       = $ComplianceRule.MetricName
         'WarningThreshold' = $ComplianceRule.WarningThreshold
@@ -48,7 +60,15 @@ Function New-PSCodeHealthComplianceResult {
         'Result'           = $Result
     }
 
-    $CustomObject = New-Object -TypeName PSObject -Property $ObjectProperties
-    $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Compliance.Result')
+    If ( $PSBoundParameters.ContainsKey('FunctionName') ) {
+        $PropsDictionary.Insert(0, 'FunctionName', $FunctionName)
+
+        $CustomObject = New-Object -TypeName PSObject -Property $PropsDictionary
+        $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Compliance.FunctionResult')
+    }
+    Else {
+        $CustomObject = New-Object -TypeName PSObject -Property $PropsDictionary
+        $CustomObject.psobject.TypeNames.Insert(0, 'PSCodeHealth.Compliance.Result')
+    }
     return $CustomObject
 }
