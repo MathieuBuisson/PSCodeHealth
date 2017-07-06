@@ -1,6 +1,6 @@
 version: 0.1.{build}
 
-os: WMF 5
+image: Visual Studio 2017
 
 environment:
   Coveralls_Key:
