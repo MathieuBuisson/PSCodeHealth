@@ -44,7 +44,7 @@ task Install_Dependencies {
 
     Foreach ( $Depend in $Settings.Dependency ) {
         "Installing build dependency : $Depend"
-        Install-Module $Depend -Scope CurrentUser -Force
+        Install-Module $Depend -Scope CurrentUser -Force -SkipPublisherCheck
         Import-Module $Depend -Force
     }
 }
