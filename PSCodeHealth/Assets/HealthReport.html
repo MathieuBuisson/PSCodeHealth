@@ -74,7 +74,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{LINES_OF_CODE_TOTAL_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
                             </div>
@@ -86,20 +86,20 @@
                 </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{SCRIPTANALYZER_TOTAL_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings</h3>
                             </div>
                             <table class="table">
-                                <tr class="text-success"><td>Errors</td><td>{SCRIPTANALYZER_ERRORS}</td></tr>
-                                <tr class="text-success"><td>Warnings</td><td>{SCRIPTANALYZER_WARNINGS}</td></tr>
-                                <tr class="text-success"><td>Information</td><td>{SCRIPTANALYZER_INFO}</td></tr>
-                                <tr class="text-success"><td>Total</td><td>{SCRIPTANALYZER_TOTAL}</td></tr>
+                                <tr class="text-{SCRIPTANALYZER_ERRORS_COMPLIANCE}"><td>Errors</td><td>{SCRIPTANALYZER_ERRORS}</td></tr>
+                                <tr class="text-{SCRIPTANALYZER_WARNINGS_COMPLIANCE}"><td>Warnings</td><td>{SCRIPTANALYZER_WARNINGS}</td></tr>
+                                <tr class="text-{SCRIPTANALYZER_INFO_COMPLIANCE}"><td>Information</td><td>{SCRIPTANALYZER_INFO}</td></tr>
+                                <tr class="text-{SCRIPTANALYZER_TOTAL_COMPLIANCE}"><td>Total</td><td>{SCRIPTANALYZER_TOTAL}</td></tr>
                             </table>
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-{TESTS_PASS_RATE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
                             </div>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-{TEST_COVERAGE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
                             </div>
@@ -123,7 +123,7 @@
             <section id="bestPractices" class="tab-pane fade">
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{SCRIPTANALYZER_TOTAL_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-plus-square-o" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Total</h3>
                             </div>
@@ -133,7 +133,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{SCRIPTANALYZER_ERRORS_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-ban" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Errors</h3>
                             </div>
@@ -143,7 +143,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{SCRIPTANALYZER_WARNINGS_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-exclamation-triangle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Warnings</h3>
                             </div>
@@ -155,7 +155,7 @@
                 </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{SCRIPTANALYZER_AVERAGE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-bar-chart" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Findings - Average</h3>
                             </div>
@@ -165,7 +165,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{SCRIPTANALYZER_INFO_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;</i> ScriptAnalyzer Info</h3>
                             </div>
@@ -175,7 +175,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-question-circle" aria-hidden="true">&nbsp;</i> Functions Without Help</h3>
                             </div>
@@ -211,7 +211,7 @@
             <section id="maintainability" class="tab-pane fade">
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{LINES_OF_CODE_TOTAL_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
                             </div>
@@ -221,7 +221,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{COMPLEXITY_HIGHEST_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Highest</h3>
                             </div>
@@ -231,7 +231,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{NESTING_DEPTH_HIGHEST_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Highest</h3>
                             </div>
@@ -243,7 +243,7 @@
                 </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{LINES_OF_CODE_AVERAGE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Average</h3>
                             </div>
@@ -253,7 +253,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{COMPLEXITY_AVERAGE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-arrows-alt" aria-hidden="true">&nbsp;</i> Complexity - Average</h3>
                             </div>
@@ -263,7 +263,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{NESTING_DEPTH_AVERAGE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-object-group" aria-hidden="true">&nbsp;</i> Nesting Depth - Average</h3>
                             </div>
@@ -309,7 +309,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-{NUMBER_OF_FAILED_TESTS_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Failed Tests</h3>
                             </div>
@@ -331,7 +331,7 @@
                 </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-{COMMANDS_MISSED_TOTAL_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
                             </div>
@@ -341,7 +341,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-{TESTS_PASS_RATE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-check-square-o" aria-hidden="true">&nbsp;</i> Tests Pass Rate (%)</h3>
                             </div>
@@ -351,7 +351,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-{TEST_COVERAGE_COMPLIANCE}">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-pie-chart" aria-hidden="true">&nbsp;</i> Test Coverage (%)</h3>
                             </div>

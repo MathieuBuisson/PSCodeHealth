@@ -38,7 +38,7 @@ Function New-PSCodeHealthTableData {
         If ( $Function.ScriptAnalyzerFindings -gt 0 ) {
             [System.Collections.ArrayList]$FindingsDetails = @()
             $Null = $FindingsDetails.Add(@"
-`n                                            <button type="button" class="btn btn-sm cell-expand-collapse"> Expand</button>
+`n                                            <button type="button" class="btn btn-{$($Function.FunctionName)_FINDINGS_DETAILS} btn-sm cell-expand-collapse"> Expand</button>
                                             <table>`n
 "@)
             Foreach ( $Finding in $Function.ScriptAnalyzerResultDetails ) {
@@ -46,7 +46,7 @@ Function New-PSCodeHealthTableData {
                 $ScriptName = Split-Path -Path $Function.FilePath -Leaf
                 $FindingDetail = @"
                                                 <tr>
-                                                    <td class="cell-largeContent">ScriptName : $ScriptName<br>
+                                                    <td class="{$($Function.FunctionName)_FINDINGS_DETAILS} cell-largeContent">ScriptName : $ScriptName<br>
 Line (in the function) : $($Finding.Line)<br>
 Severity                      : $($Finding.Severity)<br>
 RuleName                      : $($Finding.RuleName)<br>
@@ -67,9 +67,9 @@ Message                       : $($Finding.Message)<br>
         $Row = @"
                                     <tr>
                                         <td>$($Function.FunctionName)</td>
-                                        <td>$($Function.ScriptAnalyzerFindings)</td>
-                                        <td>$($FindingsDetails)</td>
-                                        <td>$($Function.ContainsHelp)</td>
+                                        <td class="{$($Function.FunctionName)_SCRIPTANALYZER_FINDINGS}">$($Function.ScriptAnalyzerFindings)</td>
+                                        <td class="{$($Function.FunctionName)_FINDINGS_DETAILS}">$($FindingsDetails)</td>
+                                        <td class="{$($Function.FunctionName)_CONTAINS_HELP}">$($Function.ContainsHelp)</td>
                                     </tr>
 "@
         $Null = $BestPracticesRows.Add($Row)
@@ -81,9 +81,9 @@ Message                       : $($Finding.Message)<br>
         $Row = @"
                                     <tr>
                                         <td>$($Function.FunctionName)</td>
-                                        <td>$($Function.LinesOfCode)</td>
-                                        <td>$($Function.Complexity)</td>
-                                        <td>$($Function.MaximumNestingDepth)</td>
+                                        <td class="{$($Function.FunctionName)_LINES_OF_CODE_COMPLIANCE}">$($Function.LinesOfCode)</td>
+                                        <td class="{$($Function.FunctionName)_COMPLEXITY_COMPLIANCE}">$($Function.Complexity)</td>
+                                        <td class="{$($Function.FunctionName)_MAXIMUM_NESTING_DEPTH_COMPLIANCE}">$($Function.MaximumNestingDepth)</td>
                                     </tr>
 "@
         $Null = $MaintainabilityRows.Add($Row)
@@ -115,8 +115,8 @@ Message                       : $($Finding.Message)<br>
         $Row = @"
                                     <tr>
                                         <td>$($Function.FunctionName)</td>
-                                        <td>$($Function.TestCoverage)</td>
-                                        <td>$($Function.CommandsMissed)</td>
+                                        <td class="{$($Function.FunctionName)_TEST_COVERAGE_COMPLIANCE}">$($Function.TestCoverage)</td>
+                                        <td class="{$($Function.FunctionName)_COMMANDS_MISSED_COMPLIANCE}">$($Function.CommandsMissed)</td>
                                     </tr>
 "@
         $Null = $CoverageRows.Add($Row)
