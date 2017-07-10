@@ -41,6 +41,10 @@ Function Invoke-PSCodeHealth {
     To instruct Invoke-PSCodeHealth to generate an HTML report, and specify the path where the HTML file should be saved.  
     The path must include the folder path (which has to exist) and the file name.  
 
+.PARAMETER CustomSettingsPath
+    To specify the path of a file containing user-defined compliance rules (metrics thresholds, etc...) in JSON format.  
+    Any compliance rule specified in this file override the default, and rules not specified in this file will use the default from PSCodeHealthSettings.json.  
+
 .PARAMETER PassThru
     When the parameter HtmlReportPath is used, by default, Invoke-PSCodeHealth doesn't output a [PSCodeHealth.Overall.HealthReport] object to the pipeline.  
     The PassThru parameter allows to instruct Invoke-PSCodeHealth to output both an HTML report file and a [PSCodeHealth.Overall.HealthReport] object.  
@@ -62,6 +66,15 @@ Function Invoke-PSCodeHealth {
 
     Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\.  
     This command will create an HTML report (Report.html) in the current directory and a PSCodeHealth.Overall.HealthReport object to the pipeline.  
+    The styling of HTML elements will reflect their compliance, based on the default compliance rules.
+
+.EXAMPLE
+    PS C:\> Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -HtmlReportPath .\Report.html -CustomSettingsPath .\MySettings.json
+
+    Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\.  
+    This command will create an HTML report (Report.html) in the current directory and a PSCodeHealth.Overall.HealthReport object to the pipeline.  
+    The styling of HTML elements will reflect their compliance, based on the default compliance rules and any custom rules in the file .\MySettings.json.
+
 
 .OUTPUTS
     PSCodeHealth.Overall.HealthReport
@@ -92,6 +105,10 @@ Function Invoke-PSCodeHealth {
         [Parameter(Mandatory, ParameterSetName='HtmlReport')]
         [ValidateScript({ Test-Path -Path (Split-Path $_ -Parent) -PathType Container })]
         [string]$HtmlReportPath,
+
+        [Parameter(Mandatory=$False, ParameterSetName='HtmlReport')]
+        [ValidateScript({ Test-Path -Path $_ -PathType Leaf })]
+        [string]$CustomSettingsPath,
 
         [Parameter(Mandatory=$False, ParameterSetName='HtmlReport')]
         [switch]$PassThru
@@ -215,6 +232,21 @@ Function Invoke-PSCodeHealth {
             JS_CONTENT = $JsContent
         }
         $HtmlContent = Set-PSCodeHealthPlaceholdersValue -TemplatePath "$PSScriptRoot\..\Assets\HealthReport.html" -PlaceholdersData $HtmlPlaceholders
+
+        $ComplianceParams = @{
+            HealthReport = $HealthReport                
+        }
+        If ( $PSBoundParameters.ContainsKey('CustomSettingsPath') ) {
+            $ComplianceParams.Add('CustomSettingsPath', $CustomSettingsPath)
+        }
+        $OverallCompliance = Test-PSCodeHealthCompliance @ComplianceParams
+        If ( $Null -eq $FunctionHealthRecords ) {
+            $PerFunctionCompliance = $Null
+        }
+        Else {
+            $PerFunctionCompliance = $FunctionHealthRecords.FunctionName.ForEach({ Test-PSCodeHealthCompliance @ComplianceParams -FunctionName $_ })
+        }
+        #$ColoredHtmlContent = Set-PSCodeHealthHtmlColor -HealthReport $HealthReport -Compliance $OverallCompliance -PerFunctionCompliance $PerFunctionCompliance
 
         $Null = New-Item -Path $HtmlReportPath -ItemType File -Force
         Set-Content -Path $HtmlReportPath -Value $HtmlContent
