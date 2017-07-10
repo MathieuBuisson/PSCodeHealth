@@ -14,7 +14,7 @@ Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <
 ### HtmlReport
 ```
 Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <PSObject>] [-Recurse]
- [-Exclude <String[]>] -HtmlReportPath <String> [-PassThru]
+ [-Exclude <String[]>] -HtmlReportPath <String> [-CustomSettingsPath <String>] [-PassThru]
 ```
 
 ## DESCRIPTION
@@ -54,6 +54,19 @@ Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModul
 Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\.
  
 This command will create an HTML report (Report.html) in the current directory and a PSCodeHealth.Overall.HealthReport object to the pipeline.
+ 
+The styling of HTML elements will reflect their compliance, based on the default compliance rules.
+
+### -------------------------- EXAMPLE 4 --------------------------
+```
+Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -HtmlReportPath .\Report.html -CustomSettingsPath .\MySettings.json
+```
+
+Gets quality and maintainability metrics for code from PowerShell files in the directory C:\GitRepos\MyModule\.
+ 
+This command will create an HTML report (Report.html) in the current directory and a PSCodeHealth.Overall.HealthReport object to the pipeline.
+ 
+The styling of HTML elements will reflect their compliance, based on the default compliance rules and any custom rules in the file .\MySettings.json.
 
 ## PARAMETERS
 
@@ -158,6 +171,23 @@ Parameter Sets: HtmlReport
 Aliases: 
 
 Required: True
+Position: Named
+Default value: None
+Accept pipeline input: False
+Accept wildcard characters: False
+```
+
+### -CustomSettingsPath
+To specify the path of a file containing user-defined compliance rules (metrics thresholds, etc...) in JSON format.
+ 
+Any compliance rule specified in this file override the default, and rules not specified in this file will use the default from PSCodeHealthSettings.json.
+
+```yaml
+Type: String
+Parameter Sets: HtmlReport
+Aliases: 
+
+Required: False
 Position: Named
 Default value: None
 Accept pipeline input: False
