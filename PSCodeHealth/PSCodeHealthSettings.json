@@ -129,9 +129,23 @@
             }
         },
         {
+            "ComplexityHighest": {
+                "WarningThreshold": 30,
+                "FailThreshold": 60,
+                "HigherIsBetter": false
+            }
+        },
+        {
             "NestingDepthAverage": {
                 "WarningThreshold": 4,
                 "FailThreshold": 8,
+                "HigherIsBetter": false
+            }
+        },
+        {
+            "NestingDepthHighest": {
+                "WarningThreshold": 8,
+                "FailThreshold": 16,
                 "HigherIsBetter": false
             }
         }

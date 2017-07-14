@@ -725,7 +725,9 @@
                 "TestCoverage": 0,
                 "CommandsMissedTotal": 296,
                 "ComplexityAverage": 0,
+                "ComplexityHighest": 0,
                 "NestingDepthAverage": 0,
+                "NestingDepthHighest": 0,
                 "FunctionHealthRecords": null
             }
         },
@@ -747,7 +749,9 @@
                 "TestCoverage": 77,
                 "CommandsMissedTotal": 296,
                 "ComplexityAverage": 0,
+                "ComplexityHighest": 19,
                 "NestingDepthAverage": 0,
+                "NestingDepthHighest": 5,
                 "FunctionHealthRecords":                 
                 {
                     "FunctionName": "Test-Function1",
@@ -789,7 +793,9 @@
                 "TestCoverage": 81,
                 "CommandsMissedTotal": 21,
                 "ComplexityAverage": 15.5,
+                "ComplexityHighest": 19,
                 "NestingDepthAverage": 3.5,
+                "NestingDepthHighest": 5,
                 "FunctionHealthRecords": [
                 {
                     "FunctionName": "Test-Function1",
@@ -809,7 +815,8 @@
                         {
                             "Severity": "Information"
                         }
-                    ]
+                    ],
+                    "ContainsHelp": false
                 },
                 {
                     "FunctionName": "Test-Function2",
@@ -838,7 +845,8 @@
                         {
                             "Severity": "Warning"
                         }
-                    ]
+                    ],
+                    "ContainsHelp": true
                 }
             ]
         }

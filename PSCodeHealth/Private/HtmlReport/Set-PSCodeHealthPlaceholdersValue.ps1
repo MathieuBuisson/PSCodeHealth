@@ -26,25 +26,31 @@ Function Set-PSCodeHealthPlaceholdersValue {
 
 .NOTES    
 #>
-    [CmdletBinding()]
+    [CmdletBinding(DefaultParameterSetName = 'File')]
     [OutputType([string[]])]
     Param (
-        [Parameter(Position=0, Mandatory)]
+        [Parameter(Position=0, Mandatory, ParameterSetName='File')]
         [ValidateScript({ Test-Path $_ -PathType Leaf })]
         [string]$TemplatePath,
 
         [Parameter(Position=1, Mandatory)]
-        [Hashtable]$PlaceholdersData
+        [Hashtable]$PlaceholdersData,
+
+        [Parameter(Position=0, Mandatory, ParameterSetName='Html')]
+        [AllowEmptyString()]
+        [string[]]$Html
     )
 
-    $TemplateContent = Get-Content -Path $TemplatePath
+    If ( $PSCmdlet.ParameterSetName -ne 'Html' ) {
+        $Html = Get-Content -Path $TemplatePath
+    }
 
     Foreach ( $Placeholder in $PlaceholdersData.GetEnumerator() ) {
         $PlaceholderPattern = '{{{0}}}' -f $Placeholder.Key
 
         # Handling values containing a collection
         $PlaceholderValue = If ( $($Placeholder.Value).Count -gt 1 ) { $Placeholder.Value | Out-String } Else { $Placeholder.Value }
-        $TemplateContent = $TemplateContent.ForEach('Replace', $PlaceholderPattern, $PlaceholderValue)
+        $Html = $Html.ForEach('Replace', $PlaceholderPattern, $PlaceholderValue)
     }
-    $TemplateContent
+    $Html
 }

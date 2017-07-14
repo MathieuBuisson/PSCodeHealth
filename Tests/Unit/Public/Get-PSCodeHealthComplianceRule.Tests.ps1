@@ -28,9 +28,9 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
                 Should Be 6
             }
-            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
+            It 'Should return 15 objects where the SettingsGroup property is equal to "OverallMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
-                Should Be 13
+                Should Be 15
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
@@ -87,9 +87,9 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
                 Should Be 6
             }
-            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
+            It 'Should return 15 objects where the SettingsGroup property is equal to "OverallMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
-                Should Be 13
+                Should Be 15
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'
@@ -142,8 +142,8 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                     ($Result | Get-Member).TypeName[0] | Should Be 'PSCodeHealth.Compliance.Rule'
                 }
             }
-            It 'Should return 13 objects' {
-                $Results.Count | Should Be 13
+            It 'Should return 15 objects' {
+                $Results.Count | Should Be 15
             }
             It 'Should return only objects with the SettingsGroup property equal to "OverallMetrics"' {
                 Foreach ( $Result in $Results ) {
@@ -299,9 +299,9 @@ Describe 'Get-PSCodeHealthComplianceRule' {
                 ($Results | Where-Object SettingsGroup -eq 'PerFunctionMetrics').Count |
                 Should Be 6
             }
-            It 'Should return 13 objects where the SettingsGroup property is equal to "OverallMetrics"' {
+            It 'Should return 15 objects where the SettingsGroup property is equal to "OverallMetrics"' {
                 ($Results | Where-Object SettingsGroup -eq 'OverallMetrics').Count |
-                Should Be 13
+                Should Be 15
             }
             It 'Resulting compliance rules are the same as the defaults for metric "LinesOfCode"' {
                 $LinesOfCodeResult = $Results | Where-Object MetricName -eq 'LinesOfCode'

@@ -22,7 +22,9 @@ Describe 'Test-PSCodeHealthCompliance' {
         $TestsPassRate = $Result.Where({$_.MetricName -eq 'TestsPassRate'})
         $CommandsMissedTotal = $Result.Where({$_.MetricName -eq 'CommandsMissedTotal'})
         $ComplexityAverage = $Result.Where({$_.MetricName -eq 'ComplexityAverage'})
+        $ComplexityHighest = $Result.Where({$_.MetricName -eq 'ComplexityHighest'})        
         $NestingDepthAverage = $Result.Where({$_.MetricName -eq 'NestingDepthAverage'})
+        $NestingDepthHighest = $Result.Where({$_.MetricName -eq 'NestingDepthHighest'})
 
         It 'Should return correct value for the metric : LinesOfCode' {
             $LinesOfCode.Value | Should Be 39
@@ -112,11 +114,23 @@ Describe 'Test-PSCodeHealthCompliance' {
         It 'Should return correct compliance result for the metric : ComplexityAverage' {
             $ComplexityAverage.Result | Should Be 'Pass'
         }
+        It 'Should return correct value for the metric : ComplexityHighest' {
+            $ComplexityHighest.Value | Should Be 5
+        }
+        It 'Should return correct compliance result for the metric : ComplexityHighest' {
+            $ComplexityHighest.Result | Should Be 'Pass'
+        }
         It 'Should return correct value for the metric : NestingDepthAverage' {
             $NestingDepthAverage.Value | Should Be 1.11
         }
         It 'Should return correct compliance result for the metric : NestingDepthAverage' {
             $NestingDepthAverage.Result | Should Be 'Pass'
+        }
+        It 'Should return correct value for the metric : NestingDepthHighest' {
+            $NestingDepthHighest.Value | Should Be 3
+        }
+        It 'Should return correct compliance result for the metric : NestingDepthHighest' {
+            $NestingDepthHighest.Result | Should Be 'Pass'
         }
     }
     Context 'Given code in coveralls module, it returns the expected compliance summary result' {

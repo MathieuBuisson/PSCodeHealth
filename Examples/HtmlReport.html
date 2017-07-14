@@ -7,7 +7,7 @@
     <meta name="description" content="PowerShell Code Health Report">
     <meta name="author" content="PSCodeHealth">
 
-    <title>PSCodeHealth Report - MyPSModule</title>
+    <title>PSCodeHealth Report - coveralls</title>
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" media="all" rel="stylesheet">
@@ -111,7 +111,7 @@
         .text-warning {
             color: #8a6d3b;
         }
-        .text-fail {
+        .text-danger {
             color: #a94442;
         }
         .tablePanel {
@@ -165,7 +165,8 @@
         }
         th.narrowColum {
             width: 21%;
-        }        
+        }
+
     </style>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -173,7 +174,6 @@
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 </head>
-
 <body>
     <div class="container-fluid">
         <header class="container-fluid">
@@ -183,13 +183,13 @@
                         <a href="https://github.com/MathieuBuisson/PSCodeHealth" target="_blank">
                             <img class="logo" src= "https://github.com/MathieuBuisson/PSCodeHealth/raw/master/PSCodeHealth/Assets/PSCodeHealthLogo.png" alt="PSCodeHealth Logo"/>
                         </a>
-                        Code Health Report - <small>MyPSModule</small>
+                        Code Health Report - <small>coveralls</small>
                     </h1>
                 </div>
                 <div class="col-sm-4 col-md-5 col-lg-4 right-header">
                     <h5>
-                        Analyzed path :<span class="right-header-data"> C:\GitHub\MyPSModule\MyPSModule</span><br>
-                        Analysis date :<span class="right-header-data"> 2017-06-05 16:25:43Z</span>
+                        Analyzed path :<span class="right-header-data"> C:\GitHub\PSCodeHealth\Tests\TestData\coveralls</span><br>
+                        Analysis date :<span class="right-header-data"> 2017-07-14 12:10:30Z</span>
                     </h5>
                 </div>
             </div>
@@ -233,7 +233,7 @@
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>201</h2>
+                                <h2>204</h2>
                             </div>
                         </div>
                     </div>
@@ -329,7 +329,7 @@
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-info">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-question-circle" aria-hidden="true">&nbsp;</i> Functions Without Help</h3>
                             </div>
@@ -358,13 +358,13 @@
                                     <tr>
                                         <td>Add-CoverageInfo</td>
                                         <td class="success">0</td>
-                                        <td></td>
+                                        <td class=""></td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
                                         <td>Merge-CoverageResult</td>
                                         <td class="success">0</td>
-                                        <td></td>
+                                        <td class=""></td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
@@ -373,36 +373,36 @@
                                         <td class="danger">
                                             <button type="button" class="btn btn-danger btn-sm cell-expand-collapse"> Expand</button>
                                             <table>
-                                                <tr>
+                                                 <tr>
                                                     <td class="danger cell-largeContent">ScriptName : Coveralls.ps1<br>
-Line       : 50<br>
-Severity   : Error<br>
-RuleName   : PSAvoidUsingConvertToSecureStringWithPlainText<br>
-Message    : File 'Coveralls.ps1' uses ConvertTo-SecureString with plaintext. This will expose secure information. Encrypted standard strings should be used instead.
+Line (in the function) : 11<br>
+Severity                      : Warning<br>
+RuleName                      : PSUseDeclaredVarsMoreThanAssignments<br>
+Message                       : The variable 'SecurePassword' is assigned but never used.<br>
                                                     </td>
                                                 </tr>
-                                                <tr>
+                                                 <tr>
                                                     <td class="danger cell-largeContent">ScriptName : Coveralls.ps1<br>
-Line       : 50<br>
-Severity   : Warning<br>
-RuleName   : PSUseDeclaredVarsMoreThanAssignments<br>
-Message    : The variable 'SecurePassword' is assigned but never used.
+Line (in the function) : 11<br>
+Severity                      : Error<br>
+RuleName                      : PSAvoidUsingConvertToSecureStringWithPlainText<br>
+Message                       : Script definition uses ConvertTo-SecureString with plaintext. This will expose secure information. Encrypted standard strings should be used instead.<br>
                                                     </td>
                                                 </tr>
-                                            </table>
+                                             </table>
                                         </td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
                                         <td>Format-FileCoverage</td>
                                         <td class="success">0</td>
-                                        <td></td>
+                                        <td class=""></td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
                                         <td>Get-CommandsForFile</td>
                                         <td class="success">0</td>
-                                        <td></td>
+                                        <td class=""></td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
@@ -411,28 +411,28 @@ Message    : The variable 'SecurePassword' is assigned but never used.
                                         <td class="warning">
                                             <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
                                             <table>
-                                                <tr>
-                                                    <td class="warning cell-largeContent">ScriptName : Get-GitInfo.ps1<br>
-Line       : 124<br>
-Severity   : Warning<br>
-RuleName   : PSAvoidUsingCmdletAliases<br>
-Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Coveralls.ps1<br>
+Line (in the function) : 8<br>
+Severity                      : Warning<br>
+RuleName                      : PSAvoidUsingCmdletAliases<br>
+Message                       : 'cd' is an alias of 'Set-Location'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.<br>
                                                     </td>
                                                 </tr>
-                                            </table>
+                                             </table>
                                         </td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
                                         <td>Format-Coverage</td>
                                         <td class="success">0</td>
-                                        <td></td>
+                                        <td class=""></td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
                                         <td>Publish-Coverage</td>
                                         <td class="success">0</td>
-                                        <td></td>
+                                        <td class=""></td>
                                         <td class="danger">False</td>
                                     </tr>
                                     <tr>
@@ -441,18 +441,19 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                         <td class="warning">
                                             <button type="button" class="btn btn-warning btn-sm cell-expand-collapse"> Expand</button>
                                             <table>
-                                                <tr>
-                                                    <td class="warning cell-largeContent">ScriptName : Get-CoveragePercentage.ps1<br>
-Line       : 212<br>
-Severity   : Warning<br>
-RuleName   : PSAvoidUsingCmdletAliases<br>
-Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.
+                                                 <tr>
+                                                    <td class="warning cell-largeContent">ScriptName : Coveralls.ps1<br>
+Line (in the function) : 9<br>
+Severity                      : Warning<br>
+RuleName                      : PSAvoidUsingCmdletAliases<br>
+Message                       : 'cd' is an alias of 'Set-Location'. Alias can introduce possible problems and make scripts hard to maintain. Please consider changing alias to its full content.<br>
                                                     </td>
                                                 </tr>
-                                            </table>
+                                             </table>
                                         </td>
                                         <td class="danger">False</td>
                                     </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -467,7 +468,7 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Total</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>201</h2>
+                                <h2>204</h2>
                             </div>
                         </div>
                     </div>
@@ -499,7 +500,7 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                 <h3 class="panel-title"><i class="fa fa-arrows-v" aria-hidden="true">&nbsp;</i> Lines of Code - Average</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>22.33</h2>
+                                <h2>22.67</h2>
                             </div>
                         </div>
                     </div>
@@ -554,7 +555,7 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                     </tr>
                                     <tr>
                                         <td>Get-CoverageArray</td>
-                                        <td class="warning">30</td>
+                                        <td class="warning">31</td>
                                         <td class="success">5</td>
                                         <td class="success">3</td>
                                     </tr>
@@ -572,7 +573,7 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                     </tr>
                                     <tr>
                                         <td>Get-GitInfo</td>
-                                        <td class="success">23</td>
+                                        <td class="success">24</td>
                                         <td class="success">2</td>
                                         <td class="success">2</td>
                                     </tr>
@@ -590,10 +591,11 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                                     </tr>
                                     <tr>
                                         <td>Get-CoveragePercentage</td>
-                                        <td class="success">16</td>
+                                        <td class="success">17</td>
                                         <td class="success">2</td>
                                         <td class="success">1</td>
                                     </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -613,7 +615,7 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                         </div>
                     </div>
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-success">
+                        <div class="panel panel-warning">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Failed Tests</h3>
                             </div>
@@ -635,12 +637,12 @@ Message    : 'cd' is an alias of 'Set-Location'. Alias can introduce possible pr
                 </div>
                 <div class="row col-sm-offset-3 col-md-offset-1 col-lg-offset-2">
                     <div class="col-sm-3 panelContainer">
-                        <div class="panel panel-danger">
+                        <div class="panel panel-success">
                             <div class="panel-heading">
                                 <h3 class="panel-title"><i class="fa fa-times" aria-hidden="true">&nbsp;</i> Number of Missed Commands</h3>
                             </div>
                             <div class="panel-body">
-                                <h2>60</h2>
+                                <h2>61</h2>
                             </div>
                         </div>
                     </div>
@@ -697,6 +699,7 @@ But was:  {0}</td>
                                         <td>Should return 0 objects with the value 0</td>
                                         <td>Expected: value to be empty but it was {1}</td>
                                     </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -720,16 +723,16 @@ But was:  {0}</td>
                                     <tr>
                                         <td>Add-CoverageInfo</td>
                                         <td class="danger">0</td>
-                                        <td class="warning">3</td>
+                                        <td class="success">3</td>
                                     </tr>
                                     <tr>
                                         <td>Merge-CoverageResult</td>
                                         <td class="danger">0</td>
-                                        <td class="warning">6</td>
+                                        <td class="success">6</td>
                                     </tr>
                                     <tr>
                                         <td>Get-CoverageArray</td>
-                                        <td class="success">94.44</td>
+                                        <td class="success">94.74</td>
                                         <td class="success">1</td>
                                     </tr>
                                     <tr>
@@ -745,7 +748,7 @@ But was:  {0}</td>
                                     <tr>
                                         <td>Get-GitInfo</td>
                                         <td class="danger">0</td>
-                                        <td class="danger">18</td>
+                                        <td class="danger">19</td>
                                     </tr>
                                     <tr>
                                         <td>Format-Coverage</td>
@@ -762,6 +765,7 @@ But was:  {0}</td>
                                         <td class="success">100</td>
                                         <td class="success">0</td>
                                     </tr>
+
                                 </tbody>
                             </table>
                         </div>
@@ -870,7 +874,7 @@ But was:  {0}</td>
                 labels: ["Covered","Missed"],
                 datasets: [
                 {
-                    data: [38.78,61.22],
+                    data: [39.6,60.4],
                     backgroundColor: ["#a3d48d","#d59595"],
                     hoverBackgroundColor: ["#a3d48d","#d59595"]
                 }]
@@ -885,7 +889,7 @@ But was:  {0}</td>
                         center: {
                             // This evaluates the max length of the text
                             maxText: '99.99%',
-                            text: '38.78%',
+                            text: '39.6%',
                             fontColor: '#d59595',
                             fontFamily: "'Helvetica Neue', 'Helvetica', 'Arial', sans-serif",
                             fontStyle: 'normal'
@@ -911,6 +915,7 @@ But was:  {0}</td>
                 });
             }
         });
+
     </script>
 </body>
 </html>

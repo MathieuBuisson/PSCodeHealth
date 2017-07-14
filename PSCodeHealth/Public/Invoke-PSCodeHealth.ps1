@@ -246,10 +246,17 @@ Function Invoke-PSCodeHealth {
         Else {
             $PerFunctionCompliance = $FunctionHealthRecords.FunctionName.ForEach({ Test-PSCodeHealthCompliance @ComplianceParams -FunctionName $_ })
         }
-        #$ColoredHtmlContent = Set-PSCodeHealthHtmlColor -HealthReport $HealthReport -Compliance $OverallCompliance -PerFunctionCompliance $PerFunctionCompliance
+
+        $HtmlColorParams = @{
+            HealthReport = $HealthReport
+            Compliance = $OverallCompliance
+            PerFunctionCompliance = $PerFunctionCompliance
+            Html = $HtmlContent
+        }
+        $ColoredHtmlContent = Set-PSCodeHealthHtmlColor @HtmlColorParams
 
         $Null = New-Item -Path $HtmlReportPath -ItemType File -Force
-        Set-Content -Path $HtmlReportPath -Value $HtmlContent
+        Set-Content -Path $HtmlReportPath -Value $ColoredHtmlContent
         If ( $PassThru ) {
             return $HealthReport
         }

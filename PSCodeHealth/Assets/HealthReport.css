@@ -97,7 +97,7 @@ header > .row {
         .text-warning {
             color: #8a6d3b;
         }
-        .text-fail {
+        .text-danger {
             color: #a94442;
         }
         .tablePanel {

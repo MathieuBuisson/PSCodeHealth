@@ -327,5 +327,18 @@ Describe 'Invoke-PSCodeHealth (again)' {
                 Should Throw "Cannot validate argument on parameter 'HtmlReportPath'."
             }
         }
+        Context 'The file specified via the CustomSettingsPath parameter does not exist' {
+
+            $HealthReportParams = @{
+                Path = "$TestDrive\2PublicFunctions.psm1"
+                HtmlReportPath = "$TestDrive\Report3.html"
+                CustomSettingsPath = "$TestDrive\DoesNotExist"
+            }
+
+            It 'Should throw a "ParameterArgumentValidationError" exception' {
+                { Invoke-PSCodeHealth @HealthReportParams } |
+                Should Throw "Cannot validate argument on parameter 'CustomSettingsPath'."
+            }
+        }
     }
 }
