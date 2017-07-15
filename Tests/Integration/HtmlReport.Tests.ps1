@@ -1,10 +1,10 @@
 $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\$ModuleName\$($ModuleName).psd1" -Force
 $CodePath = "$PSScriptRoot\..\TestData\coveralls"
+$ReportPath = "$($env:TEMP)\Report.html"
 
 Describe 'Invoke-PSCodeHealth' {
 
-    $ReportPath = "$TestDrive\Report.html"
     Invoke-PSCodeHealth -Path $CodePath -HtmlReportPath $ReportPath
     $ReportContent = Get-Content -Path $ReportPath -Raw
     $ExpectedFunctionNames = @('Add-CoverageInfo','Merge-CoverageResult','Get-CoverageArray','Format-FileCoverage','Get-CommandsForFile','Get-GitInfo','Format-Coverage','Publish-Coverage','Get-CoveragePercentage')
@@ -115,5 +115,11 @@ Describe 'Invoke-PSCodeHealth' {
         It 'Should contain the expected Test Coverage row for the function "Get-CoveragePercentage"' {
             $ReportContent | Should Match '(?smi)(<td>Get-CoveragePercentage</td>.+<td class="success">100</td>.+<td class="success">0</td>.+\s+</tr>)'
         }
+    }
+}
+Describe 'Web UI' {
+
+    Context 'Given code in coveralls module, the HTML report responds to interactions as expected' {
+    
     }
 }
