@@ -4,7 +4,7 @@
 $Settings = @{
 
     BuildOutput = "$PSScriptRoot\BuildOutput"
-    Dependency = @('Coveralls','Pester','PsScriptAnalyzer','platyPS')
+    Dependency = @('Coveralls','Pester','PsScriptAnalyzer','platyPS','Selenium.WebDriver')
     SourceFolder = "$PSScriptRoot\$($env:APPVEYOR_PROJECT_NAME)"
     TestUploadUrl = "https://ci.appveyor.com/api/testresults/nunit/$($env:APPVEYOR_JOB_ID)"
     CoverallsKey = $env:Coveralls_Key

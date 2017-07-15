@@ -44,8 +44,13 @@ task Install_Dependencies {
 
     Foreach ( $Depend in $Settings.Dependency ) {
         "Installing build dependency : $Depend"
-        Install-Module $Depend -Scope CurrentUser -Force -SkipPublisherCheck
-        Import-Module $Depend -Force
+        If ( $Depend -eq 'Selenium.WebDriver' ) {
+            Install-Package $Depend -Source nuget.org -Force
+        }
+        Else {
+            Install-Module $Depend -Scope CurrentUser -Force -SkipPublisherCheck
+            Import-Module $Depend -Force
+        }
     }
 }
 

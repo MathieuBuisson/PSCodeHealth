@@ -2,8 +2,9 @@ $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\$ModuleName\$($ModuleName).psd1" -Force
 $CodePath = "$PSScriptRoot\..\TestData\coveralls"
 $ReportPath = "$($env:TEMP)\Report.html"
+Add-Type -Path 'C:\Program Files\PackageManagement\NuGet\Packages\Selenium.WebDriver.3.4.0\lib\net40\WebDriver.dll'
 
-Describe 'Invoke-PSCodeHealth' {
+Describe 'Invoke-PSCodeHealth HTML report' {
 
     Invoke-PSCodeHealth -Path $CodePath -HtmlReportPath $ReportPath
     $ReportContent = Get-Content -Path $ReportPath -Raw
@@ -117,9 +118,127 @@ Describe 'Invoke-PSCodeHealth' {
         }
     }
 }
-Describe 'Web UI' {
+Describe 'HTML Report UI tests' {
 
-    Context 'Given code in coveralls module, the HTML report responds to interactions as expected' {
-    
+    $ReportUrl = 'file:///{0}' -f $ReportPath.Replace('\','/')
+    $Driver = New-Object OpenQA.Selenium.Chrome.ChromeDriver
+    $Driver.Manage().Window.Maximize()
+    $Driver.Navigate().GoToUrl($ReportUrl)
+
+    Context 'Given the "bestPractices" link in the sidebar has been clicked' {
+
+        $Driver.FindElementByPartialLinkText(' Best Practices').Click()
+        $bestPracticesSection = $Driver.FindElementById('bestPractices')
+        $bestPracticesPerFunctionTable = $bestPracticesSection.FindElementsByCssSelector('div.table-responsive')
+        $Button = $bestPracticesPerFunctionTable.FindElementByTagName('button')
+
+        It 'Should make the "bestPractices" section active' {
+
+            $Classes = $bestPracticesSection.GetAttribute('Class') -split "\s"
+            $Classes -contains 'active' | Should Be $True
+        }
+        It 'Should make the "bestPractices" section visible' {
+            $bestPracticesSection.Displayed | Should Be $True
+        }        
+        It 'The active nav sidebar item should be the one for "bestPractices"' {
+            
+            $ActiveSidebar = $Driver.FindElementByCssSelector('.nav-sidebar > li.active')
+            $ActiveSidebar.Text | Should Be 'Style & Best Practices'
+        }
+        It 'The "bestPractices" section should contain 6 panels' {
+            
+            $bestPracticesSection.FindElementsByClassName('panel-body').Count |
+            Should Be 6
+        }
+        It 'The "bestPractices" section should contain 1 "Per Function Information" table' {
+            
+            $bestPracticesPerFunctionTable.Count | Should Be 1
+        }
+        It 'The "Per Function Information" table should contain 3 buttons' {
+            
+            $bestPracticesPerFunctionTable.FindElementsByTagName('button').Count |
+            Should Be 3
+        }
+        It 'Clicking a button in the table should change the button text to "Collapse"' {
+            
+            $Button.Click()
+            $Button.Text | Should MatchExactly 'Collapse'
+        }
+        It 'Should show the table containing the findings details in the row where the button is' {
+            $Button.FindElementByXPath('following-sibling::table').Displayed | Should Be $True
+        }
+        It 'Clicking the button again should change the button text to "Expand"' {
+            
+            $Button.Click()
+            $Button.Text | Should MatchExactly 'Expand'
+        }
+        It 'Should hide the table containing the findings details in the row where the button is' {
+            Start-Sleep -Seconds 2
+            $Button.FindElementByXPath('following-sibling::table').Displayed | Should Be $False
+        }
     }
+    Context 'Given the "Maintainability" link in the sidebar has been clicked' {
+
+        $Driver.FindElementByLinkText('Maintainability').Click()
+        $maintainabilitySection = $Driver.FindElementById('maintainability')
+        $maintainabilityPerFunctionTable = $maintainabilitySection.FindElementsByCssSelector('div.table-responsive')
+
+        It 'Should make the "maintainability" section active' {
+            Start-Sleep -Seconds 2
+            $Classes = $maintainabilitySection.GetAttribute('Class') -split "\s"
+            $Classes -contains 'active' | Should Be $True
+        }
+        It 'Should make the "maintainability" section visible' {
+            $maintainabilitySection.Displayed | Should Be $True
+        }        
+        It 'The active nav sidebar item should be the one for "maintainability"' {
+            
+            $ActiveSidebar = $Driver.FindElementByCssSelector('.nav-sidebar > li.active')
+            $ActiveSidebar.Text | Should Be 'Maintainability'
+        }
+        It 'The "maintainability" section should contain 6 panels' {
+            
+            $maintainabilitySection.FindElementsByClassName('panel-body').Count |
+            Should Be 6
+        }
+        It 'The "maintainability" section should contain 1 "Per Function Information" table' {
+            
+            $maintainabilityPerFunctionTable.Count | Should Be 1
+        }
+    }
+    Context 'Given the "Tests" link in the sidebar has been clicked' {
+
+        $Driver.FindElementByLinkText('Tests').Click()
+        $testsSection = $Driver.FindElementById('tests')
+        $testsTablePanels = $testsSection.FindElementsByClassName('tablePanel')
+        $testsTableTitles = $testsTablePanels.FindElementsByClassName('panel-title')
+
+        It 'Should make the "Tests" section active' {
+            Start-Sleep -Seconds 2
+            $Classes = $testsSection.GetAttribute('Class') -split "\s"
+            $Classes -contains 'active' | Should Be $True
+        }
+        It 'Should make the "Tests" section visible' {
+            $testsSection.Displayed | Should Be $True
+        }        
+        It 'The active nav sidebar item should be the one for "Tests"' {
+            
+            $ActiveSidebar = $Driver.FindElementByCssSelector('.nav-sidebar > li.active')
+            $ActiveSidebar.Text | Should Be 'Tests'
+        }
+        It 'The "Tests" section should contain 6 panels' {
+            
+            $testsSection.FindElementsByClassName('panel-body').Count |
+            Should Be 6
+        }
+        It 'The "Tests" section should contain 1 "Failed Tests Details" table' {
+            ($testsTableTitles | Where-Object Text -eq 'Failed Tests Details').Count |
+            Should Be 1
+        }
+        It 'The "Tests" section should contain 1 "Per Function Information" table' {
+            ($testsTableTitles | Where-Object Text -eq 'Failed Tests Details').Count |
+            Should Be 1
+        }
+    }
+    $Driver.Quit()
 }
