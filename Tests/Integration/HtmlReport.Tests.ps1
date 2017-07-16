@@ -124,6 +124,8 @@ Describe 'HTML Report UI tests' {
     $Driver = New-Object OpenQA.Selenium.Chrome.ChromeDriver
     $Driver.Manage().Window.Maximize()
     $Driver.Navigate().GoToUrl($ReportUrl)
+    $summarySectionScreen = $Driver.GetScreenShot()
+    $summarySectionScreen.SaveAsFile("$($env:TEMP)\SummarySectionScreenshot.png", [OpenQA.Selenium.ScreenshotImageFormat]::Png)
 
     Context 'Given the "bestPractices" link in the sidebar has been clicked' {
 
@@ -131,6 +133,8 @@ Describe 'HTML Report UI tests' {
         $bestPracticesSection = $Driver.FindElementById('bestPractices')
         $bestPracticesPerFunctionTable = $bestPracticesSection.FindElementsByCssSelector('div.table-responsive')
         $Button = $bestPracticesPerFunctionTable.FindElementByTagName('button')
+        $bestPracticesSectionScreen = $Driver.GetScreenShot()
+        $bestPracticesSectionScreen.SaveAsFile("$($env:TEMP)\BestPracticesSectionScreenshot.png", [OpenQA.Selenium.ScreenshotImageFormat]::Png)
 
         It 'Should make the "bestPractices" section active' {
 
@@ -182,6 +186,8 @@ Describe 'HTML Report UI tests' {
         $Driver.FindElementByLinkText('Maintainability').Click()
         $maintainabilitySection = $Driver.FindElementById('maintainability')
         $maintainabilityPerFunctionTable = $maintainabilitySection.FindElementsByCssSelector('div.table-responsive')
+        $maintainabilitySectionScreen = $Driver.GetScreenShot()
+        $maintainabilitySectionScreen.SaveAsFile("$($env:TEMP)\MaintainabilitySectionScreenshot.png", [OpenQA.Selenium.ScreenshotImageFormat]::Png)
 
         It 'Should make the "maintainability" section active' {
             Start-Sleep -Seconds 2
@@ -212,6 +218,8 @@ Describe 'HTML Report UI tests' {
         $testsSection = $Driver.FindElementById('tests')
         $testsTablePanels = $testsSection.FindElementsByClassName('tablePanel')
         $testsTableTitles = $testsTablePanels.FindElementsByClassName('panel-title')
+        $testsSectionScreen = $Driver.GetScreenShot()
+        $testsSectionScreen.SaveAsFile("$($env:TEMP)\TestsSectionScreenshot.png", [OpenQA.Selenium.ScreenshotImageFormat]::Png)
 
         It 'Should make the "Tests" section active' {
             Start-Sleep -Seconds 2

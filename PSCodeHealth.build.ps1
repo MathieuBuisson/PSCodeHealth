@@ -99,12 +99,23 @@ task Upload_Test_Results_To_AppVeyor {
     }
 }
 
+task Upload_Test_Screenshots_To_Appveyor {
+    Write-TaskBanner -TaskName $Task.Name
+
+    $ScreenShots = Get-ChildItem -Path $Settings.ScreenshotPath
+    Foreach ( $ScreenShot in $ScreenShots ) {
+        "Uploading file $($Screenshot.Name) as an Appveyor artifact"
+        Push-AppveyorArtifact $ScreenShot.FullName
+    }
+}
+
 task Test Unit_Tests,
     Fail_If_Failed_Unit_Test,
     Publish_Unit_Tests_Coverage,
     Integration_Tests,
     Fail_If_Failed_Integration_Test,
-    Upload_Test_Results_To_AppVeyor
+    Upload_Test_Results_To_AppVeyor,
+    Upload_Test_Screenshots_To_Appveyor
 
 task Analyze {
     Write-TaskBanner -TaskName $Task.Name

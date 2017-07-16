@@ -56,4 +56,5 @@ $Settings = @{
     GitHubKey = $env:GitHub_Key
     Email = 'MathieuBuisson@users.noreply.github.com'
     Name = 'Mathieu Buisson'
+    ScreenshotPath = "$($env:TEMP)\*Screenshot.png"
 }
