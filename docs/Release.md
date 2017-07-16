@@ -1,3 +1,3 @@
-# 2017-06-18  
+# 2017-07-16  
 
-  - Add a 'FailedTestsDetails' property to health reports  
+  - Add 2 new compliance rules for metrics "ComplexityHighest" and "NestingDepthHighest"  

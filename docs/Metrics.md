@@ -54,7 +54,7 @@ The later a defect is detected, the more expensive (in time and money) it is to 
   - Fail : greater than 12  
 
 ### Complexity  
-This is the cyclomatic complexity of a given function. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluation code complexity.  
+This is the cyclomatic complexity of a given function. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluate code complexity.  
 
 Lower is better, because complex code tends to have the following properties :  
   - Difficult to read/understand  
@@ -195,7 +195,7 @@ The later a defect is detected, the more expensive (in time and money) it is to 
   - Fail : greater than 400  
 
 ### ComplexityAverage  
-This is the average cyclomatic complexity per function. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluation code complexity.  
+This is the average cyclomatic complexity per function. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluate code complexity.  
 
 Lower is better, because complex code tends to have the following properties :  
   - Difficult to read/understand  
@@ -210,6 +210,20 @@ Lower is better, because complex code tends to have the following properties :
 
 For more details on how the cyclomatic complexity is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).
 
+### ComplexityHighest  
+This is the cyclomatic complexity of the function which has the highest complexity value in the health report. Cyclomatic complexity measures the number of possible execution paths through a given section of code. This is intended to evaluate code complexity.  
+
+Lower is better, because complex code tends to have the following properties :  
+  - Difficult to read/understand  
+  - Difficult to test  
+  - More prone to defects  
+  - Make defects more difficult to identify
+  - More difficult and risky to change/refactor/maintain  
+
+#### Default thresholds : the double of the average ([Source](http://www.ndepend.com/docs/code-metrics#CC))  
+  - Warning : greater than 30  
+  - Fail : greater than 60  
+
 ### NestingDepthAverage  
 This is the average of **MaximumNestingDepth** per function.  
 MaximumNestingDepth is the depth of the most deeply nested code in a given function. This measures a different aspect of complexity from the "cyclomatic complexity", so these 2 metrics are complementary. The nesting depth of a piece of code is an indication of the complexity of its context.  
@@ -221,3 +235,13 @@ Again, lower is better.
   - Fail : greater than 8  
 
 For more details on how the maximum nesting depth is calculated, please refer to [this article](http://theshellnut.com/measuring-powershell-code-complexity-why-and-how/).  
+
+### NestingDepthHighest  
+This is the **MaximumNestingDepth** of the function which has the highest value in the health report.  
+MaximumNestingDepth is the depth of the most deeply nested code in a given function. This measures a different aspect of complexity from the "cyclomatic complexity", so these 2 metrics are complementary. The nesting depth of a piece of code is an indication of the complexity of its context.  
+
+Again, lower is better.  
+
+#### Default thresholds : the double of the average ([Source](http://www.ndepend.com/docs/code-metrics#ILNestingDepth))  
+  - Warning : greater than 8  
+  - Fail : greater than 16  
