@@ -104,7 +104,6 @@ task Upload_Test_Screenshots_To_Appveyor {
 
     $ScreenShots = Get-ChildItem -Path $Settings.ScreenshotPath
     Foreach ( $ScreenShot in $ScreenShots ) {
-        "Uploading file $($Screenshot.Name) as an Appveyor artifact"
         Push-AppveyorArtifact $ScreenShot.FullName
     }
 }
