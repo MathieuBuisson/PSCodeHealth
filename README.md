@@ -19,6 +19,9 @@ It can allow you to ensure that your code is compliant with metrics goals (quali
 
 These features can be leveraged from within your PowerShell release pipeline.  
 
+PSCodeHealth can also generate a highly visual HTML report so that you can interpret the results at a glance, and easily share them :  
+![HTML report - Summary section](https://raw.githubusercontent.com/MathieuBuisson/PSCodeHealth/master/Examples/SummarySectionScreenshot.png "HTML report - Summary section")
+
 Want to know more ? Head to the full documentation :  
 <http://pscodehealth.readthedocs.io/en/latest/>
 ## Requirements  
@@ -89,6 +92,15 @@ Publish-Coverage            18              1              False          0 %   
 Get-CoveragePercentage      16              2              False          100 %                0       
 
 ```
+
+To output the PSCodeHealth report as an HTML file, use `HtmlReportPath` parameter to specify the full path of the HTML file :
+
+```powershell
+C:\> Invoke-PSCodeHealth -Path '.\coveralls' -TestsPath '.\coveralls' -HtmlReportPath "$env:USERPROFILE\Desktop\Report.html"
+
+```
+  
+The above command will not output anything to the PowerShell pipeline, unless you add the `PassThru` parameter.  
 
 ## Contributing to PSCodeHealth
 
