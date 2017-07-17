@@ -112,6 +112,8 @@ Files    Functions        LOC (Average)    Findings (Total) Findings         Com
 
 ```
   
+## Generating an HTML report  
+
 To output the PSCodeHealth report as an HTML file, use the `HtmlReportPath` parameter to specify the full path of the HTML file :
 
 ```powershell
