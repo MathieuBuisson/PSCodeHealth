@@ -111,3 +111,12 @@ Files    Functions        LOC (Average)    Findings (Total) Findings         Com
 2        9                22.33            0                0                2                39.58 %        
 
 ```
+  
+To output the PSCodeHealth report as an HTML file, use the `HtmlReportPath` parameter to specify the full path of the HTML file :
+
+```powershell
+C:\> Invoke-PSCodeHealth -Path '.\coveralls' -TestsPath '.\coveralls' -HtmlReportPath "$env:USERPROFILE\Desktop\Report.html"
+
+```
+  
+The above command will not output anything to the PowerShell pipeline, unless you add the `PassThru` parameter.  

@@ -17,11 +17,18 @@ It can allow you to ensure that your code is compliant with metrics goals (quali
 
 These features can be leveraged from within you PowerShell release pipeline.  
 
-Want to know more ? Head to the full documentation :  
-<http://pscodehealth.readthedocs.io/en/latest/>
+PSCodeHealth can also generate a highly visual HTML report so that you can interpret the results at a glance, and easily share them.  
+For example, here is what the **Summary** tab looks like :  
+![HTML report - Summary section](https://raw.githubusercontent.com/MathieuBuisson/PSCodeHealth/master/Examples/SummarySectionScreenshot.png "HTML report - Summary section")  
+&nbsp;  
+
+And here is an example of what the **Style & Best Practices** tab looks like :  
+![HTML report - Style & Best Practices section](https://raw.githubusercontent.com/MathieuBuisson/PSCodeHealth/master/Examples/BestPracticesSectionScreenshot.png "HTML report - Style & Best Practices section")  
+
 ## Requirements  
 
 Before using PSCodeHealth, you need :  
   - PowerShell 5.x  
   - The **[Pester](https://github.com/pester/Pester)** PowerShell module (version 3.4.0 or later)  
   - The **[PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer)** PowerShell module  
+  - Internet access when opening the HTML report (to download some CSS and Javascript for Bootstrap, jQuery and Chart.js)  
