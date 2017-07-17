@@ -19,11 +19,13 @@ It can allow you to ensure that your code is compliant with metrics goals (quali
 
 These features can be leveraged from within your PowerShell release pipeline.  
 
-PSCodeHealth can also generate a highly visual HTML report so that you can interpret the results at a glance, and easily share them :  
-![HTML report - Summary section](https://raw.githubusercontent.com/MathieuBuisson/PSCodeHealth/master/Examples/SummarySectionScreenshot.png "HTML report - Summary section")
+PSCodeHealth can also generate a highly visual HTML report so that you can interpret the results at a glance, and easily share them.  
+For example, here is how the Summary tab looks like :  
+![HTML report - Summary section](https://raw.githubusercontent.com/MathieuBuisson/PSCodeHealth/master/Examples/SummarySectionScreenshot.png "HTML report - Summary section")  
 
-Want to know more ? Head to the full documentation :  
-<http://pscodehealth.readthedocs.io/en/latest/>
+And here is an example of how the "Style & Best Practices" tab looks like :  
+![HTML report - Style & Best Practices section](https://raw.githubusercontent.com/MathieuBuisson/PSCodeHealth/master/Examples/BestPracticesSectionScreenshot.png "HTML report - Style & Best Practices section")  
+
 ## Requirements  
 
 Before using PSCodeHealth, you need :  
@@ -101,6 +103,9 @@ C:\> Invoke-PSCodeHealth -Path '.\coveralls' -TestsPath '.\coveralls' -HtmlRepor
 ```
   
 The above command will not output anything to the PowerShell pipeline, unless you add the `PassThru` parameter.  
+
+Want to know more ? Head to the full documentation :  
+<http://pscodehealth.readthedocs.io/en/latest/>  
 
 ## Contributing to PSCodeHealth
 
