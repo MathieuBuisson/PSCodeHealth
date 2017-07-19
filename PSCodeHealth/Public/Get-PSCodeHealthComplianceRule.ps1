@@ -61,7 +61,7 @@ Function Get-PSCodeHealthComplianceRule {
         [ValidateSet('LinesOfCode','ScriptAnalyzerFindings','TestCoverage','CommandsMissed','Complexity','MaximumNestingDepth','LinesOfCodeTotal',
         'LinesOfCodeAverage','ScriptAnalyzerFindingsTotal','ScriptAnalyzerErrors','ScriptAnalyzerWarnings',
         'ScriptAnalyzerInformation','ScriptAnalyzerFindingsAverage','NumberOfFailedTests','TestsPassRate',
-        'CommandsMissedTotal','ComplexityAverage','NestingDepthAverage')]
+        'CommandsMissedTotal','ComplexityAverage','ComplexityHighest','NestingDepthAverage','NestingDepthHighest')]
         [string[]]$MetricName
     )
 
