@@ -3,9 +3,9 @@
 As seen in the page [**Check if my code meets metrics goals**](http://pscodehealth.readthedocs.io/en/latest/HowDoI/CheckCodeCompliance/), **PSCodeHealth** comes with a set of default compliance rules which help determining if the analyzed code is doing well (or not so well) for any given metric.  
 
 These default compliance rules are based on community consensus, thresholds from reference projects, or other code quality tools.  
-But your requirements or metrics goals for different project(s) may differ from these defaults, so you may need to customize the warning/fail threshold for 1, some, or all metrics.  
+But your requirements or metrics goals for different project(s) may differ from these defaults, so you may need to customize the warning/fail thresholds for 1, some, or all metrics.  
 
-As reminder, here is how to view all the default compliance rules :  
+As a reminder, here is how to view all the default compliance rules :  
 
 ```powershell
 PS C:\> Get-PSCodeHealthComplianceRule
@@ -40,7 +40,8 @@ NestingDepthHighest           OverallMetrics     8                 16           
 
 The default compliance rules built into **PSCodeHealth** are stored in the file **PSCodeHealthSettings.json** in the module root. To customize the thresholds for some metrics, it is strongly **NOT** recommended to modify this file, but to create a new JSON file containing the rules you need to override.  
 
-For example, you may have a specific project which require `Switch` statements containing large numbers of clauses. This has a high impact on the **Complexity** metric, even though in this specific case, the code is still readable and fairly easy to maintain. In other words, the **Complexity** metric (based on Cyclomatic Complexity) doesn't properly reflect complexity for your particular project.  
+For example, you may have a specific project which require `Switch` statements containing large numbers of clauses.  
+This has a high impact on the **Complexity** metric, even though in this specific case, the code is still readable and fairly easy to maintain. In other words, the **Complexity** metric (based on Cyclomatic Complexity) doesn't properly reflect complexity for your particular project.  
 So you decide to increase all the complexity-related thresholds by 10.  
 
 To view the default compliance rules for all complexity-related metrics, run the following command :  
@@ -124,7 +125,7 @@ NestingDepthHighest           OverallMetrics     8                 16           
 
 ```
 
-To verify that the complexity-related compliance rules are overidden by your custom rules, run the following :  
+To verify that the complexity-related compliance rules are overridden by your custom rules, run the following :  
 
 ```powershell
 PS C:\> $ComplexityMetrics = 'Complexity','ComplexityAverage','ComplexityHighest'
@@ -174,6 +175,7 @@ NestingDepthHighest           8                  16                3            
 
 ```
 
-Looking at the "Warning Threshold" and "Fail Threshold" columns above, we can see that the complexity-related metrics get the custom thresholds defined in the file `MyProjectSettings.json`.  
+Looking at the **Warning Threshold** and **Fail Threshold** columns above, we can see that the complexity-related metrics get the custom thresholds defined in the file `MyProjectSettings.json`.  
+
 Also, the compliance results for the complexity-related metrics are now based on the customized thresholds.  
 For example, the average complexity value of 24, would be a **Warning** according to the default compliance rule for this metric, but it is now a **Pass**.  

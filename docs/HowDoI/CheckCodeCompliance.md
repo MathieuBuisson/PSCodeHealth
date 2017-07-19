@@ -138,7 +138,7 @@ Also, if you use `Invoke-PSCodeHealth` to generate an HTML report, many HTML ele
 ## Checking some PowerShell code against specific compliance rules  
 
 Just like for `Get-PSCodeHealthComplianceRule`, `Test-PSCodeHealthCompliance` has the `SettingsGroup` and `MetricName` parameters, which can be used to filter compliance results.  
-The `SettingsGroup` parameter filters the compliance results for a specific group of metrics (OverallMetrics or PerFunctionMetrics).  
+The `SettingsGroup` parameter filters the compliance results for a specific group of metrics (**OverallMetrics** or **PerFunctionMetrics**).  
 The `MetricName` parameter filters the compliance results for 1 or more metric(s).  
 They can even be used in combination :  
 
