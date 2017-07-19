@@ -40,8 +40,9 @@ NestingDepthHighest           OverallMetrics     8                 16           
 
 The default compliance rules built into **PSCodeHealth** are stored in the file **PSCodeHealthSettings.json** in the module root. To customize the thresholds for some metrics, it is strongly **NOT** recommended to modify this file, but to create a new JSON file containing the rules you need to override.  
 
-For example, you may have a specific project which require `Switch` statements containing large numbers of clauses.  
-This has a high impact on the **Complexity** metric, even though in this specific case, the code is still readable and fairly easy to maintain. In other words, the **Complexity** metric (based on Cyclomatic Complexity) doesn't properly reflect complexity for your particular project.  
+For example, you may have a specific project which requires `Switch` statements containing large numbers of clauses.  
+This has a high impact on the **Complexity** metric, even though in this particular case the code is still fairly easy to read and maintain.  
+In other words, the **Complexity** metric (based on Cyclomatic Complexity) doesn't properly reflect the complexity of your particular project.  
 So you decide to increase all the complexity-related thresholds by 10.  
 
 To view the default compliance rules for all complexity-related metrics, run the following command :  
@@ -140,7 +141,7 @@ ComplexityHighest             OverallMetrics     40                70           
 
 ```
 
-## checking if your code meets your customized compliance rules  
+## Checking if your code meets your customized compliance rules  
 
 Now, that you have compliance rules matching the metrics goals for your particular project/needs, you can use **PSCodeHealth** to verify how your PowerShell code is doing against these goals, like so :  
 
