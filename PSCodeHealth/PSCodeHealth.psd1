@@ -24,7 +24,7 @@ Author = 'Mathieu Buisson'
 CompanyName = 'Unknown'
 
 # Copyright statement for this module
-Copyright = '(c) 2016 Mathieu Buisson. All rights reserved.'
+Copyright = '(c) 2017 Mathieu Buisson. All rights reserved.'
 
 # Description of the functionality provided by this module
 Description = 'This module allows you to measure the quality and maintainability of your PowerShell code, based on a variety of metrics.'

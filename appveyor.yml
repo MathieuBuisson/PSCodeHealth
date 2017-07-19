@@ -7,6 +7,8 @@ environment:
     secure: 0eJvIYA/nSAW0zBTrjkNZ+7s76G3zGM5Oas2iWJicIwjZnRraAbtzrCCb8ndVMhq
   GitHub_Key:
     secure: wtrwAJK+i7Ar5L8TXeXOUtsxmVD+2wXu9u9bOf6GRfPP0Xn2V4yqTatLwaT7VWA6
+  PSGallery_Key:
+    secure: 1OaraGK9SJwOoGVdOHdM1DH5rvfL2AcDfvUFvrMxKYIkqJ0LIw3rwe4nUhxMgBfE
 
 before_build:
   - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"

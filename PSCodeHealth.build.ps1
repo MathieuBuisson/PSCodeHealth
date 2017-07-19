@@ -226,6 +226,13 @@ task Copy_Source_To_Build_Output {
     Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
 }
 
+task Publish_Module_To_PSGallery {
+    Write-TaskBanner -TaskName $Task.Name
+
+    Remove-Module -Name 'PSCodeHealth' -Force -ErrorAction SilentlyContinue
+    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey
+}
+
 # Default task :
 task . Clean,
     Install_Dependencies,
@@ -235,4 +242,5 @@ task . Clean,
     Build_Documentation,
     Set_Module_Version,
     Push_Build_Changes_To_Repo,
-    Copy_Source_To_Build_Output
+    Copy_Source_To_Build_Output,
+    Publish_Module_To_PSGallery

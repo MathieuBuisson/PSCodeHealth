@@ -57,4 +57,6 @@ $Settings = @{
     Email = 'MathieuBuisson@users.noreply.github.com'
     Name = 'Mathieu Buisson'
     ScreenshotPath = "$($env:TEMP)\*Screenshot.png"
+    PSGalleryKey = $env:PSGallery_Key
+    OutputModulePath = "$PSScriptRoot\BuildOutput\$($env:APPVEYOR_PROJECT_NAME)"
 }
