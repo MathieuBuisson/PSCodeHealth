@@ -13,7 +13,6 @@ environment:
 before_build:
   - ps: Write-Host "Build version :`  $env:APPVEYOR_BUILD_VERSION"
   - ps: Write-Host "Branch        :`  $env:APPVEYOR_REPO_BRANCH"
-  - ps: Install-PackageProvider -Name NuGet -Force
   - ps: Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
   - ps: Install-Module InvokeBuild -Scope CurrentUser -AllowClobber -Force
   - ps: Import-Module InvokeBuild
