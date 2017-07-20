@@ -230,7 +230,10 @@ task Publish_Module_To_PSGallery {
     Write-TaskBanner -TaskName $Task.Name
 
     Remove-Module -Name 'PSCodeHealth' -Force -ErrorAction SilentlyContinue
-    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey
+
+    Write-Host "OutputModulePath : $($Settings.OutputModulePath)"
+    Write-Host "PSGalleryKey : $($Settings.PSGalleryKey)"
+    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey -Verbose -ErrorAction Stop
 }
 
 # Default task :
