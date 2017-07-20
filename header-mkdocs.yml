@@ -11,5 +11,6 @@ pages:
   - Getting Started: GettingStarted.md
   - Metrics collected by PSCodeHealth: Metrics.md
   - How do I ...:
+    - Create and interpret a PSCodeHealth HTML report: HowDoI/HtmlReport.md
     - Check if my code meets metrics goals: HowDoI/CheckCodeCompliance.md
     - Customize compliance rules according to my metrics goals: HowDoI/CustomizeComplianceRules.md
