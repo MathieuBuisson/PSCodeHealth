@@ -233,7 +233,7 @@ task Publish_Module_To_PSGallery {
 
     Write-Host "OutputModulePath : $($Settings.OutputModulePath)"
     Write-Host "PSGalleryKey : $($Settings.PSGalleryKey)"
-    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey -Verbose -ErrorAction Stop
+    Publish-Module -Path $Settings.OutputModulePath -NuGetApiKey $Settings.PSGalleryKey -Verbose
 }
 
 # Default task :
