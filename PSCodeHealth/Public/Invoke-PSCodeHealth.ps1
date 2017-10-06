@@ -114,8 +114,10 @@ Function Invoke-PSCodeHealth {
         [switch]$PassThru
 
     )
-    If ( -not($PSBoundParameters.ContainsKey('Path')) ) {
-
+    If ( $PSBoundParameters.ContainsKey('Path') ) {
+        $Path = (Resolve-Path -Path $Path).Path
+    }
+    Else {
         If ( $PWD.Provider.Name -eq 'FileSystem' ) {
             $Path = $PWD.ProviderPath
         }
