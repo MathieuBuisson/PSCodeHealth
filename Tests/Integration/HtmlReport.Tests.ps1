@@ -2,7 +2,9 @@ $ModuleName = 'PSCodeHealth'
 Import-Module "$PSScriptRoot\..\..\$ModuleName\$($ModuleName).psd1" -Force
 $CodePath = "$PSScriptRoot\..\TestData\coveralls"
 $ReportPath = "$($env:TEMP)\Report.html"
-Add-Type -Path 'C:\Program Files\PackageManagement\NuGet\Packages\Selenium.WebDriver.3.4.0\lib\net40\WebDriver.dll'
+$DllPattern = 'C:\Program Files\PackageManagement\NuGet\Packages\*\lib\net40\WebDriver.dll'
+$DllPath = (Get-ChildItem -Path $DllPattern | Select-Object -First 1).FullName
+Add-Type -Path $DllPath
 
 Describe 'Invoke-PSCodeHealth HTML report' {
 
