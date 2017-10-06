@@ -24,12 +24,12 @@ Describe 'New-PSCodeHealthTableData' {
 
             It 'Should have 1 best practices row for each function' {
                 Foreach ( $Function in $FunctionNames ) {
-                    "$TestDrive\BestPracticesRows.txt" | Should Contain "<td>$Function</td>"
+                    "$TestDrive\BestPracticesRows.txt" | Should -FileContentMatch "<td>$Function</td>"
                 }
             }
             It 'Should have 1 maintainability row for each function' {
                 Foreach ( $Function in $FunctionNames ) {
-                    "$TestDrive\MaintainabilityRows.txt" | Should Contain "<td>$Function</td>"
+                    "$TestDrive\MaintainabilityRows.txt" | Should -FileContentMatch "<td>$Function</td>"
                 }
             }
             It 'Should have 1 failed test row for each failed test' {
@@ -39,7 +39,7 @@ Describe 'New-PSCodeHealthTableData' {
             }
             It 'Should have 1 test coverage row for each function' {
                 Foreach ( $Function in $FunctionNames ) {
-                    "$TestDrive\CoverageRows.txt" | Should Contain "<td>$Function</td>"
+                    "$TestDrive\CoverageRows.txt" | Should -FileContentMatch "<td>$Function</td>"
                 }
             }
         }
