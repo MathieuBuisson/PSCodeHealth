@@ -49,8 +49,8 @@ Function Set-PSCodeHealthPlaceholdersValue {
         $PlaceholderPattern = '{{{0}}}' -f $Placeholder.Key
 
         # Handling values containing a collection
-        $PlaceholderValue = If ( $($Placeholder.Value).Count -gt 1 ) { $Placeholder.Value | Out-String } Else { $Placeholder.Value }
-        $Html = $Html.ForEach('Replace', $PlaceholderPattern, $PlaceholderValue)
+        $PlaceholderValue = If ( $($Placeholder.Value).Count -ne 1 ) { $Placeholder.Value | Out-String } Else { $Placeholder.Value }
+        $Html = $Html.ForEach('Replace', $PlaceholderPattern, [string]$PlaceholderValue)
     }
     $Html
 }
