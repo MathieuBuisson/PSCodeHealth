@@ -32,7 +32,13 @@ Function Get-FunctionDefinition {
 
             $PowerShellFile = (Resolve-Path -Path $PowerShellFile).Path
             $FileAst = [System.Management.Automation.Language.Parser]::ParseFile($PowerShellFile, [ref]$Null, [ref]$Null)
-            $FileFunctions = $FileAst.FindAll({ $args[0] -is [System.Management.Automation.Language.FunctionDefinitionAst] }, $False)
+            
+            $AstToInclude = [System.Management.Automation.Language.FunctionDefinitionAst]
+            # Excluding class methods, since we don't support classes
+            $AstToExclude = [System.Management.Automation.Language.FunctionMemberAst]
+
+            $Predicate = { $args[0] -is $AstToInclude -and $args[0].Parent -isnot $AstToExclude }
+            $FileFunctions = $FileAst.FindAll($Predicate, $False)
             If ( $FileFunctions ) {
                 Foreach ( $FunctionName in $FileFunctions.Name ) {
                     Write-VerboseOutput -Message "Found function : $FunctionName"
