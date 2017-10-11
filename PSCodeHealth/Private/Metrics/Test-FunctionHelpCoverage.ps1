@@ -3,7 +3,8 @@ Function Test-FunctionHelpCoverage {
 .SYNOPSIS
     Tells whether or not the specified function definition contains help information.
 .DESCRIPTION
-    Tells whether or not the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst] contains help information (a CommentHelpInfo object).
+    Tells whether or not the specified function definition specified as a [System.Management.Automation.Language.FunctionDefinitionAst] contains help information.
+    This function returns $True if the specified function definition AST has a CommentHelpInfo or if the function name is listed in an external help file.
 
 .PARAMETER FunctionDefinition
     To specify the function definition to analyze.
@@ -27,8 +28,9 @@ Function Test-FunctionHelpCoverage {
     )
     
     $FunctionHelpInfo = $FunctionDefinition.GetHelpContent()
-    $CommentBasedHelpPresent = $FunctionHelpInfo -is [System.Management.Automation.Language.CommentHelpInfo]
-    $ExternalHelpPresent = $FunctionDefinition.Name -in $Script:ExternalHelpCommandNames
+    [bool]$CommentBasedHelpPresent = $FunctionHelpInfo -is [System.Management.Automation.Language.CommentHelpInfo]
+    
+    [bool]$ExternalHelpPresent = $FunctionDefinition.Name -in $Script:ExternalHelpCommandNames
     $HelpPresent = $CommentBasedHelpPresent -or $ExternalHelpPresent
     return $HelpPresent
 }
