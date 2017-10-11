@@ -20,6 +20,7 @@ pages:
     - Test-PSCodeHealthCompliance: PublicFunctions/Test-PSCodeHealthCompliance.md
 
   - Internal Functions:
+    - Get-ExternalHelpCommand: InternalFunctions/Get-ExternalHelpCommand.md
     - Get-PowerShellFile: InternalFunctions/Get-PowerShellFile.md
     - Merge-PSCodeHealthSetting: InternalFunctions/Merge-PSCodeHealthSetting.md
     - New-FailedTestsInfo: InternalFunctions/New-FailedTestsInfo.md
