@@ -1,0 +1,632 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml">
+
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Get-PlasterTemplate</command:name>
+<command:verb>Get</command:verb>
+<command:noun>PlasterTemplate</command:noun>
+<maml:description><maml:para>Retrieves a list of available Plaster templates that can be used with the Invoke-Plaster cmdlet.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Retrieves a list of available Plaster templates from the specified path or from the set of templates that are shipped with Plaster.  Specifying no arguments will cause only the built-in Plaster templates to be returned.  Using the -IncludeInstalledModules switch will also search the PSModulePath for PowerShell modules that advertise Plaster templates that they include.
+</maml:para>
+<maml:para>
+</maml:para>
+<maml:para>The objects returned from this cmdlet will provide details about each individual template that was retrieved.  Use the TemplatePath property of a template object as the input to Invoke-Plaster's -TemplatePath parameter.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Get-PlasterTemplate</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="IncludeModules"><maml:name>IncludeInstalledModules</maml:name>
+<maml:Description><maml:para>Initiates a search for Plaster templates inside of installed modules.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+<command:syntaxItem><maml:name>Get-PlasterTemplate</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>Path</maml:name>
+<maml:Description><maml:para>Specifies a path to a folder containing a Plaster template or multiple template folders. Can also be a path to plasterManifest.xml.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Recurse</maml:name>
+<maml:Description><maml:para>Indicates that this cmdlet gets the items in the specified locations and in all child items of the locations.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="IncludeModules"><maml:name>IncludeInstalledModules</maml:name>
+<maml:Description><maml:para>Initiates a search for Plaster templates inside of installed modules.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>Path</maml:name>
+<maml:Description><maml:para>Specifies a path to a folder containing a Plaster template or multiple template folders. Can also be a path to plasterManifest.xml.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Recurse</maml:name>
+<maml:Description><maml:para>Indicates that this cmdlet gets the items in the specified locations and in all child items of the locations.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>The first positional parameter is a filesystem path under which templates might be found.  The -Recurse switch will cause this path to be searched recursively.
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Object</maml:name>
+</dev:type>
+<maml:description><maml:para>This output object provides the following properties:
+</maml:para>
+<maml:para>- Title: The title of the template
+</maml:para>
+<maml:para>- Author: The author of the template
+</maml:para>
+<maml:para>- Version: The version of the template
+</maml:para>
+<maml:para>- Description: Text describing the template and what it creates
+</maml:para>
+<maml:para>- Tags: A list of tag strings which categorize the template
+</maml:para>
+<maml:para>- TemplatePath: The template's folder path in the filesystem
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>Example 1</maml:title>
+<dev:code>PS C:\&gt; $templates = Get-PlasterTemplate
+
+PS C:\&gt; Invoke-Plaster -TemplatePath $templates[0].TemplatePath -DestinationPath ~\GitHub\NewModule</dev:code>
+<dev:remarks><maml:para>This will get the list of built-in Plaster templates.  The first template returned is then used to create a new module at the specifed path.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 2</maml:title>
+<dev:code>PS C:\&gt; $templates = Get-PlasterTemplate -IncludeInstalledModules
+
+PS C:\&gt; Invoke-Plaster -TemplatePath $templates[0].TemplatePath -DestinationPath ~\GitHub\NewModule</dev:code>
+<dev:remarks><maml:para>This will get a list of Plaster templates, both built-in and included with installed modules.  The first template returned is then used to create a new module at the specifed path.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>Example 3</maml:title>
+<dev:code>PS C:\&gt; $templates = Get-PlasterTemplate -Path c:\MyPlasterTemplates -Recurse
+
+PS C:\&gt; Invoke-Plaster -TemplatePath $templates[0].TemplatePath -DestinationPath ~\GitHub\NewModule</dev:code>
+<dev:remarks><maml:para>This will get a list of Plaster templates found recursively under c:\MyPlasterTemplates The first template returned is then used to create a new module at the specifed path.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Get-PlasterTemplate.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Invoke-Plaster</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Invoke-Plaster.md</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Invoke-Plaster</command:name>
+<command:verb>Invoke</command:verb>
+<command:noun>Plaster</command:noun>
+<maml:description><maml:para>Invokes the specified Plaster template which will scaffold out a file or a set of files and directories.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Invokes the specified Plaster template which will scaffold out a file or a set of files and directories.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Invoke-Plaster</maml:name>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>TemplatePath</maml:name>
+<maml:Description><maml:para>Specifies the path to the template directory.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none"><maml:name>DestinationPath</maml:name>
+<maml:Description><maml:para>Specifies the path to directory in which the template will use as a root directory when generating files. If the directory does not exist, it will be created.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Force</maml:name>
+<maml:Description><maml:para>Specify Force to override user prompts for conflicting handling. This will override the confirmation prompt and allow the template to overwrite existing files.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>NoLogo</maml:name>
+<maml:Description><maml:para>Suppresses the display of the Plaster logo.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none"><maml:name>DestinationPath</maml:name>
+<maml:Description><maml:para>Specifies the path to directory in which the template will use as a root directory when generating files. If the directory does not exist, it will be created.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>Force</maml:name>
+<maml:Description><maml:para>Specify Force to override user prompts for conflicting handling. This will override the confirmation prompt and allow the template to overwrite existing files.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>NoLogo</maml:name>
+<maml:Description><maml:para>Suppresses the display of the Plaster logo.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>TemplatePath</maml:name>
+<maml:Description><maml:para>Specifies the path to the template directory.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes></command:inputTypes>
+<command:returnValues></command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Invoke-Plaster -TemplatePath . -Destination ~\GitHub\NewModule</dev:code>
+<dev:remarks><maml:para>This will invoke the Plaster template in the current directory. The template will generate any files and directories in the ~\GitHub\NewModule directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+<dev:code>Invoke-Plaster -TemplatePath . -Destination ~\GitHub\NewModule -ModuleName Foo -Version 1.0.0</dev:code>
+<dev:remarks><maml:para>This will invoke the Plaster template in the current directory using dynamic parameters ModuleName and Version extracted from the parameters section of the manifest file. The template will generate any files and directories in the ~\GitHub\NewModule directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Invoke-Plaster.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>New-PlasterManifest</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/New-PlasterManifest.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Test-PlasterManifest</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Test-PlasterManifest.md</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>New-PlasterManifest</command:name>
+<command:verb>New</command:verb>
+<command:noun>PlasterManifest</command:noun>
+<maml:description><maml:para>Creates a new Plaster template manifest file.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>The New-PlasterManifest command creates a new Plaster manifest file, populates its values, and saves the manifest file in the specified path.
+</maml:para>
+<maml:para>Template authors can use this command to create a manifest for their template. A template manifest is a file named plasterManifest.xml or plasterManifest_&lt;culture-name&gt;.xml. The information stored in the manifest is used to scaffold files and folders.
+</maml:para>
+<maml:para>The metadata section of the manifest is used to supply information about the template e.g. a unique id, name, version, title, author and tags.
+</maml:para>
+<maml:para>The parameters section of the manifest is used to describe choices the template user can choose from. Those choices are then used to conditionally create files and folders and modify existing files under the specified destination path.
+</maml:para>
+<maml:para>The content section is used to specify what actions the template will perform under the user's chosen destination directory. This includes copying files to the destination, copy &amp; expanding template files, modifying files, verifying required modules are installed and displaying messages to the user.
+</maml:para>
+<maml:para>See the help topic about_Plaster_CreatingAManifest for more details on authoring a Plaster manifest file.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>New-PlasterManifest</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>Path</maml:name>
+<maml:Description><maml:para>Specifies the path and file name of the new Plaster manifest. Enter a path and file name with a .xml extension, such as $pshome\Modules\MyPlasterTemplate\plasterManifest.xml. NOTE: Plaster requires the manifest file be named either plasterManifest.xml OR plasterManifest_&lt;culture-name&gt;.xml e.g. plasterManifest_fr-FR.xml. The default, if no value is provided is to create plasterManifest.xml in the current directory.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>"$pwd\plasterManifest.xml"</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none"><maml:name>TemplateName</maml:name>
+<maml:Description><maml:para>Specifies the name of the template. A template name is required. For localized manifests, this value should not be localized. The name is limited to the characters: aA-zZ0-9_-.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>Id</maml:name>
+<maml:Description><maml:para>Unique identifier for all versions of this template. The id is a GUID. Use the same id for each version of your template. This will prevent editor environments from listing multiple, installed versions of your template. When you keep your template id the same, the editor will list only the latest version of your template.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Guid</command:parameterValue>
+<dev:type><maml:name>Guid</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>[guid]::NewGuid()</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>TemplateVersion</maml:name>
+<maml:Description><maml:para>Specifies the version of the template.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>1.0.0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none"><maml:name>Title</maml:name>
+<maml:Description><maml:para>Title of the Plaster template. This string is typically used in an editor like VSCode when displaying a list of Plaster templates. A typical title might be "New DSC Resource" or "New PowerShell Module".
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>$Name</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none"><maml:name>Description</maml:name>
+<maml:Description><maml:para>Description of the Plaster template. This describes what the the template is for. It is typically used in an editor like VSCode when displaying additional information about a Plaster template. A typical title might be "Creates files required for a PowerShell module with optional support for Pester tests, building with psake and publishing to the PowerShell Gallery."
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none"><maml:name>Tags</maml:name>
+<maml:Description><maml:para>Specifies an array of tags for the template. Users can search for templates based on these tags.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none"><maml:name>Author</maml:name>
+<maml:Description><maml:para>Specifies the author of the template.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>AddContent</maml:name>
+<maml:Description><maml:para>If specified, the contents of the directory the manifest is being created in will be added to the manifest's content element.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none"><maml:name>AddContent</maml:name>
+<maml:Description><maml:para>If specified, the contents of the directory the manifest is being created in will be added to the manifest's content element.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="7" aliases="none"><maml:name>Author</maml:name>
+<maml:Description><maml:para>Specifies the author of the template.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf"><maml:name>Confirm</maml:name>
+<maml:Description><maml:para>Prompts you for confirmation before running the cmdlet.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="5" aliases="none"><maml:name>Description</maml:name>
+<maml:Description><maml:para>Description of the Plaster template. This describes what the the template is for. It is typically used in an editor like VSCode when displaying additional information about a Plaster template. A typical title might be "Creates files required for a PowerShell module with optional support for Pester tests, building with psake and publishing to the PowerShell Gallery."
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="2" aliases="none"><maml:name>Id</maml:name>
+<maml:Description><maml:para>Unique identifier for all versions of this template. The id is a GUID. Use the same id for each version of your template. This will prevent editor environments from listing multiple, installed versions of your template. When you keep your template id the same, the editor will list only the latest version of your template.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">Guid</command:parameterValue>
+<dev:type><maml:name>Guid</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>[guid]::NewGuid()</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none"><maml:name>Path</maml:name>
+<maml:Description><maml:para>Specifies the path and file name of the new Plaster manifest. Enter a path and file name with a .xml extension, such as $pshome\Modules\MyPlasterTemplate\plasterManifest.xml. NOTE: Plaster requires the manifest file be named either plasterManifest.xml OR plasterManifest_&lt;culture-name&gt;.xml e.g. plasterManifest_fr-FR.xml. The default, if no value is provided is to create plasterManifest.xml in the current directory.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>"$pwd\plasterManifest.xml"</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="6" aliases="none"><maml:name>Tags</maml:name>
+<maml:Description><maml:para>Specifies an array of tags for the template. Users can search for templates based on these tags.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none"><maml:name>TemplateName</maml:name>
+<maml:Description><maml:para>Specifies the name of the template. A template name is required. For localized manifests, this value should not be localized. The name is limited to the characters: aA-zZ0-9_-.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>None</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="3" aliases="none"><maml:name>TemplateVersion</maml:name>
+<maml:Description><maml:para>Specifies the version of the template.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>1.0.0</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="4" aliases="none"><maml:name>Title</maml:name>
+<maml:Description><maml:para>Title of the Plaster template. This string is typically used in an editor like VSCode when displaying a list of Plaster templates. A typical title might be "New DSC Resource" or "New PowerShell Module".
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String</command:parameterValue>
+<dev:type><maml:name>String</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>$Name</dev:defaultValue>
+</command:parameter>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi"><maml:name>WhatIf</maml:name>
+<maml:Description><maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+<dev:type><maml:name>SwitchParameter</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>False</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>None</maml:name>
+</dev:type>
+<maml:description><maml:para>You cannot pipe input to this cmdlet.
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>None</maml:name>
+</dev:type>
+<maml:description><maml:para>
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>New-PlasterManifest -TemplateName NewPowerShellItem</dev:code>
+<dev:remarks><maml:para>Creates a basic plasterManifest.xml file in the current directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+<dev:code>New-PlasterManifest -TemplateName NewPowerShellItem -TemplateVersion 0.1.0 -Description "Some description." -Tags Module, Publish,Build</dev:code>
+<dev:remarks><maml:para>Creates a plasterManifest.xml file in the current directory with the version set to 0.1.0 and with the Description and Tags elements populated.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>-------------------------- EXAMPLE 3 --------------------------</maml:title>
+<dev:code>New-PlasterManifest -TemplateName NewPowerShellItem -AddContent</dev:code>
+<dev:remarks><maml:para>Creates a plasterManifest.xml file in the current directory with the content element filled in with all the files (except for any plasterManifest files) in and below the specified directory which defaults to the current directory.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/New-PlasterManifest.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Invoke-Plaster</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Invoke-Plaster.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Test-PlasterManifest</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Test-PlasterManifest.md</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+<command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+<command:details><command:name>Test-PlasterManifest</command:name>
+<command:verb>Test</command:verb>
+<command:noun>PlasterManifest</command:noun>
+<maml:description><maml:para>Verifies that a plaster manifest file is a valid.
+</maml:para>
+</maml:description>
+</command:details>
+<maml:description><maml:para>Verifies that a plaster manifest file is a valid. If there are any errors, the details of the errors can be viewed by using the Verbose parameter.
+</maml:para>
+</maml:description>
+<command:syntax><command:syntaxItem><maml:name>Test-PlasterManifest</maml:name>
+<command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="PSPath"><maml:name>Path</maml:name>
+<maml:Description><maml:para>Specifies a path to a plasterManifest.xml file.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>"$pwd\plasterManifest.xml"</dev:defaultValue>
+</command:parameter>
+</command:syntaxItem>
+</command:syntax>
+<command:parameters><command:parameter required="false" variableLength="true" globbing="false" pipelineInput="True (ByPropertyName, ByValue)" position="0" aliases="PSPath"><maml:name>Path</maml:name>
+<maml:Description><maml:para>Specifies a path to a plasterManifest.xml file.
+</maml:para>
+</maml:Description>
+<command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+<dev:type><maml:name>String[]</maml:name>
+<maml:uri /></dev:type>
+<dev:defaultValue>"$pwd\plasterManifest.xml"</dev:defaultValue>
+</command:parameter>
+</command:parameters>
+<command:inputTypes><command:inputType><dev:type><maml:name>System.String</maml:name>
+</dev:type>
+<maml:description><maml:para>You can pipe the path to a plaster manifest to Test-PlasterManifest.
+</maml:para>
+</maml:description>
+</command:inputType>
+</command:inputTypes>
+<command:returnValues><command:returnValue><dev:type><maml:name>System.Xml.XmlDocument</maml:name>
+</dev:type>
+<maml:description><maml:para>Test-PlasterManifest returns a System.Xml.XmlDocument if the manifest is valid. Otherwise it returns $null.
+</maml:para>
+</maml:description>
+</command:returnValue>
+</command:returnValues>
+<maml:alertSet><maml:alert><maml:para>
+</maml:para>
+</maml:alert>
+</maml:alertSet>
+<command:examples><command:example><maml:title>-------------------------- EXAMPLE 1 --------------------------</maml:title>
+<dev:code>Test-PlasterManifest MyTemplate\plasterManifest.xml</dev:code>
+<dev:remarks><maml:para>Verifies that the plasterManifest.xml file in the MyTemplate sub-directory is valid.
+</maml:para>
+</dev:remarks>
+</command:example>
+<command:example><maml:title>-------------------------- EXAMPLE 2 --------------------------</maml:title>
+<dev:code>Test-PlasterManifest plasterManifest.xml -Verbose</dev:code>
+<dev:remarks><maml:para>Verifies that the plasterManifest.xml file in the current directory is valid. If there are any validation errors, using -Verbose will display the details of those errors.
+</maml:para>
+</dev:remarks>
+</command:example>
+</command:examples>
+<command:relatedLinks><maml:navigationLink><maml:linkText>Online Version:</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Test-PlasterManifest.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>Invoke-Plaster</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/Invoke-Plaster.md</maml:uri>
+</maml:navigationLink>
+<maml:navigationLink><maml:linkText>New-PlasterManifest</maml:linkText>
+<maml:uri>https://github.com/PowerShell/Plaster/blob/master/docs/en-US/New-PlasterManifest.md</maml:uri>
+</maml:navigationLink>
+</command:relatedLinks>
+</command:command>
+</helpItems>

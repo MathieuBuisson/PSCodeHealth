@@ -127,6 +127,7 @@ Function Invoke-PSCodeHealth {
     }
     
     If ( (Get-Item -Path $Path).PSIsContainer ) {
+        $ExternalHelpSearchRoot = $Path
         If ( $PSBoundParameters.ContainsKey('Exclude') ) {
             $PowerShellFiles = Get-PowerShellFile -Path $Path -Recurse:$($Recurse.IsPresent) -Exclude $Exclude
         }
@@ -135,6 +136,7 @@ Function Invoke-PSCodeHealth {
         }
     }
     Else {
+        $ExternalHelpSearchRoot = Split-Path -Path $Path -Parent
         $PowerShellFiles = $Path
     }
 
@@ -145,6 +147,7 @@ Function Invoke-PSCodeHealth {
         Write-VerboseOutput -Message 'Found the following PowerShell files in the directory :'
         Write-VerboseOutput -Message "$($PowerShellFiles | Out-String)"
     }
+    $Script:ExternalHelpCommandNames = Get-ExternalHelpCommand -Path $ExternalHelpSearchRoot
 
     $FunctionDefinitions = Get-FunctionDefinition -Path $PowerShellFiles
     [System.Collections.ArrayList]$FunctionHealthRecords = @()

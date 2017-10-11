@@ -10,6 +10,7 @@ Foreach ( $Import in @($Public + $Private) ) {
         Write-Error -Message "Failed to import function $($Import.FullName): $_"
     }
 }
+$Script:ExternalHelpCommandNames = @()
 
 Export-ModuleMember -Function $Public.Basename
 Set-Alias -Name ipch -Value Invoke-PSCodeHealth -Force

@@ -27,5 +27,8 @@ Function Test-FunctionHelpCoverage {
     )
     
     $FunctionHelpInfo = $FunctionDefinition.GetHelpContent()
-    return ($FunctionHelpInfo -is [System.Management.Automation.Language.CommentHelpInfo])
+    $CommentBasedHelpPresent = $FunctionHelpInfo -is [System.Management.Automation.Language.CommentHelpInfo]
+    $ExternalHelpPresent = $FunctionDefinition.Name -in $Script:ExternalHelpCommandNames
+    $HelpPresent = $CommentBasedHelpPresent -or $ExternalHelpPresent
+    return $HelpPresent
 }
