@@ -10,7 +10,8 @@ Test-FunctionHelpCoverage [-FunctionDefinition] <FunctionDefinitionAst>
 ```
 
 ## DESCRIPTION
-Tells whether or not the specified function definition specified as a \[System.Management.Automation.Language.FunctionDefinitionAst\] contains help information (a CommentHelpInfo object).
+Tells whether or not the specified function definition specified as a \[System.Management.Automation.Language.FunctionDefinitionAst\] contains help information.
+This function returns $True if the specified function definition AST has a CommentHelpInfo or if the function name is listed in an external help file.
 
 ## EXAMPLES
 
