@@ -4,7 +4,7 @@ Function Get-PowerShellFile {
     Gets all PowerShell files in the specified directory.
 .DESCRIPTION
     Gets all PowerShell files (.ps1, .psm1 and .psd1) in the specified directory.
-    The following PowerShell-related files are excluded : Tests, format data files and type data files.
+    The following PowerShell-related files are excluded : format data files, type data files and files containing Pester Tests.
 
 .PARAMETER Path
     To specify the path of the directory to search.
@@ -44,8 +44,20 @@ Function Get-PowerShellFile {
         [string[]]$Exclude
     )
 
-    $ChildItems = Get-ChildItem @PSBoundParameters
-    $PowerShellFiles = $ChildItems.Where({$_.PSIsContainer -eq $False -and $_.Name -like '*.ps*1' -and $_.BaseName -notmatch "Test"})
-    
-    return $PowerShellFiles.FullName
+    $ChildItems = Get-ChildItem @PSBoundParameters -File
+    $PowerShellFilter = { $_.Name -like '*.ps*1' }
+    $PowerShellFiles = $ChildItems | Where-Object $PowerShellFilter
+
+    Foreach ( $File in $PowerShellFiles ) {
+        $FileAst = [System.Management.Automation.Language.Parser]::ParseFile($File.FullName, [ref]$Null, [ref]$Null)
+        $Predicate = {
+            Param($Ast) $Ast -is [System.Management.Automation.Language.CommandAst] -and
+            $Ast.GetCommandName() -eq 'Describe' -and
+            $Ast.CommandElements.StaticType -contains [scriptblock]
+        }
+        $DescribeBlock = $FileAst.Find($Predicate, $False)
+        If ( -not($DescribeBlock) ) {
+            $File.FullName
+        }
+    }
 }
