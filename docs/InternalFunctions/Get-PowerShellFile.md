@@ -11,7 +11,7 @@ Get-PowerShellFile [-Path] <String> [-Recurse] [-Exclude <String[]>]
 
 ## DESCRIPTION
 Gets all PowerShell files (.ps1, .psm1 and .psd1) in the specified directory.
-The following PowerShell-related files are excluded : Tests, format data files and type data files.
+The following PowerShell-related files are excluded : format data files, type data files and files containing Pester Tests.
 
 ## EXAMPLES
 
