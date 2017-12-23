@@ -52,7 +52,7 @@ Function Get-FunctionTestCoverage {
     $Tests = Get-ChildItem -Path $TestsPath -Recurse -Filter *.tests.ps1 |
             Select-String -Pattern $FunctionName |
             Where-Object { $_.Line -notmatch 'Describe|Context|It|Mock'} |
-            Select-Object -ExpandProperty Path
+            Select-Object -ExpandProperty Path -Unique
 
     # Invoke-Pester didn't have the "Show" parameter prior to version 4.x
     $SuppressOutput = If ((Get-Module -Name Pester).Version.Major -lt 4) { @{Quiet = $True} } Else { @{Show = 'None'} }
