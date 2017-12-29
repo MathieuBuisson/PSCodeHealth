@@ -10,7 +10,7 @@ Describe 'Get-FunctionTestCoverage' {
         Context 'Pester finds 1 command in the function' {
 
             Mock Invoke-Pester { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
-            
+
             It 'Should return an object of the type [PSCodeHealth.Function.TestCoverageInfo]' {
                 (Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] | Get-Member).TypeName[0] |
                 Should Be 'PSCodeHealth.Function.TestCoverageInfo'
@@ -44,20 +44,26 @@ Describe 'Get-FunctionTestCoverage' {
 
             New-Item -Path TestDrive:\Module -ItemType Directory
             New-Item -Path TestDrive:\Module\Module.Tests.ps1 -ItemType File
+            New-Item -Path TestDrive:\Module\Module2.Tests.ps1 -ItemType File
 
-            Mock Invoke-Pester -ParameterFilter { $Script -eq 'TestDrive:\Module\Module.Tests.ps1' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
-            Mock Invoke-Pester -ParameterFilter { $Script -eq 'TestDrive:\Module' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
-            Mock Invoke-Pester -ParameterFilter { $Script -like '*\TestData' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
+            "{&Public} | Should -Not -Throw" | Set-Content TestDrive:\Module\Module.Tests.ps1
+            "Mock -CommandName Public -MockWith {}" | Set-Content TestDrive:\Module\Module2.Tests.ps1
+
+            Mock Invoke-Pester -MockWith {}
+            Mock Invoke-Pester -ParameterFilter { $Script -like '*\Module\Module.Tests.ps1' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
+            Mock Invoke-Pester -ParameterFilter { $Script -like '*\Module' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
+            Mock Invoke-Pester -ParameterFilter { $Script -like '*\TestData\*' } { $Mocks.'Invoke-Pester'.'1CommandAnalyzed' }
 
             $Result = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] -TestsPath 'TestDrive:\Module\Module.Tests.ps1'
 
             It 'Should call Invoke-Pester with the file path if TestsPath is a file' {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] -TestsPath 'TestDrive:\Module\Module.Tests.ps1'
-                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -eq 'TestDrive:\Module\Module.Tests.ps1' }
+                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\Module\Module.Tests.ps1' }
             }
             It 'Should call Invoke-Pester with the directory path if TestsPath is a directory' {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] -TestsPath 'TestDrive:\Module'
-                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -eq 'TestDrive:\Module' }
+                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\Module' } -Exactly -Times 0
+                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\Module\Module.Tests.ps1' }
             }
             It "Should call Invoke-Pester with the source file's parent directory if TestsPath is not specified" {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0]
