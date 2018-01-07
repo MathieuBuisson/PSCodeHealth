@@ -60,14 +60,14 @@ Describe 'Get-FunctionTestCoverage' {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] -TestsPath 'TestDrive:\Module\Module.Tests.ps1'
                 Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\Module\Module.Tests.ps1' }
             }
-            It 'Should call Invoke-Pester with the directory path if TestsPath is a directory' {
+            It 'Should not call Invoke-Pester with the directory path if TestsPath is a directory' {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0] -TestsPath 'TestDrive:\Module'
                 Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\Module' } -Exactly -Times 0
                 Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\Module\Module.Tests.ps1' }
             }
-            It "Should call Invoke-Pester with the source file's parent directory if TestsPath is not specified" {
+            It "Should not call Invoke-Pester with the source file's parent directory if TestsPath is not specified" {
                 $Null = Get-FunctionTestCoverage -FunctionDefinition $FunctionDefinitions[0]
-                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\TestData' }
+                Assert-MockCalled -CommandName Invoke-Pester -Scope It -ParameterFilter { $Script -like '*\TestData' } -Exactly -Times 0
             }
             It 'Should return an object with the expected property "CodeCoveragePerCent"' {
                 $Result.CodeCoveragePerCent | Should Be 0
