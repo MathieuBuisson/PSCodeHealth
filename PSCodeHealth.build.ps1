@@ -14,7 +14,7 @@ Function Get-ModulePrivateFunction {
         [Parameter(Mandatory)]
         [string]$ModuleName
     )
-    
+
     $ModuleInfo = $Null
     $ModuleInfo = Get-Module -Name $ModuleName -ErrorAction SilentlyContinue
     If ( -not $ModuleInfo ) {
@@ -142,11 +142,11 @@ task Fail_If_Analyze_Findings {
 
 Task Build_Documentation {
     Write-TaskBanner -TaskName $Task.Name
-    
+
     Remove-Module -Name $Settings.ModuleName -Force -ErrorAction SilentlyContinue
     # platyPS + AppVeyor requires the module to be loaded in Global scope
     Import-Module $Settings.ManifestPath -Force -Global
-    
+
     $HeaderContent = Get-Content -Path $Settings.HeaderPath -Raw
     $HeaderContent += "  - Public Functions:`n"
     If (Test-Path -Path $Settings.PublicFunctionDocsPath) {
@@ -205,9 +205,9 @@ task Set_Module_Version {
 }
 
 task Push_Build_Changes_To_Repo {
-    Write-TaskBanner -TaskName $Task.Name  
-    
-    cmd /c "git config --global credential.helper store 2>&1"    
+    Write-TaskBanner -TaskName $Task.Name
+
+    cmd /c "git config --global credential.helper store 2>&1"
     Add-Content "$env:USERPROFILE\.git-credentials" "https://$($Settings.GitHubKey):x-oauth-basic@github.com`n"
     cmd /c "git config --global user.email ""$($Settings.Email)"" 2>&1"
     cmd /c "git config --global user.name ""$($Settings.Name)"" 2>&1"
