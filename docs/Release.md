@@ -1,3 +1,7 @@
-# 2017-07-16  
+# 2018-05-10  
 
-  - Add 2 new compliance rules for metrics "ComplexityHighest" and "NestingDepthHighest"  
+
+## Getting the per-function test coverage information is much more efficient  
+
+  - `Get-FunctionTestCoverage` will not run the whole tests suite for each function anymore.  
+  - It runs only test script(s) referencing/running the currently evaluated function.  
