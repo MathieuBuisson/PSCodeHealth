@@ -6,7 +6,7 @@ Gets all the function definitions in the specified files.
 ## SYNTAX
 
 ```
-Get-FunctionDefinition [-Path] <String[]>
+Get-FunctionDefinition [-Path] <String[]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -14,7 +14,7 @@ Gets all the function definitions (including private functions but excluding nes
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-FunctionDefinition -Path C:\GitRepos\MyModule\MyModule.psd1
 ```
@@ -29,7 +29,7 @@ To specify the path of the file to analyze.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -37,6 +37,10 @@ Default value: None
 Accept pipeline input: True (ByValue)
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -47,4 +51,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

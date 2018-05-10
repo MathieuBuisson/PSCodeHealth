@@ -7,7 +7,7 @@ Gets the compliance result(s) of the analyzed PowerShell code, based on a PSCode
 
 ```
 Test-PSCodeHealthCompliance [-HealthReport] <PSObject> [[-CustomSettingsPath] <String>]
- [[-SettingsGroup] <String>] [[-MetricName] <String[]>] [-Summary]
+ [[-SettingsGroup] <String>] [[-MetricName] <String[]>] [-Summary] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,21 +28,21 @@ By default, this function outputs the compliance results for every metrics in ev
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport
 ```
 
 Gets the compliance results for every metrics, based on the specified PSCodeHealth report ($MyProjectHealthReport) and the compliance rules in the default settings.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Invoke-PSCodeHealth | Test-PSCodeHealthCompliance
 ```
 
 Gets the compliance results for every metrics, based on the PSCodeHealth report specified via pipeline input and the compliance rules in the default settings.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -CustomSettingsPath .\MySettings.json -SettingsGroup OverallMetrics
 ```
@@ -51,7 +51,7 @@ Evaluates the compliance results for the metrics in the settings group OverallMe
  
 This checks compliance against compliance rules in the defaults compliance rules and any custom compliance rule from the file 'MySettings.json'.
 
-### -------------------------- EXAMPLE 4 --------------------------
+### EXAMPLE 4
 ```
 Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -MetricName 'TestCoverage','Complexity','MaximumNestingDepth'
 ```
@@ -60,7 +60,7 @@ Evaluates the compliance results only for the TestCoverage, Complexity and Maxim
  
 In the case of TestCoverage, this metric exists in both PerFunctionMetrics and OverallMetrics, so this evaluates the compliance result for the TestCoverage metric from both groups.
 
-### -------------------------- EXAMPLE 5 --------------------------
+### EXAMPLE 5
 ```
 Test-PSCodeHealthCompliance -HealthReport $MyProjectHealthReport -FunctionName 'Get-Something'
 ```
@@ -70,7 +70,7 @@ Because this is the compliance of a specific function, only the per function met
  
 If the value of the FunctionName parameter doesn't match any function name in the HealthReport the parameter validation will fail and state the set of possible values.
 
-### -------------------------- EXAMPLE 6 --------------------------
+### EXAMPLE 6
 ```
 Invoke-PSCodeHealth | Test-PSCodeHealthCompliance -Summary
 ```
@@ -89,7 +89,7 @@ The ouput of the command Invoke-PSCodeHealth is a PSCodeHealth report and can be
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -106,7 +106,7 @@ Any compliance rule specified in this file override the default, and rules not s
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -127,7 +127,7 @@ If not specified, compliance is evaluated for metrics in both groups.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -144,7 +144,7 @@ If not specified, compliance is evaluated for all metrics.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -164,7 +164,7 @@ This retains the worst compliance level, meaning :
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -172,6 +172,10 @@ Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -182,4 +186,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

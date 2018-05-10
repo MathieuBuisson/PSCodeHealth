@@ -6,7 +6,7 @@ Creates one or more custom objects of the type : 'PSCodeHealth.Overall.FailedTes
 ## SYNTAX
 
 ```
-New-FailedTestsInfo [-TestsResult] <PSObject>
+New-FailedTestsInfo [-TestsResult] <PSObject> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -17,7 +17,7 @@ This information is used in the overall health report.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-FailedTestsInfo -TestsResult $TestsResult
 ```
@@ -32,7 +32,7 @@ To specify the Pester tests result object.
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -40,6 +40,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -50,4 +54,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

@@ -7,6 +7,7 @@ Gets test coverage information for the specified function.
 
 ```
 Get-FunctionTestCoverage [-FunctionDefinition] <FunctionDefinitionAst> [[-TestsPath] <String>]
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -19,7 +20,7 @@ It uses Pester with its CodeCoverage parameter.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-FunctionTestCoverage -FunctionDefinition $MyFunctionAst -TestsPath $MyModule.ModuleBase
 ```
@@ -34,7 +35,7 @@ To specify the function definition to analyze.
 ```yaml
 Type: FunctionDefinitionAst
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -51,7 +52,7 @@ If not specified, the directory of the file containing the specified function, a
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -59,6 +60,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -69,4 +74,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

@@ -8,13 +8,13 @@ Gets quality and maintainability metrics for PowerShell code contained in script
 ### Default (Default)
 ```
 Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <PSObject>] [-Recurse]
- [-Exclude <String[]>]
+ [-Exclude <String[]>] [<CommonParameters>]
 ```
 
 ### HtmlReport
 ```
 Invoke-PSCodeHealth [[-Path] <String>] [[-TestsPath] <String>] [[-TestsResult] <PSObject>] [-Recurse]
- [-Exclude <String[]>] -HtmlReportPath <String> [-CustomSettingsPath <String>] [-PassThru]
+ [-Exclude <String[]>] -HtmlReportPath <String> [-CustomSettingsPath <String>] [-PassThru] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -28,7 +28,7 @@ These metrics relate to :
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -Recurse -TestsPath 'C:\GitRepos\MyModule\Tests\Unit'
 ```
@@ -37,7 +37,7 @@ Gets quality and maintainability metrics for code from PowerShell files in the d
  
 This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\Unit, and any subdirectories.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -Recurse -Exclude "*example*"
 ```
@@ -46,7 +46,7 @@ Gets quality and maintainability metrics for code from PowerShell files in the d
  
 This command will look for tests located in the directory C:\GitRepos\MyModule\Tests\, and any subdirectories.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -HtmlReportPath .\Report.html -PassThru
 ```
@@ -57,7 +57,7 @@ This command will create an HTML report (Report.html) in the current directory a
  
 The styling of HTML elements will reflect their compliance, based on the default compliance rules.
 
-### -------------------------- EXAMPLE 4 --------------------------
+### EXAMPLE 4
 ```
 Invoke-PSCodeHealth -Path 'C:\GitRepos\MyModule' -TestsPath 'C:\GitRepos\MyModule\Tests' -HtmlReportPath .\Report.html -CustomSettingsPath .\MySettings.json
 ```
@@ -78,7 +78,7 @@ If the Path is not specified and the current location is in a FileSystem PowerSh
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -95,7 +95,7 @@ If not specified, the command will look for tests in the same directory as each 
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -116,7 +116,7 @@ To use an existing Pester tests result object for generating the following metri
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -131,7 +131,7 @@ To search PowerShell files in the Path directory and all subdirectories recursiv
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -151,7 +151,7 @@ Wildcards are permitted.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -168,7 +168,7 @@ The path must include the folder path (which has to exist) and the file name.
 ```yaml
 Type: String
 Parameter Sets: HtmlReport
-Aliases: 
+Aliases:
 
 Required: True
 Position: Named
@@ -185,7 +185,7 @@ Any compliance rule specified in this file override the default, and rules not s
 ```yaml
 Type: String
 Parameter Sets: HtmlReport
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -202,7 +202,7 @@ The PassThru parameter allows to instruct Invoke-PSCodeHealth to output both an 
 ```yaml
 Type: SwitchParameter
 Parameter Sets: HtmlReport
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -210,6 +210,10 @@ Default value: False
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -220,4 +224,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

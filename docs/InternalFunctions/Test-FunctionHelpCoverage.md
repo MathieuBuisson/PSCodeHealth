@@ -6,7 +6,7 @@ Tells whether or not the specified function definition contains help information
 ## SYNTAX
 
 ```
-Test-FunctionHelpCoverage [-FunctionDefinition] <FunctionDefinitionAst>
+Test-FunctionHelpCoverage [-FunctionDefinition] <FunctionDefinitionAst> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -15,7 +15,7 @@ This function returns $True if the specified function definition AST has a Comme
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Test-FunctionHelpCoverage -FunctionDefinition $MyFunctionAst
 ```
@@ -30,7 +30,7 @@ To specify the function definition to analyze.
 ```yaml
 Type: FunctionDefinitionAst
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -38,6 +38,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -48,4 +52,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

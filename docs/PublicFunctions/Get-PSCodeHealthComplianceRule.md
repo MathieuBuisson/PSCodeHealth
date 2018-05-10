@@ -7,7 +7,7 @@ Get the PSCodeHealth compliance rules (metrics thresholds, etc...) which are cur
 
 ```
 Get-PSCodeHealthComplianceRule [[-CustomSettingsPath] <String>] [[-SettingsGroup] <String>]
- [[-MetricName] <String[]>]
+ [[-MetricName] <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -25,14 +25,14 @@ By default, this function outputs compliance rules for every metrics in every se
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-PSCodeHealthComplianceRule
 ```
 
 Gets all the default PSCodeHealth compliance rules (metrics warning and fail thresholds, etc...).
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-PSCodeHealthComplianceRule -CustomSettingsPath .\MySettings.json -SettingsGroup OverallMetrics
 ```
@@ -41,7 +41,7 @@ Gets all PSCodeHealth compliance rules (metrics warning and fail thresholds, etc
  
 This also output any compliance rule overriding the defaults because they are specified in the file MySettings.json.
 
-### -------------------------- EXAMPLE 3 --------------------------
+### EXAMPLE 3
 ```
 Get-PSCodeHealthComplianceRule -MetricName 'TestCoverage','Complexity','MaximumNestingDepth'
 ```
@@ -60,7 +60,7 @@ Any compliance rule specified in this file override the default, and rules not s
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 1
@@ -81,7 +81,7 @@ If not specified, compliance rules from both groups are output.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 2
@@ -98,7 +98,7 @@ There is a large number of metrics, so for convenience, all the possible values 
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 3
@@ -106,6 +106,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -116,4 +120,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

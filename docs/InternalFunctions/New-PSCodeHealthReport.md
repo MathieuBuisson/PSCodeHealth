@@ -7,7 +7,7 @@ Creates a new custom object and gives it the TypeName : 'PSCodeHealth.Overall.He
 
 ```
 New-PSCodeHealthReport [-ReportTitle] <String> [-AnalyzedPath] <String> [-Path] <String[]>
- [-FunctionHealthRecord] <PSObject[]> [-TestsPath] <String> [[-TestsResult] <PSObject>]
+ [-FunctionHealthRecord] <PSObject[]> [-TestsPath] <String> [[-TestsResult] <PSObject>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -17,7 +17,7 @@ The value of the TestsPath parameter specifies the location of the tests when ca
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-PSCodeHealthReport -ReportTitle 'MyTitle' -AnalyzedPath 'C:\Folder' -Path $MyPath -FunctionHealthRecord $FunctionHealthRecords -TestsPath "$MyPath\Tests"
 ```
@@ -34,7 +34,7 @@ This is mainly used when generating an HTML report.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -51,7 +51,7 @@ This corresponds to the original Path value of Invoke-PSCodeHealth.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -66,7 +66,7 @@ To specify the path of one or more PowerShell file(s) to analyze.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -81,7 +81,7 @@ To specify the PSCodeHealth.Function.HealthRecord objects which will be the basi
 ```yaml
 Type: PSObject[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 4
@@ -97,7 +97,7 @@ If a directory is specified, the directory and all subdirectories will be search
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 5
@@ -119,7 +119,7 @@ To use an existing Pester tests result object for generating the following metri
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 6
@@ -127,6 +127,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -137,4 +141,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

@@ -6,7 +6,7 @@ Merges user-defined settings (metrics thresholds, etc...) into the default PSCod
 ## SYNTAX
 
 ```
-Merge-PSCodeHealthSetting [-DefaultSettings] <PSObject> [-CustomSettings] <PSObject>
+Merge-PSCodeHealthSetting [-DefaultSettings] <PSObject> [-CustomSettings] <PSObject> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -20,7 +20,7 @@ Any setting specified in the custom settings file override the default, and sett
 ## EXAMPLES
 
 ### Example 1
-```
+```powershell
 PS C:\> {{ Add example code here }}
 ```
 
@@ -34,7 +34,7 @@ PSCustomObject converted from the JSON data in PSCodeHealthSettings.json.
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -49,7 +49,7 @@ PSCustomObject converted from the JSON data in a user-defined custom settings fi
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -57,6 +57,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -67,4 +71,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

@@ -7,7 +7,7 @@ Creates a new custom object and gives it the TypeName : 'PSCodeHealth.Compliance
 
 ```
 New-PSCodeHealthComplianceResult [-ComplianceRule] <PSObject> [-Value] <PSObject> [-Result] <String>
- [[-FunctionName] <String>]
+ [[-FunctionName] <String>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -15,14 +15,14 @@ Creates a new custom object based on a PSCodeHealth.Compliance.Rule object and a
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-PSCodeHealthComplianceResult -ComplianceRule $Rule -Value 81.26 -Result Warning
 ```
 
 Returns new custom object of the type PSCodeHealth.Compliance.Result.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 New-PSCodeHealthComplianceResult -ComplianceRule $Rule -Value 81.26 -Result Warning -FunctionName 'Get-Something'
 ```
@@ -37,7 +37,7 @@ The compliance rule which was evaluated.
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -52,7 +52,7 @@ The value from the health report for the evaluated metric.
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -67,7 +67,7 @@ The compliance result, based on the compliance rule and the actual value from th
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -84,7 +84,7 @@ If this parameter is specified, this creates a PSCodeHealth.Compliance.FunctionR
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: 4
@@ -92,6 +92,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -102,4 +106,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

@@ -12,7 +12,7 @@
 RootModule = '.\PSCodeHealth.psm1'
 
 # Version number of this module.
-ModuleVersion = '0.2.9'
+ModuleVersion = '0.2.25'
 
 # ID used to uniquely identify this module
 GUID = 'ca22dabd-bbb6-4805-9c90-a8aad6dbbfd3'

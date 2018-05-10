@@ -6,7 +6,7 @@ Gets all PowerShell files in the specified directory.
 ## SYNTAX
 
 ```
-Get-PowerShellFile [-Path] <String> [-Recurse] [-Exclude <String[]>]
+Get-PowerShellFile [-Path] <String> [-Recurse] [-Exclude <String[]>] [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -15,14 +15,14 @@ The following PowerShell-related files are excluded : format data files, type da
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse
 ```
 
 Gets all PowerShell files in the directory C:\GitRepos\MyModule\ and any subdirectories.
 
-### -------------------------- EXAMPLE 2 --------------------------
+### EXAMPLE 2
 ```
 Get-PowerShellFile -Path C:\GitRepos\MyModule\ -Recurse -Exclude "*example*"
 ```
@@ -37,7 +37,7 @@ To specify the path of the directory to search.
 ```yaml
 Type: String
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -52,7 +52,7 @@ To search the Path directory and all subdirectories recursively.
 ```yaml
 Type: SwitchParameter
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -70,7 +70,7 @@ Wildcards are permitted.
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: False
 Position: Named
@@ -78,6 +78,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -88,4 +92,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

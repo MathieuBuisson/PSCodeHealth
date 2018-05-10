@@ -7,12 +7,12 @@ Replaces Placeholders in template files with their specified value.
 
 ### File (Default)
 ```
-Set-PSCodeHealthPlaceholdersValue [-TemplatePath] <String> [-PlaceholdersData] <Hashtable>
+Set-PSCodeHealthPlaceholdersValue [-TemplatePath] <String> [-PlaceholdersData] <Hashtable> [<CommonParameters>]
 ```
 
 ### Html
 ```
-Set-PSCodeHealthPlaceholdersValue [-PlaceholdersData] <Hashtable> [-Html] <String[]>
+Set-PSCodeHealthPlaceholdersValue [-PlaceholdersData] <Hashtable> [-Html] <String[]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -20,7 +20,7 @@ Replaces Placeholders in template files with their specified string value and ou
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 $PlaceholdersData = @{
 ```
@@ -40,7 +40,7 @@ Path of the template file containing placeholders to replace.
 ```yaml
 Type: String
 Parameter Sets: File
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -56,7 +56,7 @@ The key is corresponds to the name of the placeholder to replace and the value c
 ```yaml
 Type: Hashtable
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -71,7 +71,7 @@ Accept wildcard characters: False
 ```yaml
 Type: String[]
 Parameter Sets: Html
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -79,6 +79,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -89,4 +93,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

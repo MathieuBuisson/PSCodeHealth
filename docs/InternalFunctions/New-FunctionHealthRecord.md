@@ -7,6 +7,7 @@ Creates a new custom object and gives it the TypeName : 'PSCodeHealth.Function.H
 
 ```
 New-FunctionHealthRecord [-FunctionDefinition] <FunctionDefinitionAst> [-FunctionTestCoverage] <PSObject>
+ [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -14,7 +15,7 @@ Creates a new custom object and gives it the TypeName : 'PSCodeHealth.Function.H
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-FunctionHealthRecord -FunctionDefinition $MyFunctionAst -FunctionTestCoverage $TestCoverage
 ```
@@ -29,7 +30,7 @@ To specify the function definition.
 ```yaml
 Type: FunctionDefinitionAst
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -44,7 +45,7 @@ To specify the percentage of lines of code in the specified function that are te
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -52,6 +53,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -62,4 +67,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

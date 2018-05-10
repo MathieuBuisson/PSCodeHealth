@@ -7,7 +7,7 @@ Sets classes to the elements in the HTML report which use color coding to reflec
 
 ```
 Set-PSCodeHealthHtmlColor [-HealthReport] <PSObject> [-Compliance] <PSObject[]>
- [-PerFunctionCompliance] <PSObject[]> [-Html] <String[]>
+ [-PerFunctionCompliance] <PSObject[]> [-Html] <String[]> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -19,7 +19,7 @@ Then, it returns the modified HTML content to the caller.
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 Set-PSCodeHealthHtmlColor -HealthReport $HealthReport -Compliance $OverallCompliance -PerFunctionCompliance $PerFunctionCompliance -Html $HtmlContent
 ```
@@ -34,7 +34,7 @@ To specify the input PSCodeHealth.Overall.HealthReport object containing the dat
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -49,7 +49,7 @@ To input the overall compliance information, based on the current health report 
 ```yaml
 Type: PSObject[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 2
@@ -64,7 +64,7 @@ To input the per-function compliance information, based on the functions in the 
 ```yaml
 Type: PSObject[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -79,7 +79,7 @@ To input the original HTML content (containing placeholders to be substituted wi
 ```yaml
 Type: String[]
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 3
@@ -87,6 +87,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -97,4 +101,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-

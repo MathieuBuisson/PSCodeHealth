@@ -6,7 +6,7 @@ Generate table rows for the HTML report, based on the data contained in a PSCode
 ## SYNTAX
 
 ```
-New-PSCodeHealthTableData [-HealthReport] <PSObject>
+New-PSCodeHealthTableData [-HealthReport] <PSObject> [<CommonParameters>]
 ```
 
 ## DESCRIPTION
@@ -20,7 +20,7 @@ This provides the rows for the following tables :
 
 ## EXAMPLES
 
-### -------------------------- EXAMPLE 1 --------------------------
+### EXAMPLE 1
 ```
 New-PSCodeHealthTableData -HealthReport $HealthReport
 ```
@@ -35,7 +35,7 @@ To specify the input PSCodeHealth.Overall.HealthReport object containing the dat
 ```yaml
 Type: PSObject
 Parameter Sets: (All)
-Aliases: 
+Aliases:
 
 Required: True
 Position: 1
@@ -43,6 +43,10 @@ Default value: None
 Accept pipeline input: False
 Accept wildcard characters: False
 ```
+
+### CommonParameters
+This cmdlet supports the common parameters: -Debug, -ErrorAction, -ErrorVariable, -InformationAction, -InformationVariable, -OutVariable, -OutBuffer, -PipelineVariable, -Verbose, -WarningAction, and -WarningVariable.
+For more information, see about_CommonParameters (http://go.microsoft.com/fwlink/?LinkID=113216).
 
 ## INPUTS
 
@@ -53,4 +57,3 @@ Accept wildcard characters: False
 ## NOTES
 
 ## RELATED LINKS
-
