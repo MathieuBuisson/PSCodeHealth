@@ -4,9 +4,9 @@ Function Get-FunctionTestCoverage {
     Gets test coverage information for the specified function.
 
 .DESCRIPTION
-    Gets test coverage information for the specified function. This includes 2 pieces of information :
-      - Code coverage percentage (lines of code that are exercized by unit tests)
-      - Missed Commands (lines of codes or commands not being exercized by unit tests)
+    Gets test coverage information for the specified function. This includes 2 pieces of information :  
+      - Code coverage percentage (lines of code that are exercized by unit tests)  
+      - Missed Commands (lines of codes or commands not being exercized by unit tests)  
 
     It uses Pester with its CodeCoverage parameter.
 
@@ -27,7 +27,7 @@ Function Get-FunctionTestCoverage {
     PSCodeHealth.Function.TestCoverageInfo
 
 .NOTES
-
+    
 #>
     [CmdletBinding()]
     [OutputType([PSCustomObject])]
@@ -50,9 +50,9 @@ Function Get-FunctionTestCoverage {
 
     # Find all the files under the test path that contain the function name
     $Tests = Get-ChildItem -Path $TestsPath -Recurse -Filter *.tests.ps1 |
-            Select-String -Pattern $FunctionName |
-            Where-Object { $_.Line -notmatch 'Describe|Context|It|Mock'} |
-            Select-Object -ExpandProperty Path -Unique
+    Select-String -Pattern $FunctionName |
+    Where-Object { $_.Line -notmatch 'Describe|Context|It |Mock ' } |
+    Select-Object -ExpandProperty Path -Unique
 
     # Invoke-Pester didn't have the "Show" parameter prior to version 4.x
     $SuppressOutput = If ((Get-Module -Name Pester).Version.Major -lt 4) { @{Quiet = $True} } Else { @{Show = 'None'} }

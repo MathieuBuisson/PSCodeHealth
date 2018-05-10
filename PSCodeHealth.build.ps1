@@ -3,8 +3,10 @@
 # Importing all build settings into the current scope
 . '.\PSCodeHealth.BuildSettings.ps1'
 
-Function Write-TaskBanner ( [string]$TaskName ) {
-    "`n" + ('-' * 79) + "`n" + "`t`t`t $($TaskName.ToUpper()) `n" + ('-' * 79) + "`n"
+Set-BuildHeader {
+    Param($Path)
+    Write-Build Cyan "Task $Path"
+    "`n" + ('-' * 79) + "`n" + "`t`t`t $($Task.Name.ToUpper()) `n" + ('-' * 79) + "`n"
 }
 
 Function Get-ModulePrivateFunction {
@@ -14,7 +16,7 @@ Function Get-ModulePrivateFunction {
         [Parameter(Mandatory)]
         [string]$ModuleName
     )
-
+    
     $ModuleInfo = $Null
     $ModuleInfo = Get-Module -Name $ModuleName -ErrorAction SilentlyContinue
     If ( -not $ModuleInfo ) {
@@ -27,8 +29,6 @@ Function Get-ModulePrivateFunction {
 }
 
 task Clean {
-    Write-TaskBanner -TaskName $Task.Name
-
     If (Test-Path -Path $Settings.BuildOutput) {
         "Removing existing files and folders in $($Settings.BuildOutput)\"
         Get-ChildItem $Settings.BuildOutput | Remove-Item -Force -Recurse
@@ -40,8 +40,6 @@ task Clean {
 }
 
 task Install_Dependencies {
-    Write-TaskBanner -TaskName $Task.Name
-
     Foreach ( $Depend in $Settings.Dependency ) {
         "Installing build dependency : $Depend"
         If ( $Depend -eq 'Selenium.WebDriver' ) {
@@ -55,43 +53,31 @@ task Install_Dependencies {
 }
 
 task Unit_Tests {
-    Write-TaskBanner -TaskName $Task.Name
-
     $UnitTestSettings = $Settings.UnitTestParams
     $Script:UnitTestsResult = Invoke-Pester @UnitTestSettings
 }
 
 task Fail_If_Failed_Unit_Test {
-    Write-TaskBanner -TaskName $Task.Name
-
     $FailureMessage = '{0} Unit test(s) failed. Aborting build' -f $UnitTestsResult.FailedCount
     assert ($UnitTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Publish_Unit_Tests_Coverage {
-    Write-TaskBanner -TaskName $Task.Name
-
     $Coverage = Format-Coverage -PesterResults $UnitTestsResult -CoverallsApiToken $Settings.CoverallsKey -BranchName $Settings.Branch
     Publish-Coverage -Coverage $Coverage
 }
 
 task Integration_Tests {
-    Write-TaskBanner -TaskName $Task.Name
-
     $IntegrationTestSettings = $Settings.IntegrationTestParams
     $Script:IntegrationTestsResult = Invoke-Pester @IntegrationTestSettings
 }
 
 task Fail_If_Failed_Integration_Test {
-    Write-TaskBanner -TaskName $Task.Name
-
     $FailureMessage = '{0} Integration test(s) failed. Aborting build' -f $IntegrationTestsResult.FailedCount
     assert ($IntegrationTestsResult.FailedCount -eq 0) $FailureMessage
 }
 
 task Upload_Test_Results_To_AppVeyor {
-    Write-TaskBanner -TaskName $Task.Name
-
     $TestResultFiles = (Get-ChildItem -Path $Settings.BuildOutput -Filter '*TestsResult.xml').FullName
     Foreach ( $TestResultFile in $TestResultFiles ) {
         "Uploading test result file : $TestResultFile"
@@ -100,8 +86,6 @@ task Upload_Test_Results_To_AppVeyor {
 }
 
 task Upload_Test_Screenshots_To_Appveyor {
-    Write-TaskBanner -TaskName $Task.Name
-
     $ScreenShots = Get-ChildItem -Path $Settings.ScreenshotPath
     Foreach ( $ScreenShot in $ScreenShots ) {
         Push-AppveyorArtifact $ScreenShot.FullName
@@ -117,8 +101,6 @@ task Test Unit_Tests,
     Upload_Test_Screenshots_To_Appveyor
 
 task Analyze {
-    Write-TaskBanner -TaskName $Task.Name
-
     Add-AppveyorTest -Name 'Code Analysis' -Outcome Running
     $AnalyzeSettings = $Settings.AnalyzeParams
     $Script:AnalyzeFindings = Invoke-ScriptAnalyzer @AnalyzeSettings
@@ -134,19 +116,15 @@ task Analyze {
 }
 
 task Fail_If_Analyze_Findings {
-    Write-TaskBanner -TaskName $Task.Name
-
     $FailureMessage = 'PSScriptAnalyzer found {0} issues. Aborting build' -f $AnalyzeFindings.Count
     assert ( -not($AnalyzeFindings) ) $FailureMessage
 }
 
 Task Build_Documentation {
-    Write-TaskBanner -TaskName $Task.Name
-
     Remove-Module -Name $Settings.ModuleName -Force -ErrorAction SilentlyContinue
     # platyPS + AppVeyor requires the module to be loaded in Global scope
     Import-Module $Settings.ManifestPath -Force -Global
-
+    
     $HeaderContent = Get-Content -Path $Settings.HeaderPath -Raw
     $HeaderContent += "  - Public Functions:`n"
     If (Test-Path -Path $Settings.PublicFunctionDocsPath) {
@@ -188,8 +166,6 @@ Task Build_Documentation {
 }
 
 task Set_Module_Version {
-    Write-TaskBanner -TaskName $Task.Name
-
     $ManifestContent = Get-Content -Path $Settings.ManifestPath
     $CurrentVersion = $Settings.VersionRegex.Match($ManifestContent).Groups['ModuleVersion'].Value
     "Current module version in the manifest : $CurrentVersion"
@@ -205,9 +181,7 @@ task Set_Module_Version {
 }
 
 task Push_Build_Changes_To_Repo {
-    Write-TaskBanner -TaskName $Task.Name
-
-    cmd /c "git config --global credential.helper store 2>&1"
+    cmd /c "git config --global credential.helper store 2>&1"    
     Add-Content "$env:USERPROFILE\.git-credentials" "https://$($Settings.GitHubKey):x-oauth-basic@github.com`n"
     cmd /c "git config --global user.email ""$($Settings.Email)"" 2>&1"
     cmd /c "git config --global user.name ""$($Settings.Name)"" 2>&1"
@@ -220,15 +194,11 @@ task Push_Build_Changes_To_Repo {
 }
 
 task Copy_Source_To_Build_Output {
-    Write-TaskBanner -TaskName $Task.Name
-
     "Copying the source folder [$($Settings.SourceFolder)] into the build output folder : [$($Settings.BuildOutput)]"
     Copy-Item -Path $Settings.SourceFolder -Destination $Settings.BuildOutput -Recurse
 }
 
 task Publish_Module_To_PSGallery {
-    Write-TaskBanner -TaskName $Task.Name
-
     Remove-Module -Name 'PSCodeHealth' -Force -ErrorAction SilentlyContinue
 
     Write-Host "OutputModulePath : $($Settings.OutputModulePath)"
