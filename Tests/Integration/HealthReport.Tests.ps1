@@ -143,28 +143,28 @@ Describe 'Invoke-PSCodeHealth' {
             $Result.FailedTestsDetails.Count | Should Be 2
         }
         It 'The health report should have the expected "File" values in its FailedTestsDetails property' {
-            Foreach ( $Result in $Result.FailedTestsDetails ) {
-                $Result.File | Should Be 'Coveralls.Tests.ps1'
+            Foreach ( $FailedTestsDetail in $Result.FailedTestsDetails ) {
+                $FailedTestsDetail.File | Should Be 'Coveralls.Tests.ps1'
             }
         }
         It 'The health report should have the expected "Line" values in its FailedTestsDetails property' {
-            Foreach ( $Result in $Result.FailedTestsDetails ) {
-                $Result.Line | Should BeIn @('97','100')
+            Foreach ( $FailedTestsDetail in $Result.FailedTestsDetails ) {
+                $FailedTestsDetail.Line | Should BeIn @('97','100')
             }
         }
         It 'The health report should have the expected "Describe" values in its FailedTestsDetails property' {
-            Foreach ( $Result in $Result.FailedTestsDetails ) {
-                $Result.Describe | Should Be 'Get-CoverageArray'
+            Foreach ( $FailedTestsDetail in $Result.FailedTestsDetails ) {
+                $FailedTestsDetail.Describe | Should Be 'Get-CoverageArray'
             }
         }
         It 'The health report should have the expected "TestName" values in its FailedTestsDetails property' {
-            Foreach ( $Result in $Result.FailedTestsDetails ) {
-                $Result.TestName | Should BeIn @('Should return 2 objects with the value 1','Should return 0 objects with the value 0')
+            Foreach ( $FailedTestsDetail in $Result.FailedTestsDetails ) {
+                $FailedTestsDetail.TestName | Should BeIn @('Should return 2 objects with the value 1','Should return 0 objects with the value 0')
             }
         }
         It 'The health report should have the expected "ErrorMessage" values in its FailedTestsDetails property' {
-            Foreach ( $Result in $Result.FailedTestsDetails ) {
-                $Result.ErrorMessage | Should BeLike 'Expected: * was*'
+            Foreach ( $FailedTestsDetail in $Result.FailedTestsDetails ) {
+                $FailedTestsDetail.ErrorMessage | Should BeLike 'Expected*'
             }
         }
         It 'The health report should have the expected NumberOfPassedTests property' {

@@ -32,11 +32,12 @@ Function New-FailedTestsInfo {
 
         $SplitStackTrace = $FailedTest.StackTrace -split ':\s'
         $File = ($SplitStackTrace[0] -split '\\')[-1]
-        $Line = ((($SplitStackTrace[1] -split '\n') | Where-Object { $_ -match 'line' }) -split '\s')[-1]
+        $Line = ((($SplitStackTrace[1] -split '\n') | Where-Object { $_ -match 'line' }) -split '\s')
+        $LineNumber = $Line | Where-Object { $_ -match '\d+' }
 
         $ObjectProperties = [ordered]@{
             'File'         = $File
-            'Line'         = $Line
+            'Line'         = $LineNumber
             'Describe'     = $FailedTest.Describe
             'TestName'     = $FailedTest.Name
             'ErrorMessage' = $FailedTest.FailureMessage

@@ -48,10 +48,16 @@ Function Get-FunctionTestCoverage {
         $TestsPath = Split-Path -Path $SourcePath -Parent
     }
 
+    # Find all the files under the test path that contain the function name
+    $Tests = Get-ChildItem -Path $TestsPath -Recurse -Filter *.tests.ps1 |
+    Select-String -Pattern $FunctionName |
+    Where-Object { $_.Line -notmatch 'Describe|Context|It |Mock ' } |
+    Select-Object -ExpandProperty Path -Unique
+
     # Invoke-Pester didn't have the "Show" parameter prior to version 4.x
     $SuppressOutput = If ((Get-Module -Name Pester).Version.Major -lt 4) { @{Quiet = $True} } Else { @{Show = 'None'} }
 
-    $TestsResult = Invoke-Pester -Script $TestsPath -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Verbose:$False @SuppressOutput
+    $TestsResult = Invoke-Pester -Script $Tests -CodeCoverage @{ Path = $SourcePath; Function = $FunctionName } -PassThru -Verbose:$False @SuppressOutput
 
     If ( $TestsResult.CodeCoverage ) {
         $CodeCoverage = $TestsResult.CodeCoverage
