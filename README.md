@@ -35,7 +35,9 @@ Before using PSCodeHealth, you need :
   - The **[PSScriptAnalyzer](https://github.com/PowerShell/PSScriptAnalyzer)** PowerShell module  
   - Internet access when opening the HTML report (to download some CSS and Javascript for Bootstrap, jQuery and Chart.js)  
 
-## Installation  
+## Installation
+
+### From the PowerShell Gallery
 
 The easiest and preferred way to install PSCodeHealth is via the [PowerShell Gallery](https://www.powershellgallery.com/). For more information, see the [PowerShell Gallery Getting Started](https://msdn.microsoft.com/en-us/powershell/gallery/psgallery/psgallery_gettingstarted) page.  
 
@@ -45,7 +47,19 @@ Run the following command to install PSCodeHealth and its 2 dependencies ([Peste
 ```powershell
 Install-Module -Name PSCodeHealth -Repository PSGallery
 ```
-  
+
+### From Chocolatey
+
+If you prefer to manage PSCodeHealth as a Windows package, you can use Chocolatey. If you don't have Chocolatey, you can install it from the [Chocolately Install](https://chocolatey.org/install) page. With Chocolatey installed, execute the following command to install:
+
+```powershell
+choco install pscodehealth
+```
+
+Note: the PSCodeHealth Chocolatey package is provided and supported by the community.
+
+### From Github
+
 As an alternative, you can clone this repository to a location on your system and copy the `PSCodeHealth` subfolder into :
 `C:\Program Files\WindowsPowerShell\Modules\`.  
 
