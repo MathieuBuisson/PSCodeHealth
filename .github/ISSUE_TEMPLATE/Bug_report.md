@@ -30,5 +30,5 @@ If applicable, add screenshots to help explain your problem.
 
 ## Additional context  
 How has this issue affected you ?  
-What are you trying to accomplish  ?
+What are you trying to accomplish  ?  
 Providing context helps us come up with a solution that is most useful and prioritize issues.
