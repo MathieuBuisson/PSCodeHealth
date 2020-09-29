@@ -51,11 +51,11 @@ PowerShellVersion = '5.0'
 RequiredModules = @(
     @{
         ModuleName = 'Pester'
-        ModuleVersion = '4.10.1'
+        RequiredVersion = '4.10.1'
     },
     @{
         ModuleName = 'PSScriptAnalyzer'
-        ModuleVersion= '1.19.0'
+        RequiredVersion= '1.19.0'
     }
 )
 # Assemblies that must be loaded prior to importing this module
